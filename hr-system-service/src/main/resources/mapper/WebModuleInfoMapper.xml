@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.wxiaoqi.security.hrsystem.mapper.WebModuleInfoMapper">
+  <resultMap id="WebModuleInfoResultMap" type="com.github.wxiaoqi.security.hrsystem.entity.WebModuleInfo">
+  </resultMap>
+  
+  <select id="selectModeuleBymodeid" resultMap="WebModuleInfoResultMap">
+    select
+    ModuleID "moduleid",
+    ModuleName "modulename",
+    URL "url",
+    fa "fa"
+    from WebModuleInfo where ModuleID IN
+    <foreach item="item" index="index" collection="modeId" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+
+  <select id="selectAllBymodeid" resultMap="WebModuleInfoResultMap">
+    select
+    ModuleID "moduleid",
+    ModuleName "modulename",
+    URL "url",
+    fa "fa"
+    from WebModuleInfo ORDER  BY Morder
+  </select>
+
+</mapper>

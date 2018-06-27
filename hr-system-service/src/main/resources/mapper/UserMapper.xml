@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.wxiaoqi.security.hrsystem.mapper.UserMapper">
+  <resultMap id="UserInfoVoResultMap" type="com.github.wxiaoqi.security.hrsystem.vo.UserInfoVo">
+  </resultMap>
+
+    <resultMap id="UserResultMap" type="com.github.wxiaoqi.security.hrsystem.entity.User">
+        <result column="PasswordString" property="password"/>
+    </resultMap>
+  
+  <select id="selectOneForVo" resultMap="UserInfoVoResultMap">
+     select
+        a.A0101 "name",
+        b.CONTENT "deptName"
+     from A01 a
+     left join B01 b on b.DEPT_CODE = a.Dept_Code
+     where a.A0188 = #{A0188}
+  </select>
+
+    <select id="selectUserByLogin" resultMap="UserResultMap">
+        select
+        *
+        from A01 a
+        where a.A0190 = #{loginUsername}  or a.A0177 = #{loginUsername} or a.CellPhone = #{loginUsername} or a.UserName = #{loginUsername}
+    </select>
+
+</mapper>

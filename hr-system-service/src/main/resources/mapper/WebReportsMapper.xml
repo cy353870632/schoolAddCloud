@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.wxiaoqi.security.hrsystem.mapper.WebReportsMapper">
+  <resultMap id="WebReportsVoResultMap" type="com.github.wxiaoqi.security.hrsystem.vo.WebReportsVo">
+  </resultMap>
+  
+  <select id="getRWebReportsBystrDetail" resultMap="WebReportsVoResultMap">
+      select top 5
+      Rpt_ID "rpt_id",
+      Rpt_Name "rpt_name",
+      ModuleName
+      from WebReports
+      inner join WebModuleInfo on WebReports.ModuleId=WebModuleInfo.ModuleId
+      where Rpt_ID in
+      <foreach item="item" index="index" collection="strDetail" open="(" separator="," close=")">
+          #{item}
+      </foreach>  </select>
+
+</mapper>

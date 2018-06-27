@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.wxiaoqi.security.hrsystem.mapper.WebParamsMapper">
+  <resultMap id="WebParamsResultMap" type="com.github.wxiaoqi.security.hrsystem.entity.WebParams">
+  </resultMap>
+  
+  <select id="selectWebParamsByparamName" resultMap="WebParamsResultMap">
+  select
+  ParamName "param_name",
+  ParamValue "param_value"
+  from WebParams where ParamName IN
+  <foreach item="item" index="index" collection="paramname" open="(" separator="," close=")">
+    #{item}
+  </foreach>
+</select>
+  <select id="selectAllClowms" resultType="java.util.Map">
+    select
+    *
+    from WebParams where ParamName = #{paramname}
+
+  </select>
+
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.wxiaoqi.security.hrsystem.mapper.KOverMapper">
+  <!--<resultMap id="WebColumnsResultMap" type="com.github.wxiaoqi.security.hrsystem.entity.WebColumns">-->
+  <!--</resultMap>-->
+  
+  <select id="selectByA01andBeginTmeAndEndTime" resultType="java.util.Map">
+     select * from K_Over where a0188 = #{A0188}
+      and over_begin >= #{over_Begin}
+      and  #{over_End} >=over_end
+      ORDER BY over_begin
+      OFFSET #{currpage} ROWS FETCH NEXT #{pageSize} ROWS ONLY;
+  </select>
+
+</mapper>
