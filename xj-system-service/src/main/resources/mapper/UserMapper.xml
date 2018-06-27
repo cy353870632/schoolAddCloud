@@ -5,7 +5,6 @@
   </resultMap>
 
     <resultMap id="UserResultMap" type="com.github.wxiaoqi.security.hrsystem.entity.User">
-        <result column="PasswordString" property="password"/>
     </resultMap>
   
   <select id="selectOneForVo" resultMap="UserInfoVoResultMap">
@@ -20,8 +19,8 @@
     <select id="selectUserByLogin" resultMap="UserResultMap">
         select
         *
-        from A01 a
-        where a.A0190 = #{loginUsername}  or a.A0177 = #{loginUsername} or a.CellPhone = #{loginUsername} or a.UserName = #{loginUsername}
+        from SYSTEM_USER u
+        where u.l_name = #{loginUsername}
     </select>
 
 </mapper>

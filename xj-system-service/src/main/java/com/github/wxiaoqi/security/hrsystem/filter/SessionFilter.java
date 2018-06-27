@@ -19,7 +19,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.LogRecord;
-//全局拦截，先不做任何过滤
+//全局过滤
 @WebFilter(filterName = "sessionFilter",urlPatterns = {"/*"})
 @Slf4j
 public class SessionFilter implements Filter {
@@ -37,44 +37,44 @@ public class SessionFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-//        response.setCharacterEncoding("UTF-8");
-//        response.setContentType("application/json; charset=utf-8");
-//        HttpSession session = request.getSession(false);
-//        String uri = request.getRequestURI();
-//
-//        System.out.println("filter url:"+uri);
-//        //是否需要过滤
-//        boolean needFilter = isNeedFilter(uri);
-//
-//
-//        if (!needFilter) { //不需要过滤直接传给下一个过滤器
-//            filterChain.doFilter(servletRequest, servletResponse);
-//        } else { //需要过滤器
-//            String token = request.getHeader(tokenHeader);
-//            String method = request.getMethod();
-//            if (!method.equals("OPTIONS")) {
-//                token = token.replace("Bearer ", "");
-//                JWTUtil jwtUtil = new JWTUtil();
-//                PrintWriter out = null;
-//                try {
-//                    Claims claims = jwtUtil.parseJWT(token);
-//                    if (claims.getId() == null) {
-//                        JSONObject map = new JSONObject();
-//                        map.put("message", "用户Token过期异常");
-//                        out = response.getWriter();
-//                        out.append(map.toString());
-//                        return;
-//                    }
-//                } catch (Exception e) {
-//                    JSONObject map = new JSONObject();
-//                    map.put("message", "用户Token过期异常");
-//                    out = response.getWriter();
-//                    out.append(map.toString());
-//                    return;
-//                }
-//            }
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        HttpSession session = request.getSession(false);
+        String uri = request.getRequestURI();
+
+        System.out.println("filter url:"+uri);
+        //是否需要过滤
+        boolean needFilter = isNeedFilter(uri);
+
+
+        if (!needFilter) { //不需要过滤直接传给下一个过滤器
+            filterChain.doFilter(servletRequest, servletResponse);
+        } else { //需要过滤器
+            String token = request.getHeader(tokenHeader);
+            String method = request.getMethod();
+            if (!method.equals("OPTIONS")) {
+                token = token.replace("Bearer ", "");
+                JWTUtil jwtUtil = new JWTUtil();
+                PrintWriter out = null;
+                try {
+                    Claims claims = jwtUtil.parseJWT(token);
+                    if (claims.getId() == null) {
+                        JSONObject map = new JSONObject();
+                        map.put("message", "用户Token过期异常");
+                        out = response.getWriter();
+                        out.append(map.toString());
+                        return;
+                    }
+                } catch (Exception e) {
+                    JSONObject map = new JSONObject();
+                    map.put("message", "用户Token过期异常");
+                    out = response.getWriter();
+                    out.append(map.toString());
+                    return;
+                }
+            }
             filterChain.doFilter(request, response);
-//        }
+        }
     }
 
     /**

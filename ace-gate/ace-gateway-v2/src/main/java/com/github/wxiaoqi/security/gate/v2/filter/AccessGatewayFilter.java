@@ -86,15 +86,15 @@ public class AccessGatewayFilter implements GlobalFilter {
         LinkedHashSet requiredAttribute = serverWebExchange.getRequiredAttribute(ServerWebExchangeUtils.GATEWAY_ORIGINAL_REQUEST_URL_ATTR);
         ServerHttpRequest request = serverWebExchange.getRequest();
         String requestUri = request.getPath().pathWithinApplication().value();
-        if (requiredAttribute != null) {
-            Iterator<URI> iterator = requiredAttribute.iterator();
-            while (iterator.hasNext()){
-                URI next = iterator.next();
-                if(next.getPath().startsWith(GATE_WAY_PREFIX)){
-                    requestUri = next.getPath().substring(GATE_WAY_PREFIX.length());
-                }
-            }
-        }
+//        if (requiredAttribute != null) {
+//            Iterator<URI> iterator = requiredAttribute.iterator();
+//            while (iterator.hasNext()){
+//                URI next = iterator.next();
+//                if(next.getPath().startsWith(GATE_WAY_PREFIX)){
+//                    requestUri = next.getPath().substring(GATE_WAY_PREFIX.length());
+//                }
+//            }
+//        }
         final String method = request.getMethod().toString();
         BaseContextHandler.setToken(null);
         ServerHttpRequest.Builder mutate = request.mutate();

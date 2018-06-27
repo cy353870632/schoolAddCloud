@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>hr-system-service</artifactId>
+    <artifactId>xj-system-service</artifactId>
     <properties>
         <hystrix.version>1.5.12</hystrix.version>
         <!-- MyBatis Generator -->

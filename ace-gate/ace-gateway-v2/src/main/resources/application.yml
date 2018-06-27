@@ -68,13 +68,13 @@ spring:
         - Path=/api/admin/**
         filters:
         - StripPrefix=2
-      - id: hr-system-service
-        uri: lb://hr-system-service
+      - id: xj-system-service
+        uri: lb://xj-system-service
         order: 8002
         predicates:
-        - Path=/api/hrsystem/**
+        - Path=/xjsystem/**
         filters:
-        - StripPrefix=2
+        - StripPrefix=1
 
 logging:
   level:
@@ -91,7 +91,7 @@ management:
 
 gate:
   ignore:
-    startWith: /auth/jwt
+    startWith: /api/TokenAuth
 
 
 auth:

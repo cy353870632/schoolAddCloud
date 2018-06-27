@@ -4,19 +4,19 @@ logging:
         com.github.wxiaoqi.security.hrsystem: DEBUG
 spring:
     application:
-        name: hr-system-service
+        name: xj-system-service
     jackson:
         date-format: yyyy-MM-dd HH:mm:ss
         time-zone: GMT+8
         default-property-inclusion: non_null
     datasource:
         name: test
-        url: jdbc:sqlserver://192.168.1.90:1433;DatabaseName=study0315
-        username: sa
-        password: 123
+        url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/schooladd?useUnicode=true&characterEncoding=UTF8
+        username: root
+        password: 123456
         # 使用druid数据源
         type: com.alibaba.druid.pool.DruidDataSource
-        driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+        driver-class-name: com.mysql.jdbc.Driver
         filters: stat
         maxActive: 20
         initialSize: 1
@@ -113,7 +113,7 @@ auth:
   user:
     token-header: Authorization
   client:
-    id: hr-system-service
+    id: xj-system-service
     secret: 123456
     token-header: x-client-token
 
@@ -122,7 +122,7 @@ user:
 
 gate:
   ignore:
-    startWith: /api/TokenAuth/Authenticate
+    startWith: /api/TokenAuth
 
 jwt:
   token-header: Authorization
@@ -140,6 +140,6 @@ redis:
     password:
     timeout: 2000
     # 服务或应用名
-    sysName: hr-system-service
+    sysName: xj-system-service
     enable: true
     database: 7

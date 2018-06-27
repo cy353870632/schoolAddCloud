@@ -12,8 +12,6 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.cors.CorsConfiguration;
@@ -37,9 +35,9 @@ import org.springframework.web.filter.CorsFilter;
 @MapperScan("com.github.wxiaoqi.security.hrsystem.mapper")
 @EnableSwagger2Doc
 @ServletComponentScan
-public class HrSystemServiceBootstrap {
+public class XjSystemServiceBootstrap {
     public static void main(String[] args) {
-        new SpringApplicationBuilder(HrSystemServiceBootstrap.class).web(true).run(args);    }
+        new SpringApplicationBuilder(XjSystemServiceBootstrap.class).web(true).run(args);    }
 
     @Bean
     public CorsFilter corsFilter() {

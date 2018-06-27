@@ -24,7 +24,7 @@
       <module fileurl="file://$PROJECT_DIR$/ace-sidecar/ace-sidecar-server/ace-sidecar-server.iml" filepath="$PROJECT_DIR$/ace-sidecar/ace-sidecar-server/ace-sidecar-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/ace-modules/ace-tool/ace-tool.iml" filepath="$PROJECT_DIR$/ace-modules/ace-tool/ace-tool.iml" />
       <module fileurl="file://$PROJECT_DIR$/ace-control/ace-trace/ace-trace.iml" filepath="$PROJECT_DIR$/ace-control/ace-trace/ace-trace.iml" />
-      <module fileurl="file://$PROJECT_DIR$/hr-system-service/hr-system-service.iml" filepath="$PROJECT_DIR$/hr-system-service/hr-system-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xj-system-service/xj-system-service.iml" filepath="$PROJECT_DIR$/xj-system-service/xj-system-service.iml" />
     </modules>
   </component>
 </project>

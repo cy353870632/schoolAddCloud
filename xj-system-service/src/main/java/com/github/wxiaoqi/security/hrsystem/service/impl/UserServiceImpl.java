@@ -59,7 +59,7 @@ public class UserServiceImpl  extends ServiceImpl<UserMapper,User> implements IU
     {
         password = MD5Util.encrypt(password+passwordKey);
         User user = userMapper.selectUserByLogin(loginUserName);
-        if (StringUtils.equalsIgnoreCase(password,user.getPassword())){
+        if (StringUtils.equalsIgnoreCase(password,user.getPwd())){
             return user;
         }
         return null;

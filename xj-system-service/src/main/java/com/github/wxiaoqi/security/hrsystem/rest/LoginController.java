@@ -79,14 +79,14 @@ public class LoginController extends BaseController{
         log.info(authenticationRequest.getUserNameOrEmailAddress()+" require logging...");
         User user = userService.getUserInfo(authenticationRequest.getUserNameOrEmailAddress(),authenticationRequest.getPassword());
         Map resulet = new HashMap<>();
-        if (user == null || user.getA0188() == null){
+        if (user == null || user.getId() == null){
             resulet.put("message","该用户没有注册/用户密码错误");
             return new ResultVo(null,false,resulet);
         }else
         {
             String jwtoken = jwtUtil.createJWT(user,ttlMillis);
             resulet.put("accessToken",jwtoken);
-            resulet.put("userId",user.getA0188());
+            resulet.put("userId",user.getId());
             return new ResultVo(resulet,true,null);
         }
     }

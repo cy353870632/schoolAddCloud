@@ -39,6 +39,7 @@
         <module name="ace-tool" />
         <module name="ace-trace" />
         <module name="hr-system-service" />
+        <module name="xj-system-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -65,6 +66,7 @@
       <module name="ace-tool" target="1.8" />
       <module name="ace-trace" target="1.6" />
       <module name="hr-system-service" target="1.8" />
+      <module name="xj-system-service" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
