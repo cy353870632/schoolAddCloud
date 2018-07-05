@@ -1,141 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8dc024af-a694-4a49-a976-efd7a6a282e4" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/BaseEntity.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ace-gate/ace-gateway-v2/target/classes/com/github/wxiaoqi/security/gate/v2/filter/AccessGatewayFilter$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ace-gate/ace-gateway-v2/target/classes/com/github/wxiaoqi/security/gate/v2/filter/AccessGatewayFilter$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ace-gate/ace-gateway-v2/target/classes/com/github/wxiaoqi/security/gate/v2/filter/AccessGatewayFilter.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ace-gate/ace-gateway-v2/src/main/java/com/github/wxiaoqi/security/gate/v2/filter/AccessGatewayFilter.java" afterPath="$PROJECT_DIR$/ace-gate/ace-gateway-v2/src/main/java/com/github/wxiaoqi/security/gate/v2/filter/AccessGatewayFilter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ace-gate/ace-gateway-v2/src/main/resources/application.yml" afterPath="$PROJECT_DIR$/ace-gate/ace-gateway-v2/src/main/resources/application.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ace-gate/ace-gateway-v2/target/classes/application.yml" afterPath="$PROJECT_DIR$/ace-gate/ace-gateway-v2/target/classes/application.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/.gitignore" afterPath="$PROJECT_DIR$/xj-system-service/.gitignore" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/.mvn/wrapper/maven-wrapper.jar" afterPath="$PROJECT_DIR$/xj-system-service/.mvn/wrapper/maven-wrapper.jar" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/.mvn/wrapper/maven-wrapper.properties" afterPath="$PROJECT_DIR$/xj-system-service/.mvn/wrapper/maven-wrapper.properties" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/mvnw" afterPath="$PROJECT_DIR$/xj-system-service/mvnw" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/mvnw.cmd" afterPath="$PROJECT_DIR$/xj-system-service/mvnw.cmd" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/pom.xml" afterPath="$PROJECT_DIR$/xj-system-service/pom.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/docker/Dockerfile" afterPath="$PROJECT_DIR$/xj-system-service/src/main/docker/Dockerfile" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/docker/wait-for-it.sh" afterPath="$PROJECT_DIR$/xj-system-service/src/main/docker/wait-for-it.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/HrSystemServiceBootstrap.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/XjSystemServiceBootstrap.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/Swagger2.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/Swagger2.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/base/BaseController.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/base/BaseController.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/biz/UserBiz.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/biz/UserBiz.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/config/WebConfiguration.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/config/WebConfiguration.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/constant/AdminCommonConstant.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/constant/AdminCommonConstant.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/DeskTopDesign.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/DeskTopDesign.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/GridOpt.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/GridOpt.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/PanelOpt.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/PanelOpt.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/RyQuerySuites.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/RyQuerySuites.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/User.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/User.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/WebActorAssign.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/WebActorAssign.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/WebColumns.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/WebColumns.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/WebFuncAssign.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/WebFuncAssign.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/WebFuncFrame.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/WebFuncFrame.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/WebMessageMap.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/WebMessageMap.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/WebModuleInfo.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/WebModuleInfo.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/WebParams.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/WebParams.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/WebReports.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/WebReports.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/filter/SessionFilter.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/filter/SessionFilter.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/DeskTopDesignMapper.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/DeskTopDesignMapper.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/KOverMapper.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/KOverMapper.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/RyQuerySuitesMapper.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/RyQuerySuitesMapper.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/UserMapper.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/UserMapper.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/UtilMapper.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/UtilMapper.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/WebActorAssignMapper.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/WebActorAssignMapper.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/WebColumnsMapper.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/WebColumnsMapper.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/WebFuncAssignMapper.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/WebFuncAssignMapper.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/WebFuncFrameMapper.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/WebFuncFrameMapper.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/WebMessageMapMapper.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/WebMessageMapMapper.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/WebModuleInfoMapper.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/WebModuleInfoMapper.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/WebParamsMapper.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/WebParamsMapper.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/WebReportsMapper.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/WebReportsMapper.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/rest/GridPageController.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/rest/GridPageController.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/rest/HrSystemController.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/rest/HrSystemController.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/rest/LoginController.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/rest/LoginController.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/rest/SelfCardController.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/rest/SelfCardController.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/rest/SelfLeaveController.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/rest/SelfLeaveController.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/rest/SelfOverController.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/rest/SelfOverController.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/rest/WorkDesktopController.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/rest/WorkDesktopController.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/rest/defaultController.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/rest/defaultController.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IDeskTopDesignService.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IDeskTopDesignService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IKOverService.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IKOverService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IRyQuerySuitesService.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IRyQuerySuitesService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IUserService.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IUserService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IWebActorAssignService.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IWebActorAssignService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IWebColumnsService.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IWebColumnsService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IWebFuncAssignService.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IWebFuncAssignService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IWebFuncFrameService.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IWebFuncFrameService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IWebMessageMapService.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IWebMessageMapService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IWebModuleInfoService.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IWebModuleInfoService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IWebReportsService.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/IWebReportsService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/grid/ICacheService.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/grid/ICacheService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/grid/IHrGridCreatService.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/grid/IHrGridCreatService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/grid/IShareDataService.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/grid/IShareDataService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/grid/impl/CacheServiceImpl.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/grid/impl/CacheServiceImpl.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/grid/impl/HrGridCreatServiceImpl.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/grid/impl/HrGridCreatServiceImpl.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/grid/impl/ShareDataImpl.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/grid/impl/ShareDataImpl.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/DeskTopDesignServiceImpl.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/DeskTopDesignServiceImpl.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/KOverServiceImpl.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/KOverServiceImpl.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/RyQuerySuitesServiceImpl.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/RyQuerySuitesServiceImpl.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/UserServiceImpl.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/UserServiceImpl.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/WebActorAssignServiceImpl.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/WebActorAssignServiceImpl.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/WebColumnsServiceImpl.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/WebColumnsServiceImpl.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/WebFuncAssignServiceImpl.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/WebFuncAssignServiceImpl.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/WebFuncFrameServiceImpl.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/WebFuncFrameServiceImpl.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/WebMessageMapServiceImpl.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/WebMessageMapServiceImpl.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/WebModuleInfoServiceImpl.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/WebModuleInfoServiceImpl.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/WebReportsServiceImpl.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/WebReportsServiceImpl.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/panel/IPanelService.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/panel/IPanelService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/panel/impl/PanelImpl.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/panel/impl/PanelImpl.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/utils/ArrayListType.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/utils/ArrayListType.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/utils/BeansUtils.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/utils/BeansUtils.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/utils/CodeUtils.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/utils/CodeUtils.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/utils/FormatUtil.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/utils/FormatUtil.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/utils/FuncToDefaultVoUtils.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/utils/FuncToDefaultVoUtils.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/utils/JWTUtil.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/utils/JWTUtil.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/utils/MD5Util.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/utils/MD5Util.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/utils/StringUtils.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/utils/StringUtils.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/utils/SupplierBean.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/utils/SupplierBean.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/DefaultVo.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/DefaultVo.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/JwtAuthenticationRequest.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/JwtAuthenticationRequest.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/Pageable.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/Pageable.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/PageableMessage.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/PageableMessage.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/PanelDataVo.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/PanelDataVo.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/PanelInterface.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/PanelInterface.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/PanelVo.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/PanelVo.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/ReqVo.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/ReqVo.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/ResultVo.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/ResultVo.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/RyQuerySuitesVo.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/RyQuerySuitesVo.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/SelfCardReqVo.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/SelfCardReqVo.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/SelfLeaveReqVo.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/SelfLeaveReqVo.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/SelfOverReqVo.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/SelfOverReqVo.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/UserInfoVo.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/UserInfoVo.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/WebColumnsVo.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/WebColumnsVo.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/WebReportsVo.java" afterPath="$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/WebReportsVo.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/resources/application.yml" afterPath="$PROJECT_DIR$/xj-system-service/src/main/resources/application.yml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/resources/builder/generatorConfig.xml" afterPath="$PROJECT_DIR$/xj-system-service/src/main/resources/builder/generatorConfig.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/resources/logback.xml" afterPath="$PROJECT_DIR$/xj-system-service/src/main/resources/logback.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/resources/mapper/DeskTopDesignMapper.xml" afterPath="$PROJECT_DIR$/xj-system-service/src/main/resources/mapper/DeskTopDesignMapper.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/resources/mapper/KOverMapper.xml" afterPath="$PROJECT_DIR$/xj-system-service/src/main/resources/mapper/KOverMapper.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/resources/mapper/RyQuerySuitesMapper.xml" afterPath="$PROJECT_DIR$/xj-system-service/src/main/resources/mapper/RyQuerySuitesMapper.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/resources/mapper/UserMapper.xml" afterPath="$PROJECT_DIR$/xj-system-service/src/main/resources/mapper/UserMapper.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/resources/mapper/UtilMapper.xml" afterPath="$PROJECT_DIR$/xj-system-service/src/main/resources/mapper/UtilMapper.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/resources/mapper/WebActorAssignMapper.xml" afterPath="$PROJECT_DIR$/xj-system-service/src/main/resources/mapper/WebActorAssignMapper.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/resources/mapper/WebColumnsMapper.xml" afterPath="$PROJECT_DIR$/xj-system-service/src/main/resources/mapper/WebColumnsMapper.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/resources/mapper/WebFuncAssignMapper.xml" afterPath="$PROJECT_DIR$/xj-system-service/src/main/resources/mapper/WebFuncAssignMapper.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/resources/mapper/WebFuncFrameMapper.xml" afterPath="$PROJECT_DIR$/xj-system-service/src/main/resources/mapper/WebFuncFrameMapper.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/resources/mapper/WebMessageMapMapper.xml" afterPath="$PROJECT_DIR$/xj-system-service/src/main/resources/mapper/WebMessageMapMapper.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/resources/mapper/WebModuleInfoMapper.xml" afterPath="$PROJECT_DIR$/xj-system-service/src/main/resources/mapper/WebModuleInfoMapper.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/resources/mapper/WebParamsMapper.xml" afterPath="$PROJECT_DIR$/xj-system-service/src/main/resources/mapper/WebParamsMapper.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hr-system-service/src/main/resources/mapper/WebReportsMapper.xml" afterPath="$PROJECT_DIR$/xj-system-service/src/main/resources/mapper/WebReportsMapper.xml" />
-    </list>
+    <list default="true" id="8dc024af-a694-4a49-a976-efd7a6a282e4" name="Default" comment="" />
     <ignored path="ace-security.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/ace-gate/ace-gate-ratelimit/target/" />
@@ -193,9 +59,22 @@
       <file leaf-file-name="AccessGatewayFilter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ace-gate/ace-gateway-v2/src/main/java/com/github/wxiaoqi/security/gate/v2/filter/AccessGatewayFilter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="101">
-              <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+            <state relative-caret-position="234">
+              <caret line="97" column="40" selection-start-line="97" selection-start-column="40" selection-end-line="97" selection-end-column="40" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HttpRequest.class" pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.0.4.RELEASE/spring-web-5.0.4.RELEASE.jar!/org/springframework/http/HttpRequest.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="133">
+              <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="13" />
+              <folding>
+                <element signature="e#394#395#0" expanded="true" />
+                <element signature="e#458#459#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -210,35 +89,42 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoginController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/rest/LoginController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="88" column="45" selection-start-line="88" selection-start-column="45" selection-end-line="88" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserServiceImpl.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UserServiceImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/UserServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="101">
-              <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+            <state relative-caret-position="196">
+              <caret line="60" column="34" selection-start-line="60" selection-start-column="34" selection-end-line="60" selection-end-column="34" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserMapper.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xj-system-service/src/main/resources/mapper/UserMapper.xml">
+      <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/User.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="397">
-              <caret line="22" column="25" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
-              <folding>
-                <marker date="1530070278548" expanded="true" signature="515:670" placeholder="select a.A01... A01" />
-                <marker date="1530070278548" expanded="true" signature="754:839" placeholder="select * fro... SYSTEM_USER" />
-              </folding>
+            <state relative-caret-position="323">
+              <caret line="20" column="38" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JwtAuthenticationRequest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/JwtAuthenticationRequest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="190">
+              <caret line="10" column="41" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserMapper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/UserMapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="114">
+              <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -253,31 +139,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BaseEntity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/BaseEntity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="application.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ace-modules/ace-admin/src/main/resources/application.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-2276">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SessionFilter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/filter/SessionFilter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="732">
-              <caret line="77" column="5" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -471,6 +337,40 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="hrsystem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ace-security" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schoolAddCloud" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="xj-system-service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hrsystem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vo" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1741,6 +1641,9 @@
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="8dc024af-a694-4a49-a976-efd7a6a282e4" name="Default" comment="" />
@@ -1748,12 +1651,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1530063596878</updated>
-      <workItem from="1530063598926" duration="6681000" />
+      <workItem from="1530063598926" duration="11015000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6681000" />
+    <option name="totallyTimeSpent" value="11015000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="3" y="3" width="1370" height="772" extended-state="0" />
@@ -1780,7 +1683,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.48043817" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6776213" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1788,6 +1691,14 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -1959,14 +1870,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="20" column="38" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/BaseEntity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
@@ -2018,18 +1921,53 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.0.4.RELEASE/spring-web-5.0.4.RELEASE.jar!/org/springframework/http/HttpRequest.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="13" />
+          <folding>
+            <element signature="e#394#395#0" expanded="true" />
+            <element signature="e#458#459#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ace-gate/ace-gateway-v2/src/main/java/com/github/wxiaoqi/security/gate/v2/filter/AccessGatewayFilter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="101">
-          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+        <state relative-caret-position="234">
+          <caret line="97" column="40" selection-start-line="97" selection-start-column="40" selection-end-line="97" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/mapper/UserMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/service/impl/UserServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="101">
-          <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+        <state relative-caret-position="196">
+          <caret line="60" column="34" selection-start-line="60" selection-start-column="34" selection-end-line="60" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/entity/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="20" column="38" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xj-system-service/src/main/java/com/github/wxiaoqi/security/hrsystem/vo/JwtAuthenticationRequest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="10" column="41" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="41" />
           <folding />
         </state>
       </provider>
