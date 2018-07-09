@@ -48,7 +48,7 @@ sample:
 mybatis:
   configuration:
     call-setters-on-nulls: true
-  basepackage: com.github.wxiaoqi.security.hrsystem.mapper
+  basepackage: com.github.wxiaoqi.security.xjsystem.mapper
   xmlLocation: classpath:mapper/**/*.xml
   mapper-locations: "classpath*:mapper/*.xml"
 
