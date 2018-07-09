@@ -1,4 +1,4 @@
-/*
+﻿/*
 Navicat MySQL Data Transfer
 
 Source Server         : mysql
@@ -10,10 +10,48 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2018-07-05 14:02:54
+Date: 2018-07-09 14:06:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for system_menu
+-- ----------------------------
+DROP TABLE IF EXISTS `system_menu`;
+CREATE TABLE `system_menu` (
+  `id` varchar(255) NOT NULL,
+  `menu_name` varchar(10) NOT NULL,
+  `parent_id` varchar(255) NOT NULL,
+  `end_mark` varchar(1) NOT NULL,
+  `state` varchar(1) NOT NULL,
+  `creat_date` datetime NOT NULL,
+  `upda_date` datetime NOT NULL,
+  `read_only` varchar(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of system_menu
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for system_menu_role
+-- ----------------------------
+DROP TABLE IF EXISTS `system_menu_role`;
+CREATE TABLE `system_menu_role` (
+  `id` varchar(255) NOT NULL,
+  `menu_id` varchar(255) NOT NULL,
+  `role_id` varchar(255) NOT NULL,
+  `creat_date` datetime NOT NULL,
+  `update_date` datetime NOT NULL,
+  `read_only` varchar(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of system_menu_role
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for system_role
@@ -24,13 +62,14 @@ CREATE TABLE `system_role` (
   `r_name` varchar(30) NOT NULL,
   `creat_date` datetime NOT NULL,
   `update_date` datetime NOT NULL,
+  `read_only` varchar(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of system_role
 -- ----------------------------
-INSERT INTO `system_role` VALUES ('qwertyuiopasdfghjklzxdwhauidwaudnhawi', 'ADMIN', '2018-06-27 11:19:28', '2018-06-27 11:19:30');
+INSERT INTO `system_role` VALUES ('qwertyuiopasdfghjklzxdwhauidwaudnhawi', 'ADMIN', '2018-06-27 11:19:28', '2018-06-27 11:19:30', '1');
 
 -- ----------------------------
 -- Table structure for system_user
