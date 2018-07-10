@@ -9,9 +9,9 @@ import javax.persistence.Table;
 @Data
 public class Menu extends BaseEntity{
 
-    private String menu_name;//菜单名称
+    private String title;//菜单名称
     private String parent_id;//父id
     private String end_mark;//是否为终结点
     private String state;//状态，1为可用，0位不可用
-
+    private String code_path;//跳转的路由路径
 }

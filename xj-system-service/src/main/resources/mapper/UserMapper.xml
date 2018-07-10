@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.wxiaoqi.security.xjsystem.mapper.UserMapper">
-  <resultMap id="UserInfoVoResultMap" type="com.github.wxiaoqi.security.xjsystem.vo.UserInfoVo">
-  </resultMap>
 
     <resultMap id="UserResultMap" type="com.github.wxiaoqi.security.xjsystem.entity.User">
     </resultMap>
   
   <select id="selectOneForVo" resultMap="UserInfoVoResultMap">
      select
-        a.A0101 "name",
-        b.CONTENT "deptName"
-     from A01 a
-     left join B01 b on b.DEPT_CODE = a.Dept_Code
-     where a.A0188 = #{A0188}
+      *
+     from SYSTEM_USER u
+     where u.id = #{id}
   </select>
 
     <select id="selectUserByLogin" resultMap="UserResultMap">
