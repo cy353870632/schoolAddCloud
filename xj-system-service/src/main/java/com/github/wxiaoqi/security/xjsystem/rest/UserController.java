@@ -4,25 +4,25 @@ package com.github.wxiaoqi.security.xjsystem.rest;
 
 import com.github.wxiaoqi.security.auth.client.jwt.UserAuthUtil;
 import com.github.wxiaoqi.security.xjsystem.base.BaseController;
-import com.github.wxiaoqi.security.xjsystem.entity.User;
+import com.github.wxiaoqi.security.xjsystem.mapper.RoleMapper;
 import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
 import com.github.wxiaoqi.security.xjsystem.service.IMenuService;
 import com.github.wxiaoqi.security.xjsystem.service.IUserService;
 import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
-import com.github.wxiaoqi.security.xjsystem.vo.JwtAuthenticationRequest;
-import com.github.wxiaoqi.security.xjsystem.vo.ResultVo;
+import com.github.wxiaoqi.security.xjsystem.vo.UserInfoVo;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,10 +32,10 @@ import java.util.Map;
  * @create 2018-05-22 11:51
  */
 @RestController
-@RequestMapping("/api/Menu")
+@RequestMapping("/api/User")
 @Api(tags = {""},description = "")
 @Slf4j
-public class MenuController extends BaseController{
+public class UserController extends BaseController{
 
     @Autowired
     IUserService userService;
@@ -59,13 +59,21 @@ public class MenuController extends BaseController{
     @Autowired
     IMenuService menuService;
 
-    @RequestMapping(value = "getMenu", method = RequestMethod.POST)
+    @Autowired
+    RoleMapper roleMapper;
+
+
+    @RequestMapping(value = "getInfo", method = RequestMethod.POST)
     public Object getMenu(HttpServletRequest request) throws Exception {
         String token = request.getHeader(tokenHeader);
         Claims claims = jwtUtil.parseJWT(token);
-        String id = claims.get("id", String.class);
         String user_role = claims.get("user_role", String.class);
-        return this.renderSuccess(menuService.getMenu(user_role));
+        UserInfoVo userInfoVo = userService.getInfo(claims);
+        Map restltMap = new HashMap<>();
+        restltMap.put("userInfo",userInfoVo);
+        restltMap.put("menus",menuService.getMenu(user_role));
+
+        return this.renderSuccess(restltMap);
     }
 
 }

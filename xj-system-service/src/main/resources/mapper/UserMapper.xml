@@ -5,7 +5,7 @@
     <resultMap id="UserResultMap" type="com.github.wxiaoqi.security.xjsystem.entity.User">
     </resultMap>
   
-  <select id="selectOneForVo" resultMap="UserInfoVoResultMap">
+  <select id="selectOneForVo" resultMap="UserResultMap">
      select
       *
      from SYSTEM_USER u

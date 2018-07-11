@@ -12,9 +12,9 @@ import java.util.List;
 @Data
 public class MenuVo {
     public String title;
-
     public String codePath;
     public String over_End;
+    public String id;
     public List<MenuVo> children;
 
 

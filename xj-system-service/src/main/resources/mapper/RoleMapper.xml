@@ -5,4 +5,13 @@
     <resultMap id="UserResultMap" type="com.github.wxiaoqi.security.xjsystem.entity.Role">
     </resultMap>
 
+    <select id="getRoleNameByidTop" resultType="java.lang.String">
+        select r_name_china FROM system_role
+        where id IN
+        <foreach collection="idList" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ORDER BY sort DESC limit 1
+    </select>
+
 </mapper>

@@ -3,13 +3,19 @@ package com.github.wxiaoqi.security.xjsystem.service.impl;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.github.wxiaoqi.security.common.util.MD5Util;
 import com.github.wxiaoqi.security.xjsystem.entity.User;
+import com.github.wxiaoqi.security.xjsystem.mapper.RoleMapper;
 import com.github.wxiaoqi.security.xjsystem.mapper.UserMapper;
 import com.github.wxiaoqi.security.xjsystem.service.IUserService;
 import com.github.wxiaoqi.security.xjsystem.vo.UserInfoVo;
+import io.jsonwebtoken.Claims;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author chengyuan
@@ -19,23 +25,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl  extends ServiceImpl<UserMapper,User> implements IUserService{
-
-
     @Autowired
     UserMapper userMapper;
 
-
     private String passwordKey = "d+#8p&nn=o30ke6%-";
 
-
-    @Override
-    public UserInfoVo getUserInfoVo(int A0188) {
-        UserInfoVo userInfoVo = userMapper.selectOneForVo(A0188);
-        userInfoVo.setImages("PublicDlg/ShowPhoto.aspx?EmployeeID="+A0188);
-            userInfoVo.setMessageCount(0);
-        //未读的消息数
-        return userInfoVo;
-    }
+    @Autowired
+    RoleMapper roleMapper;
 
     @Override
     public User getUserInfo(String loginUserName,String password)
@@ -46,5 +42,26 @@ public class UserServiceImpl  extends ServiceImpl<UserMapper,User> implements IU
             return user;
         }
         return null;
+    }
+
+    @Override
+    public UserInfoVo getInfo(Claims claims) {
+        String user_role = claims.get("user_role", String.class);
+        String user_name = claims.get("user_name", String.class);
+        List<String> roleList = new ArrayList<>();
+        if (user_role.contains(","))
+        {
+            for (String r : user_role.split(",")){
+                roleList.add(r);
+            }
+        }else
+            roleList.add(user_role);
+        String role_name = roleMapper.getRoleNameByidTop(roleList);
+
+        UserInfoVo userInfoVo = new UserInfoVo();
+        userInfoVo.setName(user_name);
+        userInfoVo.setRole(role_name);
+        userInfoVo.setImages("");
+        return userInfoVo;
     }
 }

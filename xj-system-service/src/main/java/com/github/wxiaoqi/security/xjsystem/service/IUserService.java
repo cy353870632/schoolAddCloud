@@ -3,6 +3,9 @@ package com.github.wxiaoqi.security.xjsystem.service;
 import com.baomidou.mybatisplus.service.IService;
 import com.github.wxiaoqi.security.xjsystem.entity.User;
 import com.github.wxiaoqi.security.xjsystem.vo.UserInfoVo;
+import io.jsonwebtoken.Claims;
+
+import java.util.Map;
 
 /**
  * ${DESCRIPTION}
@@ -13,8 +16,9 @@ import com.github.wxiaoqi.security.xjsystem.vo.UserInfoVo;
 
 public interface IUserService extends IService<User> {
 
-    public UserInfoVo getUserInfoVo(int A0188);
-
     public User getUserInfo(String loginUserName,String password);
+
+    public UserInfoVo getInfo(Claims claims);
+
 
 }

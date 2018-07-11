@@ -8,11 +8,16 @@ import com.github.wxiaoqi.security.xjsystem.mapper.MenuMapper;
 import com.github.wxiaoqi.security.xjsystem.mapper.UserMapper;
 import com.github.wxiaoqi.security.xjsystem.service.IMenuService;
 import com.github.wxiaoqi.security.xjsystem.service.IUserService;
+import com.github.wxiaoqi.security.xjsystem.utils.MenuUtil;
+import com.github.wxiaoqi.security.xjsystem.vo.MenuVo;
 import com.github.wxiaoqi.security.xjsystem.vo.UserInfoVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author chengyuan
@@ -33,8 +38,19 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper,Menu> implements IMe
 
     @Override
     public Object getMenu(String role) {
-
-
-        return null;
+        //多角色
+        List roles = new ArrayList<>();
+        if (role.contains(",")){
+            String[] roleone = role.split(",");
+            for (String r : roleone){
+                roles.add(r);
+            }
+        }else
+        {
+            roles.add(role);
+        }
+        List<Menu> menuList = menuMapper.selectByRole(roles);
+        List<MenuVo> menuVoList = new MenuUtil().getMenuTree(menuList);
+        return menuVoList;
     }
 }

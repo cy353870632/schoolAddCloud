@@ -17,6 +17,6 @@ public class User extends BaseEntity{
 
     private String role;//code,role关联
 
-    private Integer read_only;//是否允许修改
+    private String image;//头像
 
 }
