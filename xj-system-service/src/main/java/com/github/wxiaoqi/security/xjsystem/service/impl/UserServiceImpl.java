@@ -5,6 +5,7 @@ import com.github.wxiaoqi.security.common.util.MD5Util;
 import com.github.wxiaoqi.security.xjsystem.entity.User;
 import com.github.wxiaoqi.security.xjsystem.mapper.RoleMapper;
 import com.github.wxiaoqi.security.xjsystem.mapper.UserMapper;
+import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
 import com.github.wxiaoqi.security.xjsystem.service.IUserService;
 import com.github.wxiaoqi.security.xjsystem.vo.UserInfoVo;
 import io.jsonwebtoken.Claims;
@@ -32,6 +33,9 @@ public class UserServiceImpl  extends ServiceImpl<UserMapper,User> implements IU
 
     @Autowired
     RoleMapper roleMapper;
+
+    @Autowired
+    ICacheService cacheService;
 
     @Override
     public User getUserInfo(String loginUserName,String password)
@@ -63,5 +67,17 @@ public class UserServiceImpl  extends ServiceImpl<UserMapper,User> implements IU
         userInfoVo.setRole(role_name);
         userInfoVo.setImages("");
         return userInfoVo;
+    }
+
+    @Override
+    public List<User> getPromoter(String selfid,String keyword, Integer pageSize, Integer currentPage) {
+        currentPage = (currentPage-1)*pageSize;
+        List<User> promoterList = userMapper.selectPromoter(selfid,keyword,pageSize,currentPage);
+        return promoterList;
+    }
+
+    @Override
+    public Integer getPromoterTotal(String selfid, String keyword) {
+        return userMapper.selectPromoterTotal(selfid,keyword);
     }
 }

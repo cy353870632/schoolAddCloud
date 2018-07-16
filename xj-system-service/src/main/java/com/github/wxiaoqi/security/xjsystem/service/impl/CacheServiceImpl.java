@@ -19,34 +19,26 @@ import java.util.Map;
 @Slf4j
 public class CacheServiceImpl implements ICacheService {
 
-    public List<Map> cacheWebColumns;
-    public String cacheTotalSql;
-    public String cacheResultSql;
-    public String keyField;
+    public List cacheListMap;
+
 
     @Override
-    public void getCacheMessage(List<Map> cacheWebColumns, String cacheTotalSql, String cacheResultSql, String keyField) {
-        this.cacheWebColumns = cacheWebColumns;
-        this.cacheTotalSql = cacheTotalSql;
-        this.cacheResultSql = cacheResultSql;
-        this.keyField = keyField;
+    public void getCacheMessage(List cacheListMap) {
+        this.cacheListMap = cacheListMap;
     }
 
     @Override
     @Cache(key = "u{1}:u{2}")
-    public Map cacheGridMessage(String gridKey,Integer A0188){
+    public Map cacheGridMessage(String cacheName,String par1){
         Map resultMap = new HashMap<>();
-        resultMap.put("fields",cacheWebColumns);
-        resultMap.put("totalSql",cacheTotalSql);
-        resultMap.put("resultSql",cacheResultSql);
-        resultMap.put("keyField",keyField);
+        resultMap.put("cacheListMap",cacheListMap);
         return resultMap;
     }
 
     @Override
     @CacheClear(key = "u{1}:u{2}")
-    public void clearCache(String gridKey, Integer A0188) {
-        log.info("清除了缓存 "+gridKey);
+    public void clearCache(String cacheName,String par1) {
+        log.info("清除了缓存 "+cacheName+"---"+par1);
     }
 
 }

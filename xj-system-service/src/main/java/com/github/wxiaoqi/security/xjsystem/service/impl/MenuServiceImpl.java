@@ -6,6 +6,7 @@ import com.github.wxiaoqi.security.xjsystem.entity.Menu;
 import com.github.wxiaoqi.security.xjsystem.entity.User;
 import com.github.wxiaoqi.security.xjsystem.mapper.MenuMapper;
 import com.github.wxiaoqi.security.xjsystem.mapper.UserMapper;
+import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
 import com.github.wxiaoqi.security.xjsystem.service.IMenuService;
 import com.github.wxiaoqi.security.xjsystem.service.IUserService;
 import com.github.wxiaoqi.security.xjsystem.utils.MenuUtil;
@@ -36,8 +37,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper,Menu> implements IMe
     private String passwordKey = "d+#8p&nn=o30ke6%-";
 
 
+    @Autowired
+    ICacheService cacheService;
+
     @Override
-    public Object getMenu(String role) {
+    public List<MenuVo> getMenu(String role) {
         //多角色
         List roles = new ArrayList<>();
         if (role.contains(",")){
@@ -51,6 +55,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper,Menu> implements IMe
         }
         List<Menu> menuList = menuMapper.selectByRole(roles);
         List<MenuVo> menuVoList = new MenuUtil().getMenuTree(menuList);
+        cacheService.clearCache("getmenu",role);
+        cacheService.getCacheMessage(menuVoList);
+        cacheService.cacheGridMessage("getmenu",role);
         return menuVoList;
     }
 }

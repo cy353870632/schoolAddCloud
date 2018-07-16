@@ -19,4 +19,6 @@ public class User extends BaseEntity{
 
     private String image;//头像
 
+    private String user_code;//用户角色，超级管理员999,不允许编辑，系统管理员998，推广员1
+
 }

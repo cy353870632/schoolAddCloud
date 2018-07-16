@@ -12,10 +12,8 @@ import java.util.*;
  */
 @Data
 public class Pageable {
-    public Boolean alwaysVisible=true;
-    public int currentPage;
-    public PageableMessage message = new PageableMessage();
+    public Integer currentPage;
     public List<String> pageSizes =new ArrayList<>(Arrays.asList("10","20","30","40"));
-    private int pageSize;
-    private int total;
+    private Integer pageSize;
+    private Integer total;
 }

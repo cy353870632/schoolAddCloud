@@ -1,6 +1,7 @@
 package com.github.wxiaoqi.security.xjsystem.base;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.github.wxiaoqi.security.xjsystem.vo.Pageable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,13 +109,25 @@ public abstract class BaseController {
      * @param obj 成功时的对象
      * @return {Object}
      */
+    public Object renderSuccess(Object obj, Pageable pageable) {
+        Map result = new HashMap<>();
+        result.put("success",true);
+        result.put("result",obj);
+        result.put("pageable",pageable);
+        return result;
+    }
+    /**
+     * ajax成功
+     *
+     * @param obj 成功时的对象
+     * @return {Object}
+     */
     public Object renderSuccess(Object obj) {
         Map result = new HashMap<>();
         result.put("success",true);
         result.put("result",obj);
         return result;
     }
-
     /**
      * ajax成功
      *

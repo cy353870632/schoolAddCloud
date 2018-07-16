@@ -19,4 +19,27 @@
         where u.l_name = #{loginUsername}
     </select>
 
+    <select id="selectPromoter" resultMap="UserResultMap">
+        select
+        *
+        from SYSTEM_USER u
+        where
+        u.user_code &lt;&gt; 999 and u.id &lt;&gt; #{selfid}
+        <if test=" keyword != null and keyword != '' ">
+           and  (u.u_name like '%${keyword}%' or u.l_name like '%${keyword}%')
+        </if>
+        limit #{currentPage},#{PageSize}
+    </select>
+
+    <select id="selectPromoterTotal" resultType="java.lang.Integer">
+        select
+        count(*)
+        from SYSTEM_USER u
+        where
+        u.user_code &lt;&gt; 999 and u.id &lt;&gt; #{selfid}
+        <if test=" keyword != null and keyword != '' ">
+            and  (u.u_name like '%${keyword}%' or u.l_name like '%${keyword}%')
+        </if>
+    </select>
+
 </mapper>

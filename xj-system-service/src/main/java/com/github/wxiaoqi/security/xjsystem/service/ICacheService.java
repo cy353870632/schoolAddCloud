@@ -12,11 +12,11 @@ import java.util.Map;
 
 public interface ICacheService {
 
-    public void getCacheMessage(List<Map> cacheWebColumns, String cacheTotalSql, String cacheResultSql,String keyField);
+    public void getCacheMessage(List cacheListMap);
 
-    public Map cacheGridMessage(String gridKey, Integer A0188);
+    public Map cacheGridMessage(String cacheName,String par1);
 
-    public void clearCache(String gridKey, Integer A0188);
+    public void clearCache(String cacheName,String par1);
 
 
 }
