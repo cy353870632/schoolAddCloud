@@ -90,17 +90,31 @@ public class UserController extends BaseController{
         String user_id = claims.get("id", String.class);
         Map cacheMap = cacheService.cacheGridMessage("getmenu",user_role);
         List<JSONObject> menuObejct = (List<JSONObject>)cacheMap.get("cacheListMap");
-
         if (menuObejct != null && menuObejct.size()>0) {
-            for (JSONObject map : menuObejct) {
-                List<JSONObject> childMapList = (List<JSONObject>)map.get("children");
-                if (childMapList != null && childMapList.size()>0) {
-                    for (JSONObject child : childMapList) {
-                        if (child.get("title").equals("推广员管理")) {
-                            status = true;
-                            break;
+            if (menuObejct.get(0).getClass().equals(JSONObject.class)){
+                for (JSONObject map : menuObejct) {
+                    List<JSONObject> childMapList = (List<JSONObject>)map.get("children");
+                    if (childMapList != null && childMapList.size()>0) {
+                        for (JSONObject child : childMapList) {
+                            if (child.get("title").equals("推广员管理")) {
+                                status = true;
+                                break;
+                            }
                         }
                     }
+                }
+            }else
+            {
+                for (Object map : menuObejct) {
+                        List<MenuVo> childMapList = ((MenuVo) map).getChildren();
+                        if (childMapList != null && childMapList.size()>0) {
+                            for (MenuVo child : childMapList) {
+                                if (child.getTitle().equals("推广员管理")) {
+                                    status = true;
+                                    break;
+                                }
+                            }
+                        }
                 }
             }
         }
@@ -120,9 +134,5 @@ public class UserController extends BaseController{
             return this.renderSuccess(promoterList,pageable);
         }
         return this.renderError("您没有访问该页面的权限","400");//权限不够
-
-
-
     }
-
 }
