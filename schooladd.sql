@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2018-07-11 14:31:26
+Date: 2018-07-16 17:29:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -88,6 +88,7 @@ CREATE TABLE `system_role` (
 -- Records of system_role
 -- ----------------------------
 INSERT INTO `system_role` VALUES ('qwertyuiopasdfdawdwadwhauidwaudnhawi', 'PROMOTER', '2018-06-27 11:19:28', '2018-06-27 11:19:30', '0', '99', '推广员');
+INSERT INTO `system_role` VALUES ('qwertyuiopasdfghjklzxdwdwada', 'SYSADMIN', '2018-06-27 11:19:28', '2018-06-27 11:19:30', '1', '9998', '系统管理员');
 INSERT INTO `system_role` VALUES ('qwertyuiopasdfghjklzxdwhauidwaudnhawi', 'ADMIN', '2018-06-27 11:19:28', '2018-06-27 11:19:30', '1', '9999', '超级管理员');
 
 -- ----------------------------
@@ -104,10 +105,14 @@ CREATE TABLE `system_user` (
   `update_date` datetime DEFAULT NULL,
   `read_only` int(1) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
+  `user_code` varchar(10) NOT NULL COMMENT '用户种类，系统管理员/推广员',
+  `phone` varchar(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of system_user
 -- ----------------------------
-INSERT INTO `system_user` VALUES ('qwertyuiopasdfghjklzxcvbnm123456789', '系统管理员', '69E17EBC47491F2A95EBB33B4FFD8903', 'admin', 'qwertyuiopasdfghjklzxdwhauidwaudnhawi', '2018-06-27 11:16:49', '2018-06-27 11:16:52', '1', null);
+INSERT INTO `system_user` VALUES ('qwertyuiopasdfghjklzxcdwada12345621', '老张', '69E17EBC47491F2A95EBB33B4FFD8903', 'zhanglin', 'qwertyuiopasdfdawdwadwhauidwaudnhawi', '2018-06-27 11:16:49', '2018-06-27 11:16:52', '0', '', '1', '13062439512');
+INSERT INTO `system_user` VALUES ('qwertyuiopasdfghjklzxcvbnm12345621', '程远', '69E17EBC47491F2A95EBB33B4FFD8903', 'chengyuan', 'qwertyuiopasdfghjklzxdwdwada', '2018-06-27 11:16:49', '2018-06-27 11:16:52', '0', '', '998', '13062439511');
+INSERT INTO `system_user` VALUES ('qwertyuiopasdfghjklzxcvbnm123456789', '超级管理员', '69E17EBC47491F2A95EBB33B4FFD8903', 'admin', 'qwertyuiopasdfghjklzxdwhauidwaudnhawi', '2018-06-27 11:16:49', '2018-06-27 11:16:52', '1', null, '999', '13062439513');
