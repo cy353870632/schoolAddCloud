@@ -2,11 +2,14 @@ package com.github.wxiaoqi.security.xjsystem.service.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.github.wxiaoqi.security.common.util.MD5Util;
+import com.github.wxiaoqi.security.xjsystem.entity.Role;
 import com.github.wxiaoqi.security.xjsystem.entity.User;
 import com.github.wxiaoqi.security.xjsystem.mapper.RoleMapper;
 import com.github.wxiaoqi.security.xjsystem.mapper.UserMapper;
 import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
+import com.github.wxiaoqi.security.xjsystem.service.IRoleService;
 import com.github.wxiaoqi.security.xjsystem.service.IUserService;
+import com.github.wxiaoqi.security.xjsystem.sysEnum.RoleEnum;
 import com.github.wxiaoqi.security.xjsystem.vo.UserInfoVo;
 import io.jsonwebtoken.Claims;
 import org.apache.commons.lang3.StringUtils;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +40,9 @@ public class UserServiceImpl  extends ServiceImpl<UserMapper,User> implements IU
 
     @Autowired
     ICacheService cacheService;
+
+    @Autowired
+    IRoleService roleService;
 
     @Override
     public User getUserInfo(String loginUserName,String password)
@@ -79,5 +86,18 @@ public class UserServiceImpl  extends ServiceImpl<UserMapper,User> implements IU
     @Override
     public Integer getPromoterTotal(String selfid, String keyword) {
         return userMapper.selectPromoterTotal(selfid,keyword);
+    }
+
+    @Override
+    public Integer addPromoter(User user) {
+        Role role = roleService.getRoleByRname(RoleEnum.PROMOTER.toString());
+        user.setPwd(MD5Util.encrypt("666666"));
+        user.setCreat_date(new Date());
+        user.setUpdate_date(new Date());
+        user.setUser_code("1");
+        user.setRead_only("0");
+        user.setRole(role.getId());
+        return userMapper.insert(user);
+
     }
 }

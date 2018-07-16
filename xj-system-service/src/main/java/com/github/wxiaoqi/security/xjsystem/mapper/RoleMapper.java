@@ -11,4 +11,8 @@ import java.util.List;
 public interface RoleMapper extends BaseMapper<Role> {
 
     public String getRoleNameByidTop(@Param("idList") List<String> idList);
+
+    public Role getRoleByRname(@Param("r_name") String r_name);
+
+
 }

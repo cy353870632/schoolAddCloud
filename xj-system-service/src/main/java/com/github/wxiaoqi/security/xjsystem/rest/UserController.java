@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -135,4 +136,21 @@ public class UserController extends BaseController{
         }
         return this.renderError("您没有访问该页面的权限","400");//权限不够
     }
+
+    @RequestMapping(value = "addPromoter", method = RequestMethod.POST)
+    public Object addPromoter(HttpServletRequest request,@RequestBody User user) throws Exception{
+        String token = request.getHeader(tokenHeader);
+        Claims claims = jwtUtil.parseJWT(token);
+        String user_code = claims.get("user_code", String.class);
+        String user_id = claims.get("id", String.class);
+        if (!user_code.equals("999") && !user_code.equals("998")){
+            return this.renderError("您没有权限进行该操作","400");//权限不够
+        }
+        if (userService.addPromoter(user)==1)
+            return this.renderSuccess();
+        else
+            return this.renderError("保存失败","add is error");
+
+    }
+
 }

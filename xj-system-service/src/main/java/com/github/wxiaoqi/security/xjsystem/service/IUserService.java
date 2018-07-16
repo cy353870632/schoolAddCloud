@@ -25,5 +25,7 @@ public interface IUserService extends IService<User> {
 
     public Integer getPromoterTotal(String selfid,String keyword);
 
+    public Integer addPromoter(User user);
+
 
 }
