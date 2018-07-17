@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Data
 public class BaseEntity {
-    @Id
+
     private String id;
     //工号，账号
     private Date creat_date;

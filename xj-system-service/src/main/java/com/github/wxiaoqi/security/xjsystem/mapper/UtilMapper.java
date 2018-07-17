@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 import java.util.Map;
 
-public interface UtilMapper extends BaseMapper<Map>{
+public interface UtilMapper{
     public List<Map> selectBysql(@Param("sql") String sql);
     public List<CaseInsensitiveMap> selectBysqlForCaseInsensitiveMap(@Param("sql") String sql);
     public List<Map> selectByTableName(@Param("tablename") String tablename);

@@ -17,10 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author chengyuan
@@ -97,6 +94,7 @@ public class UserServiceImpl  extends ServiceImpl<UserMapper,User> implements IU
         user.setUser_code("1");
         user.setRead_only("0");
         user.setRole(role.getId());
+        user.setId(UUID.randomUUID().toString());
         return userMapper.insert(user);
 
     }
