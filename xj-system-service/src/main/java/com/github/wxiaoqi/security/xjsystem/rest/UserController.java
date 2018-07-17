@@ -92,7 +92,7 @@ public class UserController extends BaseController{
         Map cacheMap = cacheService.cacheGridMessage("getmenu",user_role);
         List<JSONObject> menuObejct = (List<JSONObject>)cacheMap.get("cacheListMap");
         if (menuObejct != null && menuObejct.size()>0) {
-            if (menuObejct.get(0).getClass().equals(JSONObject.class)){
+            try {
                 for (JSONObject map : menuObejct) {
                     List<JSONObject> childMapList = (List<JSONObject>)map.get("children");
                     if (childMapList != null && childMapList.size()>0) {
@@ -104,18 +104,17 @@ public class UserController extends BaseController{
                         }
                     }
                 }
-            }else
-            {
+            }catch (Exception e){
                 for (Object map : menuObejct) {
-                        List<MenuVo> childMapList = ((MenuVo) map).getChildren();
-                        if (childMapList != null && childMapList.size()>0) {
-                            for (MenuVo child : childMapList) {
-                                if (child.getTitle().equals("推广员管理")) {
-                                    status = true;
-                                    break;
-                                }
+                    List<MenuVo> childMapList = ((MenuVo) map).getChildren();
+                    if (childMapList != null && childMapList.size()>0) {
+                        for (MenuVo child : childMapList) {
+                            if (child.getTitle().equals("推广员管理")) {
+                                status = true;
+                                break;
                             }
                         }
+                    }
                 }
             }
         }
@@ -134,7 +133,7 @@ public class UserController extends BaseController{
             pageable.setTotal(total);
             return this.renderSuccess(promoterList,pageable);
         }
-        return this.renderError("您没有访问该页面的权限","400");//权限不够
+        return this.renderError("您没有访问该页面的权限",400);//权限不够
     }
 
     @RequestMapping(value = "addPromoter", method = RequestMethod.POST)
@@ -144,13 +143,31 @@ public class UserController extends BaseController{
         String user_code = claims.get("user_code", String.class);
         String user_id = claims.get("id", String.class);
         if (!user_code.equals("999") && !user_code.equals("998")){
-            return this.renderError("您没有权限进行该操作","400");//权限不够
+            return this.renderError("您没有权限进行该操作",400);//权限不够
         }
         if (userService.addPromoter(user)==1)
             return this.renderSuccess();
         else
-            return this.renderError("保存失败","add is error");
+            return this.renderError("保存失败",201);
+    }
 
+    @RequestMapping(value = "deletePromoter", method = RequestMethod.POST)
+    public Object deletePromoter(HttpServletRequest request,String uid) throws Exception{
+        String token = request.getHeader(tokenHeader);
+        Claims claims = jwtUtil.parseJWT(token);
+        String user_code = claims.get("user_code", String.class);
+        String user_id = claims.get("id", String.class);
+        if (!user_code.equals("999") && !user_code.equals("998")){
+            return this.renderError("您没有权限进行该操作",400);//权限不够
+        }
+
+        if (userService.deletePromoter(uid,user_code)==1)
+            return this.renderSuccess();
+        else if(userService.deletePromoter(uid,user_code)==3)
+            return this.renderError("数据不存在",404);
+        else {
+            return this.renderError("删除出错/该数据不允许被删除",201);//201只读数据或者过程报错
+        }
     }
 
 }

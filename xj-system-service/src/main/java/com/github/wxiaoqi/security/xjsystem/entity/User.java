@@ -10,7 +10,9 @@ import java.util.Date;
 
 @TableName("system_user")
 @Data
-public class User extends Model<User>{
+public class User extends Model<User> implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     private String id;
     //工号，账号
@@ -33,6 +35,10 @@ public class User extends Model<User>{
     private String user_code;//用户角色，超级管理员999,不允许编辑，系统管理员998，推广员1
 
     private String phone;
+
+    private String delete_status;
+
+    private String sex;
 
     @Override
     protected Serializable pkVal() {

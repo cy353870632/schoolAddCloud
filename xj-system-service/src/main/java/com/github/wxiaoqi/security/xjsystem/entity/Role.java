@@ -10,7 +10,10 @@ import java.util.Date;
 
 @TableName("system_role")
 @Data
-public class Role extends Model<Role> {
+public class Role extends Model<Role> implements Serializable{
+
+    private static final long serialVersionUID = 1L;
+
     private String id;
     //工号，账号
     private Date creat_date;

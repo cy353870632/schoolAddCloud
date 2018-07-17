@@ -9,14 +9,14 @@
      select
       *
      from SYSTEM_USER u
-     where u.id = #{id}
+     where u.id = #{id} and u.delete_status='1'
   </select>
 
     <select id="selectUserByLogin" resultMap="UserResultMap">
         select
         *
         from SYSTEM_USER u
-        where u.l_name = #{loginUsername}
+        where u.l_name = #{loginUsername} and u.delete_status='1'
     </select>
 
     <select id="selectPromoter" resultMap="UserResultMap">
@@ -24,7 +24,7 @@
         *
         from SYSTEM_USER u
         where
-        u.user_code &lt;&gt; 999 and u.id &lt;&gt; #{selfid}
+        u.user_code &lt;&gt; 999 and u.id &lt;&gt; #{selfid} and u.delete_status='1' and u.user_code=#{user_code}
         <if test=" keyword != null and keyword != '' ">
            and  (u.u_name like '%${keyword}%' or u.l_name like '%${keyword}%')
         </if>
@@ -36,7 +36,7 @@
         count(*)
         from SYSTEM_USER u
         where
-        u.user_code &lt;&gt; 999 and u.id &lt;&gt; #{selfid}
+        u.user_code &lt;&gt; 999 and u.id &lt;&gt; #{selfid} and u.delete_status='1'
         <if test=" keyword != null and keyword != '' ">
             and  (u.u_name like '%${keyword}%' or u.l_name like '%${keyword}%')
         </if>

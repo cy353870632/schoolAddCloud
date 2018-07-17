@@ -12,7 +12,9 @@ import java.util.Date;
 //角色和菜单关联类
 @TableName("system_menu")
 @Data
-public class Menu extends Model<Menu> {
+public class Menu extends Model<Menu> implements Serializable{
+    private static final long serialVersionUID = 1L;
+
     @TableId
     private String id;
     //工号，账号

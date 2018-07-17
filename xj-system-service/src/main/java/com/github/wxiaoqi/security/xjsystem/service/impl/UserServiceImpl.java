@@ -1,5 +1,6 @@
 package com.github.wxiaoqi.security.xjsystem.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.github.wxiaoqi.security.common.util.MD5Util;
 import com.github.wxiaoqi.security.xjsystem.entity.Role;
@@ -76,7 +77,7 @@ public class UserServiceImpl  extends ServiceImpl<UserMapper,User> implements IU
     @Override
     public List<User> getPromoter(String selfid,String keyword, Integer pageSize, Integer currentPage) {
         currentPage = (currentPage-1)*pageSize;
-        List<User> promoterList = userMapper.selectPromoter(selfid,keyword,pageSize,currentPage);
+        List<User> promoterList = userMapper.selectPromoter(selfid,keyword,pageSize,currentPage,"1");
         return promoterList;
     }
 
@@ -95,7 +96,31 @@ public class UserServiceImpl  extends ServiceImpl<UserMapper,User> implements IU
         user.setRead_only("0");
         user.setRole(role.getId());
         user.setId(UUID.randomUUID().toString());
+        user.setDelete_status("1");
         return userMapper.insert(user);
+    }
 
+    @Override
+    public Integer deletePromoter(String uid,String roleCode){
+        User user = this.selectById(uid);
+        if (user==null){
+            return 3;//不存在
+        }
+        if (roleCode.equals("999")){//真删除
+            userMapper.deleteById(uid);
+        }else//假删除
+        {
+            if (user.getRead_only().equals("0")){
+                user.setDelete_status("0");
+                user.setUpdate_date(new Date());
+                EntityWrapper<User> wrapper = new EntityWrapper<User>();
+                wrapper.eq("id",uid);
+                userMapper.update(user,wrapper);
+            }else
+            {
+                return 2;//只读数据
+            }
+        }
+        return 1;
     }
 }

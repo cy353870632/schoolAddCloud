@@ -67,13 +67,11 @@ public abstract class BaseController {
      * @param msg 失败的消息 errExp 系统报错信息
      * @return {Object}
      */
-    public Object renderError(String msg,String errExp) {
+    public Object renderError(String msg,Integer errExp) {
         Map result = new HashMap<>();
         Map error = new HashMap<>();
-        error.put("code",0);
+        result.put("status",errExp);
         error.put("message",msg);
-        error.put("details",errExp);
-        error.put("validationErrors",null);
         result.put("success",false);
         result.put("error",error);
         return result;
@@ -87,6 +85,7 @@ public abstract class BaseController {
     public Object renderSuccess() {
         Map result = new HashMap<>();
         result.put("success",true);
+        result.put("status",200);
         return result;
     }
 
@@ -111,6 +110,7 @@ public abstract class BaseController {
      */
     public Object renderSuccess(Object obj, Pageable pageable) {
         Map result = new HashMap<>();
+        result.put("status",200);
         result.put("success",true);
         result.put("result",obj);
         result.put("pageable",pageable);
@@ -126,6 +126,7 @@ public abstract class BaseController {
         Map result = new HashMap<>();
         result.put("success",true);
         result.put("result",obj);
+        result.put("status",200);
         return result;
     }
     /**

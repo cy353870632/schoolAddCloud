@@ -27,5 +27,6 @@ public interface IUserService extends IService<User> {
 
     public Integer addPromoter(User user);
 
+    public Integer deletePromoter(String uid,String roleCode);
 
 }

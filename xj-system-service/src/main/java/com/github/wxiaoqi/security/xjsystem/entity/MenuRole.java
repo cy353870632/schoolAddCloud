@@ -11,7 +11,8 @@ import java.util.Date;
 //角色和菜单关联类
 @TableName("system_menu_role")
 @Data
-public class MenuRole extends Model<MenuRole> {
+public class MenuRole extends Model<MenuRole> implements Serializable{
+    private static final long serialVersionUID = 1L;
 
     private String id;
     //工号，账号

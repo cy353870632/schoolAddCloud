@@ -56,20 +56,19 @@ public class LoginController extends BaseController{
 
 
     @RequestMapping(value = "Authenticate", method = RequestMethod.POST)
-    public ResultVo<Object> createAuthenticationToken(
+    public Object createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletRequest request) throws Exception {
         log.info(authenticationRequest.getUserNameOrEmailAddress()+" require logging...");
         User user = userService.getUserInfo(authenticationRequest.getUserNameOrEmailAddress(),authenticationRequest.getPassword());
         Map resulet = new HashMap<>();
         if (user == null || user.getId() == null){
-            resulet.put("message","该用户没有注册/用户密码错误");
-            return new ResultVo(null,false,resulet);
+            return this.renderError("该用户没有注册/用户密码错误",40001);
         }else
         {
             String jwtoken = jwtUtil.createJWT(user,ttlMillis);
             resulet.put("accessToken",jwtoken);
             resulet.put("userId",user.getId());
-            return new ResultVo(resulet,true,null);
+            return this.renderSuccess(resulet);
         }
     }
 
