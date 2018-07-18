@@ -1,9 +1,12 @@
 package com.github.wxiaoqi.security.xjsystem.filter;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
 import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
+import com.github.wxiaoqi.security.xjsystem.vo.MenuVo;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.servlet.*;
@@ -13,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.Map;
 
 //全局过滤
 @WebFilter(filterName = "sessionFilter",urlPatterns = {"/*"})
@@ -28,6 +33,10 @@ public class SessionFilter implements Filter {
 
     @Value("${user.token-header}")
     private String tokenHeader;
+
+    @Autowired
+    ICacheService cacheService;
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
@@ -41,21 +50,23 @@ public class SessionFilter implements Filter {
         //是否需要过滤
         boolean needFilter = isNeedFilter(uri);
 
-
         if (!needFilter) { //不需要过滤直接传给下一个过滤器
             filterChain.doFilter(servletRequest, servletResponse);
         } else { //需要过滤器
             String token = request.getHeader(tokenHeader);
             String method = request.getMethod();
+            token = token.replace("Bearer ", "");
+            JWTUtil jwtUtil = new JWTUtil();
+            PrintWriter out = null;
+            String user_role = "";
             if (!method.equals("OPTIONS")) {
-                token = token.replace("Bearer ", "");
-                JWTUtil jwtUtil = new JWTUtil();
-                PrintWriter out = null;
                 try {
                     Claims claims = jwtUtil.parseJWT(token);
+                    user_role =  claims.get("user_role", String.class);
                     if (claims.getId() == null) {
                         JSONObject map = new JSONObject();
                         map.put("message", "用户Token过期异常");
+                        map.put("status", 401);
                         out = response.getWriter();
                         out.append(map.toString());
                         return;
@@ -63,6 +74,7 @@ public class SessionFilter implements Filter {
                 } catch (Exception e) {
                     JSONObject map = new JSONObject();
                     map.put("message", "用户Token过期异常");
+                    map.put("status", 401);
                     out = response.getWriter();
                     out.append(map.toString());
                     return;

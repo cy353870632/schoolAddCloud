@@ -29,4 +29,21 @@ public interface IUserService extends IService<User> {
 
     public Integer deletePromoter(String uid,String roleCode);
 
+    public Integer updatePromoter(User user,String roleCode);
+
+    public Integer restPwd(String id,String user_code);
+
+
+    public List<User> getManageUser(String selfid,String keyword, Integer pageSize, Integer currentPage);
+
+    public Integer getManageUserTotal(String selfid,String keyword);
+
+    public Integer addManageUser(User user);
+
+    public Integer deleteManageUser(String uid,String roleCode);
+
+    public Integer updateManageUser(User user,String roleCode);
+
+    public Integer restManageUserPwd(String id,String user_code);
+
 }

@@ -97,7 +97,7 @@ public class UserController extends BaseController{
                     List<JSONObject> childMapList = (List<JSONObject>)map.get("children");
                     if (childMapList != null && childMapList.size()>0) {
                         for (JSONObject child : childMapList) {
-                            if (child.get("title").equals("推广员管理")) {
+                            if (child.get("codePath").equals("promoterMange")) {
                                 status = true;
                                 break;
                             }
@@ -109,7 +109,7 @@ public class UserController extends BaseController{
                     List<MenuVo> childMapList = ((MenuVo) map).getChildren();
                     if (childMapList != null && childMapList.size()>0) {
                         for (MenuVo child : childMapList) {
-                            if (child.getTitle().equals("推广员管理")) {
+                            if (child.getCodePath().equals("promoterMange")) {
                                 status = true;
                                 break;
                             }
@@ -160,14 +160,214 @@ public class UserController extends BaseController{
         if (!user_code.equals("999") && !user_code.equals("998")){
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
-
-        if (userService.deletePromoter(uid,user_code)==1)
+        int status = userService.deletePromoter(uid,user_code);
+        if (status==1)
             return this.renderSuccess();
-        else if(userService.deletePromoter(uid,user_code)==3)
+        else if(status==3)
             return this.renderError("数据不存在",404);
         else {
             return this.renderError("删除出错/该数据不允许被删除",201);//201只读数据或者过程报错
         }
     }
 
+    @RequestMapping(value = "getPromoter", method = RequestMethod.POST)
+    public Object getPromoter(HttpServletRequest request,String uid) throws Exception{
+        String token = request.getHeader(tokenHeader);
+        Claims claims = jwtUtil.parseJWT(token);
+        String user_code = claims.get("user_code", String.class);
+        String user_id = claims.get("id", String.class);
+        if (!user_code.equals("999") && !user_code.equals("998")){
+            return this.renderError("您没有权限进行该操作",400);//权限不够
+        }
+        User user = userService.selectById(uid);
+        if (user!=null)
+            return this.renderSuccess(user);
+        else if(user==null)
+            return this.renderError("该用户不存在",404);
+        else {
+            return this.renderError("系统错误",201);//201只读数据或者过程报错
+        }
+    }
+    @RequestMapping(value = "upPromoter", method = RequestMethod.POST)
+    public Object upPromoter(HttpServletRequest request,@RequestBody User user) throws Exception{
+        String token = request.getHeader(tokenHeader);
+        Claims claims = jwtUtil.parseJWT(token);
+        String user_code = claims.get("user_code", String.class);
+        String user_id = claims.get("id", String.class);
+        if (!user_code.equals("999") && !user_code.equals("998")){
+            return this.renderError("您没有权限进行该操作",400);//权限不够
+        }
+        int status = userService.updatePromoter(user,user_code);
+        if (status==1)
+            return this.renderSuccess();
+        else if(status==3)
+            return this.renderError("数据不存在",404);
+        else {
+            return this.renderError("更新出错/该数据不允许被编辑",201);//201只读数据或者过程报错
+        }
+    }
+
+    @RequestMapping(value = "restPWD", method = RequestMethod.POST)
+    public Object restPWD(HttpServletRequest request,String uid) throws Exception{
+        String token = request.getHeader(tokenHeader);
+        Claims claims = jwtUtil.parseJWT(token);
+        String user_code = claims.get("user_code", String.class);
+        String user_id = claims.get("id", String.class);
+        if (!user_code.equals("999") && !user_code.equals("998")){
+            return this.renderError("您没有权限进行该操作",400);//权限不够
+        }
+        int status = userService.restPwd(uid,user_code);
+        if (status==1)
+            return this.renderSuccess();
+        else if(status==3)
+            return this.renderError("数据不存在",404);
+        else {
+            return this.renderError("重置出错/该数据不允许被编辑",201);//201只读数据或者过程报错
+        }
+    }
+
+    //-------------系统管理员设置-----------------
+    @RequestMapping(value = "getManageUserList", method = RequestMethod.POST)
+    public Object getManageUserList(HttpServletRequest request,String keyWord,Integer pageSize,Integer currentPage) throws Exception {
+        Boolean status = false;
+        String token = request.getHeader(tokenHeader);
+        Claims claims = jwtUtil.parseJWT(token);
+        String user_role = claims.get("user_role", String.class);
+        String user_id = claims.get("id", String.class);
+        Map cacheMap = cacheService.cacheGridMessage("getmenu",user_role);
+        List<JSONObject> menuObejct = (List<JSONObject>)cacheMap.get("cacheListMap");
+        if (menuObejct != null && menuObejct.size()>0) {
+            try {
+                for (JSONObject map : menuObejct) {
+                    List<JSONObject> childMapList = (List<JSONObject>)map.get("children");
+                    if (childMapList != null && childMapList.size()>0) {
+                        for (JSONObject child : childMapList) {
+                            if (child.get("codePath").equals("userMange")) {
+                                status = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }catch (Exception e){
+                for (Object map : menuObejct) {
+                    List<MenuVo> childMapList = ((MenuVo) map).getChildren();
+                    if (childMapList != null && childMapList.size()>0) {
+                        for (MenuVo child : childMapList) {
+                            if (child.getCodePath().equals("userMange")) {
+                                status = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (status){
+            if (pageSize == null){
+                pageSize = 10;
+            }
+            if (currentPage == null){
+                currentPage = 1;
+            }
+            List<User> promoterList = userService.getManageUser(user_id,keyWord,pageSize,currentPage);
+            Integer total = userService.getManageUserTotal(user_id,keyWord);
+            Pageable pageable = new Pageable();
+            pageable.setCurrentPage(currentPage);
+            pageable.setPageSize(pageSize);
+            pageable.setTotal(total);
+            return this.renderSuccess(promoterList,pageable);
+        }
+        return this.renderError("您没有访问该页面的权限",400);//权限不够
+    }
+
+    @RequestMapping(value = "addManageUser", method = RequestMethod.POST)
+    public Object addManageUser(HttpServletRequest request,@RequestBody User user) throws Exception{
+        String token = request.getHeader(tokenHeader);
+        Claims claims = jwtUtil.parseJWT(token);
+        String user_code = claims.get("user_code", String.class);
+        String user_id = claims.get("id", String.class);
+        if (!user_code.equals("999") && !user_code.equals("998")){
+            return this.renderError("您没有权限进行该操作",400);//权限不够
+        }
+        if (userService.addManageUser(user)==1)
+            return this.renderSuccess();
+        else
+            return this.renderError("保存失败",201);
+    }
+
+    @RequestMapping(value = "deleteManageUser", method = RequestMethod.POST)
+    public Object deleteManageUser(HttpServletRequest request,String uid) throws Exception{
+        String token = request.getHeader(tokenHeader);
+        Claims claims = jwtUtil.parseJWT(token);
+        String user_code = claims.get("user_code", String.class);
+        String user_id = claims.get("id", String.class);
+        if (!user_code.equals("999") && !user_code.equals("998")){
+            return this.renderError("您没有权限进行该操作",400);//权限不够
+        }
+        int status = userService.deletePromoter(uid,user_code);
+        if (status==1)
+            return this.renderSuccess();
+        else if(status==3)
+            return this.renderError("数据不存在",404);
+        else {
+            return this.renderError("删除出错/该数据不允许被删除",201);//201只读数据或者过程报错
+        }
+    }
+
+    @RequestMapping(value = "getManageUser", method = RequestMethod.POST)
+    public Object getManageUser(HttpServletRequest request,String uid) throws Exception{
+        String token = request.getHeader(tokenHeader);
+        Claims claims = jwtUtil.parseJWT(token);
+        String user_code = claims.get("user_code", String.class);
+        String user_id = claims.get("id", String.class);
+        if (!user_code.equals("999") && !user_code.equals("998")){
+            return this.renderError("您没有权限进行该操作",400);//权限不够
+        }
+        User user = userService.selectById(uid);
+        if (user!=null)
+            return this.renderSuccess(user);
+        else if(user==null)
+            return this.renderError("该用户不存在",404);
+        else {
+            return this.renderError("系统错误",201);//201只读数据或者过程报错
+        }
+    }
+    @RequestMapping(value = "upManageUser", method = RequestMethod.POST)
+    public Object upManageUser(HttpServletRequest request,@RequestBody User user) throws Exception{
+        String token = request.getHeader(tokenHeader);
+        Claims claims = jwtUtil.parseJWT(token);
+        String user_code = claims.get("user_code", String.class);
+        String user_id = claims.get("id", String.class);
+        if (!user_code.equals("999") && !user_code.equals("998")){
+            return this.renderError("您没有权限进行该操作",400);//权限不够
+        }
+        int status = userService.updatePromoter(user,user_code);
+        if (status==1)
+            return this.renderSuccess();
+        else if(status==3)
+            return this.renderError("数据不存在",404);
+        else {
+            return this.renderError("更新出错/该数据不允许被编辑",201);//201只读数据或者过程报错
+        }
+    }
+
+    @RequestMapping(value = "restManageUserPWD", method = RequestMethod.POST)
+    public Object restManageUserPWD(HttpServletRequest request,String uid) throws Exception{
+        String token = request.getHeader(tokenHeader);
+        Claims claims = jwtUtil.parseJWT(token);
+        String user_code = claims.get("user_code", String.class);
+        String user_id = claims.get("id", String.class);
+        if (!user_code.equals("999") && !user_code.equals("998")){
+            return this.renderError("您没有权限进行该操作",400);//权限不够
+        }
+        int status = userService.restPwd(uid,user_code);
+        if (status==1)
+            return this.renderSuccess();
+        else if(status==3)
+            return this.renderError("数据不存在",404);
+        else {
+            return this.renderError("重置出错/该数据不允许被编辑",201);//201只读数据或者过程报错
+        }
+    }
 }

@@ -40,6 +40,9 @@ public class User extends Model<User> implements Serializable{
 
     private String sex;
 
+    private String id_card;
+
+
     @Override
     protected Serializable pkVal() {
         return null;

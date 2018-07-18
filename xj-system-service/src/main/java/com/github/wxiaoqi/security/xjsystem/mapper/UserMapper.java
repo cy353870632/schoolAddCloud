@@ -8,14 +8,12 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface UserMapper extends BaseMapper<User> {
-    public UserInfoVo selectOneForVo(@Param("id") String id);
     public User selectUserByLogin(@Param("loginUsername") String loginUsername);
 
     public List<User> selectPromoter(@Param("selfid") String selfid,@Param("keyword") String keyword, @Param("PageSize") Integer PageSize, @Param("currentPage") Integer currentPage
             , @Param("user_code") String user_code);
 
-    public Integer selectPromoterTotal(@Param("selfid") String selfid,@Param("keyword") String keyword);
-
-    public Integer updateDeleteStatus();
+    public Integer selectPromoterTotal(@Param("selfid") String selfid,@Param("keyword") String keyword
+            , @Param("user_code") String user_code);
 
 }

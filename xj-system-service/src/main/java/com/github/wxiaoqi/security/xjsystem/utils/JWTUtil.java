@@ -37,6 +37,7 @@ public class JWTUtil {
 		claims.put("id", user.getId());
 		claims.put("user_name", user.getU_name());
 		claims.put("user_role", user.getRole());
+		claims.put("user_image", user.getImage());
 		claims.put("user_code", user.getUser_code());
 		Map subject = new HashMap<>();
 		subject.put("userid",user.getId());

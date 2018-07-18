@@ -36,7 +36,7 @@
         count(*)
         from SYSTEM_USER u
         where
-        u.user_code &lt;&gt; 999 and u.id &lt;&gt; #{selfid} and u.delete_status='1'
+        u.user_code &lt;&gt; 999 and u.id &lt;&gt; #{selfid} and u.delete_status='1' and u.user_code=#{user_code}
         <if test=" keyword != null and keyword != '' ">
             and  (u.u_name like '%${keyword}%' or u.l_name like '%${keyword}%')
         </if>

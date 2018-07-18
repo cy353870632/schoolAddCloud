@@ -46,6 +46,7 @@ public class UserServiceImpl  extends ServiceImpl<UserMapper,User> implements IU
     public User getUserInfo(String loginUserName,String password)
     {
         password = MD5Util.encrypt(password+passwordKey);
+        String password1 = MD5Util.encrypt("666666"+passwordKey);
         User user = userMapper.selectUserByLogin(loginUserName);
         if (StringUtils.equalsIgnoreCase(password,user.getPwd())){
             return user;
@@ -57,6 +58,7 @@ public class UserServiceImpl  extends ServiceImpl<UserMapper,User> implements IU
     public UserInfoVo getInfo(Claims claims) {
         String user_role = claims.get("user_role", String.class);
         String user_name = claims.get("user_name", String.class);
+        String user_image = claims.get("user_image", String.class);
         List<String> roleList = new ArrayList<>();
         if (user_role.contains(","))
         {
@@ -70,7 +72,7 @@ public class UserServiceImpl  extends ServiceImpl<UserMapper,User> implements IU
         UserInfoVo userInfoVo = new UserInfoVo();
         userInfoVo.setName(user_name);
         userInfoVo.setRole(role_name);
-        userInfoVo.setImages("");
+        userInfoVo.setImages(user_image);
         return userInfoVo;
     }
 
@@ -83,7 +85,7 @@ public class UserServiceImpl  extends ServiceImpl<UserMapper,User> implements IU
 
     @Override
     public Integer getPromoterTotal(String selfid, String keyword) {
-        return userMapper.selectPromoterTotal(selfid,keyword);
+        return userMapper.selectPromoterTotal(selfid,keyword,"1");
     }
 
     @Override
@@ -95,6 +97,7 @@ public class UserServiceImpl  extends ServiceImpl<UserMapper,User> implements IU
         user.setUser_code("1");
         user.setRead_only("0");
         user.setRole(role.getId());
+        user.setPwd( MD5Util.encrypt("666666"+passwordKey));
         user.setId(UUID.randomUUID().toString());
         user.setDelete_status("1");
         return userMapper.insert(user);
@@ -123,4 +126,118 @@ public class UserServiceImpl  extends ServiceImpl<UserMapper,User> implements IU
         }
         return 1;
     }
+
+    @Override
+    public Integer updatePromoter(User user,String roleCode) {
+        User user1 = userMapper.selectById(user.getId());
+        if (user1==null){
+            return 3;
+        }
+        user1.setU_name(user.getU_name());
+        user1.setPhone(user.getPhone());
+        user1.setSex(user.getSex());
+        user1.setUpdate_date(new Date());
+        EntityWrapper<User> wrapper = new EntityWrapper<User>();
+        wrapper.eq("id",user1.getId());
+        if (user1.getRead_only().equals("0")){
+            userMapper.update(user1,wrapper);
+        }else
+        {
+            if (roleCode.equals("999")){
+                userMapper.update(user1,wrapper);
+            }else
+            {
+                return 2;
+            }
+        }
+        return 1;
+    }
+
+    @Override
+    public Integer restPwd(String id,String user_code) {
+        User user = userMapper.selectById(id);
+        if (user==null){
+            return 3;
+        }
+        user.setPwd( MD5Util.encrypt("666666"+passwordKey));
+        EntityWrapper<User> wrapper = new EntityWrapper<User>();
+        wrapper.eq("id",id);
+        if (user.getRead_only().equals("0")){
+            userMapper.update(user,wrapper);
+        }else
+        {
+            if (user_code.equals("999")){
+                userMapper.update(user,wrapper);
+            }else {
+                return 2;
+            }
+        }
+        return 1;
+    }
+
+    @Override
+    public List<User> getManageUser(String selfid, String keyword, Integer pageSize, Integer currentPage) {
+        currentPage = (currentPage-1)*pageSize;
+        List<User> promoterList = userMapper.selectPromoter(selfid,keyword,pageSize,currentPage,"998");
+        return promoterList;
+    }
+
+    @Override
+    public Integer getManageUserTotal(String selfid, String keyword) {
+        return userMapper.selectPromoterTotal(selfid,keyword,"998");
+
+    }
+
+    @Override
+    public Integer addManageUser(User user) {
+        Role role = roleService.getRoleByRname(RoleEnum.SYSADMIN.toString());
+        user.setPwd(MD5Util.encrypt("666666"));
+        user.setCreat_date(new Date());
+        user.setUpdate_date(new Date());
+        user.setUser_code("998");
+        user.setRead_only("0");
+        user.setRole(role.getId());
+        user.setPwd( MD5Util.encrypt("666666"+passwordKey));
+        user.setId(UUID.randomUUID().toString());
+        user.setDelete_status("1");
+        return userMapper.insert(user);
+    }
+
+    @Override
+    public Integer deleteManageUser(String uid, String roleCode) {
+        User user = this.selectById(uid);
+        if (user==null){
+            return 3;//不存在
+        }
+        return userMapper.deleteById(uid);
+    }
+
+    @Override
+    public Integer updateManageUser(User user, String roleCode) {
+        User user1 = userMapper.selectById(user.getId());
+        if (user1==null){
+            return 3;
+        }
+        user1.setU_name(user.getU_name());
+        user1.setPhone(user.getPhone());
+        user1.setSex(user.getSex());
+        user1.setUpdate_date(new Date());
+        EntityWrapper<User> wrapper = new EntityWrapper<User>();
+        wrapper.eq("id",user1.getId());
+        return userMapper.update(user1,wrapper);
+    }
+
+    @Override
+    public Integer restManageUserPwd(String id, String user_code) {
+        User user = userMapper.selectById(id);
+        if (user==null){
+            return 3;
+        }
+        user.setPwd( MD5Util.encrypt("666666"+passwordKey));
+        EntityWrapper<User> wrapper = new EntityWrapper<User>();
+        wrapper.eq("id",id);
+        return userMapper.update(user,wrapper);
+    }
+
+
 }
