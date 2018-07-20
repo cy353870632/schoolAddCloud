@@ -15,6 +15,7 @@ import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
 import com.github.wxiaoqi.security.xjsystem.vo.MenuVo;
 import com.github.wxiaoqi.security.xjsystem.vo.Pageable;
 import com.github.wxiaoqi.security.xjsystem.vo.UserInfoVo;
+import com.github.wxiaoqi.security.xjsystem.vo.UserVo;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -81,6 +82,21 @@ public class UserController extends BaseController{
         restltMap.put("menus",menuService.getMenu(user_role));
         return this.renderSuccess(restltMap);
     }
+
+    @RequestMapping(value = "getUserInfo", method = RequestMethod.POST)
+    public Object getUserInfo(HttpServletRequest request) throws Exception {
+        String token = request.getHeader(tokenHeader);
+        Claims claims = jwtUtil.parseJWT(token);
+        String user_id = claims.get("id", String.class);
+        User user = userService.selectById(user_id);
+        UserVo userVo = new UserVo();
+        BeanUtils.copyProperties(user, userVo);
+        if (user==null){
+            return this.renderError("无该用户信息",404);
+        }
+        return this.renderSuccess(userVo);
+    }
+
 
     @RequestMapping(value = "getPromoterList", method = RequestMethod.POST)
     public Object getPromoterList(HttpServletRequest request,String keyWord,Integer pageSize,Integer currentPage) throws Exception {
@@ -370,4 +386,28 @@ public class UserController extends BaseController{
             return this.renderError("重置出错/该数据不允许被编辑",201);//201只读数据或者过程报错
         }
     }
+
+    @RequestMapping(value = "changPwd", method = RequestMethod.POST)
+    public Object changPwd(HttpServletRequest request,String id,String oldpass,String pass) throws Exception{
+        if (pass.length()<6){
+            return this.renderError("密码长度不符，至少为6位",400);//权限不够
+        }
+        String token = request.getHeader(tokenHeader);
+        Claims claims = jwtUtil.parseJWT(token);
+        String user_code = claims.get("user_code", String.class);
+        String user_id = claims.get("id", String.class);
+        if (!user_id.equals(id)){
+            return this.renderError("您没有权限进行该操作",400);//权限不够
+        }
+        Integer status = userService.changPwd(id,oldpass,pass);
+        if (status==1){
+            return this.renderSuccess("更新成功");
+        }else if (status==3){
+            return this.renderError("原密码不正确，请输入正确的原密码后重试",400);//权限不够
+        }else
+            return this.renderError("更新出错/该数据不允许被编辑",201);//201只读数据或者过程报错
+    }
+
+
+
 }

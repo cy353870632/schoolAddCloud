@@ -3,6 +3,7 @@ package com.github.wxiaoqi.security.xjsystem.rest;
 //import com.ace.cache.annotation.Cache;
 
 import com.github.wxiaoqi.security.auth.client.jwt.UserAuthUtil;
+import com.github.wxiaoqi.security.common.util.MD5Util;
 import com.github.wxiaoqi.security.xjsystem.base.BaseController;
 import com.github.wxiaoqi.security.xjsystem.entity.User;
 import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
@@ -54,6 +55,8 @@ public class LoginController extends BaseController{
     @Autowired
     JWTUtil jwtUtil;
 
+    private String passwordKey = "d+#8p&nn=o30ke6%-";
+
 
     @RequestMapping(value = "Authenticate", method = RequestMethod.POST)
     public Object createAuthenticationToken(
@@ -68,6 +71,10 @@ public class LoginController extends BaseController{
             String jwtoken = jwtUtil.createJWT(user,ttlMillis);
             resulet.put("accessToken",jwtoken);
             resulet.put("userId",user.getId());
+            if (!user.getPwd().equals(MD5Util.encrypt("666666"+passwordKey)))
+                resulet.put("pwdStatus","0");
+            else
+                resulet.put("pwdStatus","1");
             return this.renderSuccess(resulet);
         }
     }

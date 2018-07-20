@@ -40,6 +40,9 @@ public interface IUserService extends IService<User> {
 
     public Integer addManageUser(User user);
 
+    public Integer changPwd(String id,String oldPassword,String password);
+
+
     public Integer deleteManageUser(String uid,String roleCode);
 
     public Integer updateManageUser(User user,String roleCode);

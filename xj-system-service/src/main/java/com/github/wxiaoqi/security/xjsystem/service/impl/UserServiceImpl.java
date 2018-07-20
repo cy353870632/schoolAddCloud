@@ -204,6 +204,18 @@ public class UserServiceImpl  extends ServiceImpl<UserMapper,User> implements IU
     }
 
     @Override
+    public Integer changPwd(String id, String oldPassword, String password) {
+        User user = userMapper.selectById(id);
+        if (user.getPwd().equals(MD5Util.encrypt(oldPassword+passwordKey))){
+            user.setPwd( MD5Util.encrypt(password+passwordKey));
+            EntityWrapper<User> wrapper = new EntityWrapper<User>();
+            wrapper.eq("id",id);
+            return userMapper.update(user,wrapper);
+        }else
+            return 3;
+    }
+
+    @Override
     public Integer deleteManageUser(String uid, String roleCode) {
         User user = this.selectById(uid);
         if (user==null){
