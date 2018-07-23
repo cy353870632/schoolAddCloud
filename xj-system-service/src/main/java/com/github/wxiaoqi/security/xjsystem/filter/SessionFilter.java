@@ -50,7 +50,7 @@ public class SessionFilter implements Filter {
         //是否需要过滤
         boolean needFilter = isNeedFilter(uri);
 
-        if (!needFilter) { //不需要过滤直接传给下一个过滤器
+        if (!needFilter||uri.equals("/api/User/changPwd")) { //不需要过滤直接传给下一个过滤器
             filterChain.doFilter(servletRequest, servletResponse);
         } else { //需要过滤器
             String token = request.getHeader(tokenHeader);

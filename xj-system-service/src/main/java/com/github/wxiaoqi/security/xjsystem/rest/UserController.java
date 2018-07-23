@@ -388,11 +388,18 @@ public class UserController extends BaseController{
     }
 
     @RequestMapping(value = "changPwd", method = RequestMethod.POST)
-    public Object changPwd(HttpServletRequest request,String id,String oldpass,String pass) throws Exception{
+    public Object changPwd(HttpServletRequest request,String id,String oldpass,String pass,String loginToken) throws Exception{
         if (pass.length()<6){
             return this.renderError("密码长度不符，至少为6位",400);//权限不够
         }
-        String token = request.getHeader(tokenHeader);
+        String token = "";
+        if (loginToken == null || loginToken.equals(""))
+            token = request.getHeader(tokenHeader);
+        else
+            token = loginToken;
+        if (token==null||token.equals("")){
+            return this.renderError("您没有权限进行该操作",400);//权限不够
+        }
         Claims claims = jwtUtil.parseJWT(token);
         String user_code = claims.get("user_code", String.class);
         String user_id = claims.get("id", String.class);

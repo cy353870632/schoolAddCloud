@@ -72,9 +72,9 @@ public class LoginController extends BaseController{
             resulet.put("accessToken",jwtoken);
             resulet.put("userId",user.getId());
             if (!user.getPwd().equals(MD5Util.encrypt("666666"+passwordKey)))
-                resulet.put("pwdStatus","0");
+                resulet.put("pwdStatus",0);
             else
-                resulet.put("pwdStatus","1");
+                resulet.put("pwdStatus",1);//1为需要强制修改密码的用户
             return this.renderSuccess(resulet);
         }
     }

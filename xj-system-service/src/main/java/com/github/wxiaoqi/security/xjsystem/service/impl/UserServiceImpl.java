@@ -133,9 +133,12 @@ public class UserServiceImpl  extends ServiceImpl<UserMapper,User> implements IU
         if (user1==null){
             return 3;
         }
-        user1.setU_name(user.getU_name());
-        user1.setPhone(user.getPhone());
-        user1.setSex(user.getSex());
+        if (user.getU_name()!=null)
+            user1.setU_name(user.getU_name());
+        if (user.getPhone()!=null)
+            user1.setPhone(user.getPhone());
+        if (user.getSex()!=null)
+            user1.setSex(user.getSex());
         user1.setUpdate_date(new Date());
         EntityWrapper<User> wrapper = new EntityWrapper<User>();
         wrapper.eq("id",user1.getId());
