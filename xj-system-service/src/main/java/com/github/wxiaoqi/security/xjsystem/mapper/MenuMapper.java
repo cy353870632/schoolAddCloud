@@ -12,4 +12,9 @@ public interface MenuMapper extends BaseMapper<Menu> {
 
     List<Menu> selectByRole(@Param("roles") List roles);
 
+    List<Menu> selectAllMenu(@Param("keyword") String keyword,@Param("PageSize") Integer PageSize,@Param("currentPage") Integer currentPage);
+
+    Integer selectMenuTotal(@Param("keyword") String keyword);
+
+
 }

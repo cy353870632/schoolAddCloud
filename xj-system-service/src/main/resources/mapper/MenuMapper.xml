@@ -13,6 +13,29 @@
             #{item}
         </foreach>
       )
+      and status='1'
     </select>
 
+    <select id="selectAllMenu" resultMap="MenuResultMap">
+        select
+        *
+        from system_menu u
+        where
+        u.status='1'
+        <if test=" keyword != null and keyword != '' ">
+            and  (u.title like '%${keyword}%')
+        </if>
+        limit #{currentPage},#{PageSize}
+    </select>
+
+    <select id="selectMenuTotal" resultMap="MenuResultMap">
+        select
+        count(*）
+        from system_menu u
+        where
+        u.status='1'
+        <if test=" keyword != null and keyword != '' ">
+            and  (u.title like '%${keyword}%')
+        </if>
+    </select>
 </mapper>

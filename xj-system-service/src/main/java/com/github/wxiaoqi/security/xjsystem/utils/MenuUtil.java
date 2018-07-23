@@ -1,16 +1,25 @@
 package com.github.wxiaoqi.security.xjsystem.utils;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.wxiaoqi.security.xjsystem.entity.Menu;
+import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
 import com.github.wxiaoqi.security.xjsystem.vo.MenuVo;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import jdk.internal.util.xml.BasicXmlPropertiesProvider;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 public class MenuUtil {
 
-	public List<MenuVo> getMenuTree(List<Menu> menuList) {
+	@Autowired
+	ICacheService cacheService;
+
+	public static List<MenuVo> getMenuTree(List<Menu> menuList) {
 		List<MenuVo> resultTree = new ArrayList<>();
 		//先找一级树
 		for (Menu menu : menuList){
@@ -23,7 +32,7 @@ public class MenuUtil {
 				//判断是不是终节点
 				menuVo.setOver_End(menu.getEnd_mark());
 				if (!menuVo.getOver_End().equals("1")){
-					menuVo1 = this.getchild(menuVo,menuList);
+					menuVo1 = getchild(menuVo,menuList);
 				}
 				resultTree.add(menuVo1);
 			}
@@ -33,7 +42,7 @@ public class MenuUtil {
 	}
 
 
-	private MenuVo getchild(MenuVo menuVo,List<Menu> menuList){
+	private static MenuVo getchild(MenuVo menuVo,List<Menu> menuList){
 		List<MenuVo> menuVos = new ArrayList<>();
 		for (Menu menu:menuList){
 			if (menu.getParent_id()!= null && menu.getParent_id().equals(menuVo.getId())){
@@ -44,7 +53,7 @@ public class MenuUtil {
 				//判断是不是终节点
 				menuVo1.setOver_End(menu.getEnd_mark());
 				if (!menuVo1.getOver_End().equals("1")){
-					MenuVo menuVo2 = this.getchild(menuVo1,menuList);
+					MenuVo menuVo2 = getchild(menuVo1,menuList);
 				}
 				menuVos.add(menuVo1);
 			}

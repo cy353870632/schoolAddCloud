@@ -4,15 +4,18 @@ package com.github.wxiaoqi.security.xjsystem.rest;
 
 import com.github.wxiaoqi.security.auth.client.jwt.UserAuthUtil;
 import com.github.wxiaoqi.security.xjsystem.base.BaseController;
+import com.github.wxiaoqi.security.xjsystem.entity.Menu;
 import com.github.wxiaoqi.security.xjsystem.entity.User;
 import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
 import com.github.wxiaoqi.security.xjsystem.service.IMenuService;
 import com.github.wxiaoqi.security.xjsystem.service.IUserService;
 import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
 import com.github.wxiaoqi.security.xjsystem.vo.JwtAuthenticationRequest;
+import com.github.wxiaoqi.security.xjsystem.vo.Pageable;
 import com.github.wxiaoqi.security.xjsystem.vo.ResultVo;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.License;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -66,6 +70,30 @@ public class MenuController extends BaseController{
         String id = claims.get("id", String.class);
         String user_role = claims.get("user_role", String.class);
         return this.renderSuccess(menuService.getMenu(user_role));
+    }
+
+    @RequestMapping(value = "getAllMenu", method = RequestMethod.POST)
+    public Object getAllMenu(HttpServletRequest request,String keyWord,Integer pageSize,Integer currentPage) throws Exception {
+        String token = request.getHeader(tokenHeader);
+        Claims claims = jwtUtil.parseJWT(token);
+        String id = claims.get("id", String.class);
+        String user_code = claims.get("user_code", String.class);
+        String user_role = claims.get("user_role", String.class);
+        if (!user_code.equals("999") || !menuService.checkMenu(user_role,"menuManage")){
+            return this.renderError("访问权限不够",400);
+        }
+        if (currentPage==0){
+            currentPage =1;
+        }
+        if (pageSize==0){
+            pageSize = 10;
+        }
+        List<Menu> menuList = menuService.getAllMenu(keyWord,pageSize,currentPage);
+        Pageable pageable = new Pageable();
+        pageable.setPageSize(pageSize);
+        pageable.setCurrentPage(currentPage);
+        pageable.setTotal(menuService.getMenuTotal(keyWord));
+        return this.renderSuccess(menuList,pageable);
     }
 
 }

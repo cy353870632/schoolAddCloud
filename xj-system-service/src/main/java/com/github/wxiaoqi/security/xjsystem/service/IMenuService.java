@@ -19,4 +19,10 @@ public interface IMenuService extends IService<Menu> {
 
     public List getMenu(String role);
 
+    public Boolean checkMenu(String user_role,String MenuCodePath);
+
+    public List getAllMenu(String keyword, Integer pageSize, Integer currentPage);
+
+    public Integer getMenuTotal(String keyword);
+
 }

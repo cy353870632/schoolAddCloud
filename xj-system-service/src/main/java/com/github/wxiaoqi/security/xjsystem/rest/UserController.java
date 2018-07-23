@@ -12,6 +12,7 @@ import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
 import com.github.wxiaoqi.security.xjsystem.service.IMenuService;
 import com.github.wxiaoqi.security.xjsystem.service.IUserService;
 import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
+import com.github.wxiaoqi.security.xjsystem.utils.MenuUtil;
 import com.github.wxiaoqi.security.xjsystem.vo.MenuVo;
 import com.github.wxiaoqi.security.xjsystem.vo.Pageable;
 import com.github.wxiaoqi.security.xjsystem.vo.UserInfoVo;
@@ -105,36 +106,7 @@ public class UserController extends BaseController{
         Claims claims = jwtUtil.parseJWT(token);
         String user_role = claims.get("user_role", String.class);
         String user_id = claims.get("id", String.class);
-        Map cacheMap = cacheService.cacheGridMessage("getmenu",user_role);
-        List<JSONObject> menuObejct = (List<JSONObject>)cacheMap.get("cacheListMap");
-        if (menuObejct != null && menuObejct.size()>0) {
-            try {
-                for (JSONObject map : menuObejct) {
-                    List<JSONObject> childMapList = (List<JSONObject>)map.get("children");
-                    if (childMapList != null && childMapList.size()>0) {
-                        for (JSONObject child : childMapList) {
-                            if (child.get("codePath").equals("promoterMange")) {
-                                status = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }catch (Exception e){
-                for (Object map : menuObejct) {
-                    List<MenuVo> childMapList = ((MenuVo) map).getChildren();
-                    if (childMapList != null && childMapList.size()>0) {
-                        for (MenuVo child : childMapList) {
-                            if (child.getCodePath().equals("promoterMange")) {
-                                status = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (status){
+        if (menuService.checkMenu(user_role,"promoterMange")){
             if (pageSize == null){
                 pageSize = 10;
             }
@@ -250,36 +222,7 @@ public class UserController extends BaseController{
         Claims claims = jwtUtil.parseJWT(token);
         String user_role = claims.get("user_role", String.class);
         String user_id = claims.get("id", String.class);
-        Map cacheMap = cacheService.cacheGridMessage("getmenu",user_role);
-        List<JSONObject> menuObejct = (List<JSONObject>)cacheMap.get("cacheListMap");
-        if (menuObejct != null && menuObejct.size()>0) {
-            try {
-                for (JSONObject map : menuObejct) {
-                    List<JSONObject> childMapList = (List<JSONObject>)map.get("children");
-                    if (childMapList != null && childMapList.size()>0) {
-                        for (JSONObject child : childMapList) {
-                            if (child.get("codePath").equals("userMange")) {
-                                status = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }catch (Exception e){
-                for (Object map : menuObejct) {
-                    List<MenuVo> childMapList = ((MenuVo) map).getChildren();
-                    if (childMapList != null && childMapList.size()>0) {
-                        for (MenuVo child : childMapList) {
-                            if (child.getCodePath().equals("userMange")) {
-                                status = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (status){
+        if (menuService.checkMenu(user_role,"userMange")){
             if (pageSize == null){
                 pageSize = 10;
             }
