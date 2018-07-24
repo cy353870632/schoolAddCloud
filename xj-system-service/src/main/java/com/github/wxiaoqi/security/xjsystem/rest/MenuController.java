@@ -96,4 +96,34 @@ public class MenuController extends BaseController{
         return this.renderSuccess(menuList,pageable);
     }
 
+    @RequestMapping(value = "addMenu", method = RequestMethod.POST)
+    public Object addMenu(HttpServletRequest request,@RequestBody Menu menu) throws Exception {
+        String token = request.getHeader(tokenHeader);
+        Claims claims = jwtUtil.parseJWT(token);
+        String id = claims.get("id", String.class);
+        String user_role = claims.get("user_role", String.class);
+        String user_code = claims.get("user_code", String.class);
+        if (!user_code.equals("999") || !menuService.checkMenu(user_role,"menuManage")){
+            return this.renderError("访问权限不够",400);
+        }
+        if (menuService.addMenu(menu)==1)
+            return this.renderSuccess();
+        else
+            return this.renderError("保存失败",201);
+    }
+
+
+    @RequestMapping(value = "getParentMenu", method = RequestMethod.POST)
+    public Object getParentMenu(HttpServletRequest request) throws Exception {
+        String token = request.getHeader(tokenHeader);
+        Claims claims = jwtUtil.parseJWT(token);
+        String id = claims.get("id", String.class);
+        String user_role = claims.get("user_role", String.class);
+        String user_code = claims.get("user_code", String.class);
+        if (!user_code.equals("999") || !menuService.checkMenu(user_role,"menuManage")){
+            return this.renderError("访问权限不够",400);
+        }
+        return this.renderSuccess(menuService.getParentMenu());
+    }
+
 }

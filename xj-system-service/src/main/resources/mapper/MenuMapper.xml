@@ -21,7 +21,7 @@
         *
         from system_menu u
         where
-        u.status='1'
+        u.status != '0'
         <if test=" keyword != null and keyword != '' ">
             and  (u.title like '%${keyword}%')
         </if>
@@ -30,12 +30,20 @@
 
     <select id="selectMenuTotal" resultMap="MenuResultMap">
         select
-        count(*）
+        count(*)
         from system_menu u
         where
-        u.status='1'
+        u.status != '0'
         <if test=" keyword != null and keyword != '' ">
             and  (u.title like '%${keyword}%')
         </if>
+    </select>
+
+    <select id="selectAllParent" resultMap="MenuResultMap">
+        select
+        *
+        from system_menu u
+        where
+        u.status != '0' and u.end_mark = '0'
     </select>
 </mapper>

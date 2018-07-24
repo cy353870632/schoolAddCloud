@@ -26,8 +26,10 @@ public class Menu extends Model<Menu> implements Serializable{
     private String title;//菜单名称
     private String parent_id;//父id
     private String end_mark;//是否为终结点
-    private String state;//状态，1为可用，0位不可用
+    private String status;//状态，1为可用，0位不可用
     private String code_path;//跳转的路由路径
+    private String parent_title;//跳转的路由路径
+
 
     @Override
     protected Serializable pkVal() {

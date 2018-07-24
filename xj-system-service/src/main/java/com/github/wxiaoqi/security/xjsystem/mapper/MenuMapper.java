@@ -16,5 +16,6 @@ public interface MenuMapper extends BaseMapper<Menu> {
 
     Integer selectMenuTotal(@Param("keyword") String keyword);
 
+    List<Menu> selectAllParent();
 
 }

@@ -25,4 +25,8 @@ public interface IMenuService extends IService<Menu> {
 
     public Integer getMenuTotal(String keyword);
 
+    public Integer addMenu(Menu menu);
+
+    public List getParentMenu();
+
 }
