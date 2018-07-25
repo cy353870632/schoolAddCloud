@@ -29,4 +29,7 @@ public interface IMenuService extends IService<Menu> {
 
     public List getParentMenu();
 
+    public Integer upMenu(Menu menu,Integer status);
+
+
 }

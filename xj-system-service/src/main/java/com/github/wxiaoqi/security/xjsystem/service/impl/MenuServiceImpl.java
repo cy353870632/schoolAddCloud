@@ -1,6 +1,7 @@
 package com.github.wxiaoqi.security.xjsystem.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.github.wxiaoqi.security.common.util.MD5Util;
 import com.github.wxiaoqi.security.xjsystem.entity.Menu;
@@ -151,5 +152,31 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper,Menu> implements IMe
             return menuList_parent;
         }
         return menuObejct;
+    }
+
+    @Override
+    public Integer upMenu(Menu menu,Integer status) {
+        Menu menu1 = menuMapper.selectById(menu.getId());
+        if (status==1) {
+            if (menu.getTitle() != null && !menu.getTitle().equals(""))
+                menu1.setTitle(menu.getTitle());
+            if (menu.getParent_id() != null && !menu.getParent_id().equals("")) {
+                menu1.setParent_title(menu.getParent_id());
+                Menu menu2 = menuMapper.selectById(menu.getParent_id());
+                menu1.setParent_title(menu2.getParent_title());
+            }
+            if (menu.getCode_path() != null&& !menu.getCode_path().equals(""))
+                menu1.setCode_path(menu.getCode_path());
+            menu1.setStatus("1");
+        }else if (status==0){
+            menu1.setStatus("0");
+        }else
+        {
+            menu1.setStatus("2");//冻结
+        }
+        cacheService.clearCache("getAllmenuParent","Parent");
+        EntityWrapper<Menu> wrapper = new EntityWrapper<Menu>();
+        wrapper.eq("id",menu1.getId());
+        return menuMapper.update(menu1,wrapper);
     }
 }
