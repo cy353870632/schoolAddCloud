@@ -13,6 +13,7 @@ import com.github.wxiaoqi.security.xjsystem.service.IMenuService;
 import com.github.wxiaoqi.security.xjsystem.service.IUserService;
 import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
 import com.github.wxiaoqi.security.xjsystem.utils.MenuUtil;
+import com.github.wxiaoqi.security.xjsystem.utils.StringUtils;
 import com.github.wxiaoqi.security.xjsystem.vo.MenuVo;
 import com.github.wxiaoqi.security.xjsystem.vo.Pageable;
 import com.github.wxiaoqi.security.xjsystem.vo.UserInfoVo;
@@ -133,10 +134,25 @@ public class UserController extends BaseController{
         if (!user_code.equals("999") && !user_code.equals("998")){
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
-        if (userService.addPromoter(user)==1)
-            return this.renderSuccess();
-        else
-            return this.renderError("保存失败",201);
+        try {
+            if (userService.addPromoter(user)==1)
+                return this.renderSuccess();
+            else
+                return this.renderError("保存失败",201);
+        }catch (Exception e){
+            String s1 = e.getCause().getMessage();
+            String s = StringUtils.subString(e.getCause().getMessage(),"entry '","' for");
+            String s2 = StringUtils.subString(e.getCause().getMessage(),"for key '","'");
+            if (s2.equals("phone"))
+                return this.renderError("手机号 "+s+" 已经存在，请勿重复添加",201);
+            if (s2.equals("l_name"))
+                return this.renderError("用户名 "+s+"已经存在，请勿重复添加",201);
+            if (s2.equals("id_card"))
+                return this.renderError("身份证号 "+s+"已经存在，请勿重复添加",201);
+            else
+                return this.renderError("保存失败,请检查填写信息重试",201);
+        }
+
     }
 
     @RequestMapping(value = "deletePromoter", method = RequestMethod.POST)
@@ -185,13 +201,27 @@ public class UserController extends BaseController{
         if (!user_code.equals("999") && !user_code.equals("998")){
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
-        int status = userService.updatePromoter(user,user_code);
-        if (status==1)
-            return this.renderSuccess();
-        else if(status==3)
-            return this.renderError("数据不存在",404);
-        else {
-            return this.renderError("更新出错/该数据不允许被编辑",201);//201只读数据或者过程报错
+        try {
+            int status = userService.updatePromoter(user,user_code);
+            if (status==1)
+                return this.renderSuccess();
+            else if(status==3)
+                return this.renderError("数据不存在",404);
+            else {
+                return this.renderError("更新出错/该数据不允许被编辑",201);//201只读数据或者过程报错
+            }
+        }catch (Exception e){
+            String s1 = e.getCause().getMessage();
+            String s = StringUtils.subString(e.getCause().getMessage(),"entry '","' for");
+            String s2 = StringUtils.subString(e.getCause().getMessage(),"for key '","'");
+            if (s2.equals("phone"))
+                return this.renderError("手机号 "+s+" 已经存在",201);
+            if (s2.equals("l_name"))
+                return this.renderError("用户名 "+s+"已经存在",201);
+            if (s2.equals("id_card"))
+                return this.renderError("身份证号 "+s+"已经存在",201);
+            else
+                return this.renderError("更新失败,请检查填写信息重试",201);
         }
     }
 
@@ -249,10 +279,25 @@ public class UserController extends BaseController{
         if (!user_code.equals("999") && !user_code.equals("998")){
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
-        if (userService.addManageUser(user)==1)
-            return this.renderSuccess();
-        else
-            return this.renderError("保存失败",201);
+        try {
+            if (userService.addManageUser(user)==1)
+                return this.renderSuccess();
+            else
+                return this.renderError("保存失败",201);
+        }catch (Exception e){
+            String s1 = e.getCause().getMessage();
+            String s = StringUtils.subString(e.getCause().getMessage(),"entry '","' for");
+            String s2 = StringUtils.subString(e.getCause().getMessage(),"for key '","'");
+            if (s2.equals("phone"))
+                return this.renderError("手机号 "+s+" 已经存在，请勿重复添加",201);
+            if (s2.equals("l_name"))
+                return this.renderError("用户名 "+s+"已经存在，请勿重复添加",201);
+            if (s2.equals("id_card"))
+                return this.renderError("身份证号 "+s+"已经存在，请勿重复添加",201);
+            else
+                return this.renderError("保存失败,请检查填写信息重试",201);
+        }
+
     }
 
     @RequestMapping(value = "deleteManageUser", method = RequestMethod.POST)
@@ -301,14 +346,29 @@ public class UserController extends BaseController{
         if (!user_code.equals("999") && !user_code.equals("998")){
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
-        int status = userService.updatePromoter(user,user_code);
-        if (status==1)
-            return this.renderSuccess();
-        else if(status==3)
-            return this.renderError("数据不存在",404);
-        else {
-            return this.renderError("更新出错/该数据不允许被编辑",201);//201只读数据或者过程报错
+        try {
+            int status = userService.updatePromoter(user,user_code);
+            if (status==1)
+                return this.renderSuccess();
+            else if(status==3)
+                return this.renderError("数据不存在",404);
+            else {
+                return this.renderError("更新出错/该数据不允许被编辑",201);//201只读数据或者过程报错
+            }
+        }catch (Exception e){
+            String s1 = e.getCause().getMessage();
+            String s = StringUtils.subString(e.getCause().getMessage(),"entry '","' for");
+            String s2 = StringUtils.subString(e.getCause().getMessage(),"for key '","'");
+            if (s2.equals("phone"))
+                return this.renderError("手机号 "+s+" 已经存在",201);
+            if (s2.equals("l_name"))
+                return this.renderError("用户名 "+s+"已经存在",201);
+            if (s2.equals("id_card"))
+                return this.renderError("身份证号 "+s+"已经存在",201);
+            else
+                return this.renderError("更新失败,请检查填写信息重试",201);
         }
+
     }
 
     @RequestMapping(value = "restManageUserPWD", method = RequestMethod.POST)

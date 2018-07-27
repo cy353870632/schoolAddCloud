@@ -10,6 +10,7 @@ import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
 import com.github.wxiaoqi.security.xjsystem.service.IMenuService;
 import com.github.wxiaoqi.security.xjsystem.service.IUserService;
 import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
+import com.github.wxiaoqi.security.xjsystem.utils.StringUtils;
 import com.github.wxiaoqi.security.xjsystem.vo.JwtAuthenticationRequest;
 import com.github.wxiaoqi.security.xjsystem.vo.Pageable;
 import com.github.wxiaoqi.security.xjsystem.vo.ResultVo;
@@ -106,10 +107,23 @@ public class MenuController extends BaseController{
         if (!user_code.equals("999") || !menuService.checkMenu(user_role,"menuManage")){
             return this.renderError("访问权限不够",400);
         }
-        if (menuService.addMenu(menu)==1)
-            return this.renderSuccess();
-        else
-            return this.renderError("保存失败",201);
+        try {
+            if (menuService.addMenu(menu)==1)
+                return this.renderSuccess();
+            else
+                return this.renderError("保存失败",201);
+        }catch (Exception e){
+            String s1 = e.getCause().getMessage();
+            String s = StringUtils.subString(e.getCause().getMessage(),"entry '","' for");
+            String s2 = StringUtils.subString(e.getCause().getMessage(),"for key '","'");
+            if (s2.equals("parentTitle_title"))
+                return this.renderError("该父级菜单下已经存在该子菜单，请勿重复添加",201);
+            if (s2.equals("parentTile_codePath"))
+                return this.renderError("该父级菜单下已经存在该跳转路由，请勿重复添加",201);
+            else
+                return this.renderError("添加失败,请检查填写信息重试",201);
+        }
+
     }
 
 
@@ -147,10 +161,22 @@ public class MenuController extends BaseController{
         if (!user_code.equals("999") || !menuService.checkMenu(user_role,"menuManage")){
             return this.renderError("访问权限不够",400);
         }
-        if (menuService.upMenu(menu,1)==1)
-            return this.renderSuccess();
-        else
-            return this.renderError("更新失败",201);
+        try {
+            if (menuService.upMenu(menu,1)==1)
+                return this.renderSuccess();
+            else
+                return this.renderError("更新失败",201);
+        }catch (Exception e){
+            String s1 = e.getCause().getMessage();
+            String s = StringUtils.subString(e.getCause().getMessage(),"entry '","' for");
+            String s2 = StringUtils.subString(e.getCause().getMessage(),"for key '","'");
+            if (s2.equals("parentTitle_title"))
+                return this.renderError("该父级菜单下已经存在该子菜单",201);
+            if (s2.equals("parentTile_codePath"))
+                return this.renderError("该父级菜单下已经存在该跳转路由",201);
+            else
+                return this.renderError("更新失败,请检查填写信息重试",201);
+        }
     }
     @RequestMapping(value = "deleteMenu", method = RequestMethod.POST)
     public Object deleteMenu(HttpServletRequest request,String id) throws Exception {
