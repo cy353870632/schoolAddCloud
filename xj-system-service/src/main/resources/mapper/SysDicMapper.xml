@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.wxiaoqi.security.xjsystem.mapper.SysDicMapper">
+
+    <resultMap id="SysDicResultMap" type="com.github.wxiaoqi.security.xjsystem.entity.System_dic">
+    </resultMap>
+
+
+    <select id="getAllParent" resultMap="SysDicResultMap">
+        select * from system_dic d
+        WHERE d.parent_id='0' and d.end_mark='0'
+        <if test=" keyword != null and keyword != '' ">
+            and (d.dic_name like '%${keyword}%')
+        </if>
+        ORDER by d.seq limit #{currentPage},#{pageSize}
+
+    </select>
+
+    <select id="getAllParentTotal" resultType="java.lang.Integer">
+        select COUNT(*) from system_dic d
+        WHERE d.parent_id='0' and d.end_mark='0'
+        <if test=" keyword != null and keyword != '' ">
+            and (d.dic_name like '%${keyword}%')
+        </if>
+
+    </select>
+
+</mapper>
