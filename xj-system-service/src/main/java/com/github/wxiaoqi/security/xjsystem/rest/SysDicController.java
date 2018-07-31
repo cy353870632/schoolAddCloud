@@ -13,6 +13,7 @@ import com.github.wxiaoqi.security.xjsystem.service.IUserService;
 import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
 import com.github.wxiaoqi.security.xjsystem.utils.StringUtils;
 import com.github.wxiaoqi.security.xjsystem.vo.Pageable;
+import com.github.wxiaoqi.security.xjsystem.vo.SysDicVo;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -79,12 +80,15 @@ public class SysDicController extends BaseController{
         if (pageSize==0){
             pageSize = 10;
         }
-        List<System_dic> dicList = sysDicService.getAllSysDic(keyWord,pageSize,currentPage);
+        List<SysDicVo> sysDicVos = sysDicService.getAllSysDic(keyWord,pageSize,currentPage);
+        for (SysDicVo sysDicVo:sysDicVos){
+            sysDicVo.setChildren(sysDicService.getChildByParentid(sysDicVo.getId()));
+        }
         Pageable pageable = new Pageable();
         pageable.setPageSize(pageSize);
         pageable.setCurrentPage(currentPage);
         pageable.setTotal(sysDicService.getSysDicTotal(keyWord));
-        return this.renderSuccess(dicList,pageable);
+        return this.renderSuccess(sysDicVos,pageable);
     }
 
     @RequestMapping(value = "addMenu", method = RequestMethod.POST)

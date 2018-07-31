@@ -19,4 +19,6 @@ public interface ISysDicService extends IService<System_dic> {
 
     public Integer getSysDicTotal(String keyword);
 
+    public List getChildByParentid(String parent_id);
+
 }

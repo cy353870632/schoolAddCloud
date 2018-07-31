@@ -5,15 +5,19 @@
     <resultMap id="SysDicResultMap" type="com.github.wxiaoqi.security.xjsystem.entity.System_dic">
     </resultMap>
 
-
-    <select id="getAllParent" resultMap="SysDicResultMap">
+    <resultMap id="SysDicResultVoMap" type="com.github.wxiaoqi.security.xjsystem.vo.SysDicVo">
+    </resultMap>
+    <select id="getAllParent" resultMap="SysDicResultVoMap">
         select * from system_dic d
         WHERE d.parent_id='0' and d.end_mark='0'
         <if test=" keyword != null and keyword != '' ">
             and (d.dic_name like '%${keyword}%')
         </if>
         ORDER by d.seq limit #{currentPage},#{pageSize}
+    </select>
 
+    <select id="getchildByParentId" resultMap="SysDicResultMap">
+        SELECT * FROM system_dic WHERE FIND_IN_SET(id,queryChildrenDic(#{id})) and id  &lt;&gt; #{id} ORDER by seq;
     </select>
 
     <select id="getAllParentTotal" resultType="java.lang.Integer">

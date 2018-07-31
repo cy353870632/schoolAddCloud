@@ -1,5 +1,6 @@
 package com.github.wxiaoqi.security.xjsystem.service.impl;
 
+import com.ace.cache.annotation.Cache;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
@@ -12,6 +13,7 @@ import com.github.wxiaoqi.security.xjsystem.service.IMenuService;
 import com.github.wxiaoqi.security.xjsystem.service.ISysDicService;
 import com.github.wxiaoqi.security.xjsystem.utils.MenuUtil;
 import com.github.wxiaoqi.security.xjsystem.vo.MenuVo;
+import com.github.wxiaoqi.security.xjsystem.vo.SysDicVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,11 +43,18 @@ public class SysDicServiceImpl extends ServiceImpl<SysDicMapper,System_dic> impl
     @Override
     public List getAllSysDic(String keyword, Integer pageSize, Integer currentPage) {
         currentPage = (currentPage-1)*pageSize;
-        return sysDicMapper.getAllParent(keyword,pageSize,currentPage);
+        List<SysDicVo> sysDicVos = sysDicMapper.getAllParent(keyword,pageSize,currentPage);
+        return sysDicVos;
     }
 
     @Override
     public Integer getSysDicTotal(String keyword) {
         return sysDicMapper.getAllParentTotal(keyword);
+    }
+
+    @Override
+    @Cache(key = "dicParent:u{1}")
+    public List<System_dic> getChildByParentid(String parent_id) {
+        return sysDicMapper.getchildByParentId(parent_id);
     }
 }
