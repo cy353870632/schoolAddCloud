@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * ${DESCRIPTION}
@@ -81,6 +83,11 @@ public class SysDicController extends BaseController{
             pageSize = 10;
         }
         List<SysDicVo> sysDicVos = sysDicService.getAllSysDic(keyWord,pageSize,currentPage);
+        List<SysDicVo> sysDicVosarent =  sysDicService.getAllParent();
+        Map result = new HashMap<>();
+        result.put("parentList",sysDicVosarent);
+        result.put("dataList",sysDicVos);
+
         for (SysDicVo sysDicVo:sysDicVos){
             sysDicVo.setChildren(sysDicService.getChildByParentid(sysDicVo.getId()));
         }
@@ -88,11 +95,11 @@ public class SysDicController extends BaseController{
         pageable.setPageSize(pageSize);
         pageable.setCurrentPage(currentPage);
         pageable.setTotal(sysDicService.getSysDicTotal(keyWord));
-        return this.renderSuccess(sysDicVos,pageable);
+        return this.renderSuccess(result,pageable);
     }
 
-    @RequestMapping(value = "addMenu", method = RequestMethod.POST)
-    public Object addMenu(HttpServletRequest request,@RequestBody Menu menu) throws Exception {
+    @RequestMapping(value = "addSysDic", method = RequestMethod.POST)
+    public Object addSysDic(HttpServletRequest request,@RequestBody System_dic system_dic) throws Exception {
         String token = request.getHeader(tokenHeader);
         Claims claims = jwtUtil.parseJWT(token);
         String id = claims.get("id", String.class);
@@ -102,8 +109,10 @@ public class SysDicController extends BaseController{
             return this.renderError("访问权限不够",400);
         }
         try {
-            if (menuService.addMenu(menu)==1)
+            if (sysDicService.addSysDic(system_dic)==1) {
+                sysDicService.cacheClear(system_dic.getParent_id());
                 return this.renderSuccess();
+            }
             else
                 return this.renderError("保存失败",201);
         }catch (Exception e){
@@ -111,9 +120,9 @@ public class SysDicController extends BaseController{
             String s = StringUtils.subString(e.getCause().getMessage(),"entry '","' for");
             String s2 = StringUtils.subString(e.getCause().getMessage(),"for key '","'");
             if (s2.equals("parentTitle_title"))
-                return this.renderError("该父级菜单下已经存在该子菜单，请勿重复添加",201);
-            if (s2.equals("parentTile_codePath"))
-                return this.renderError("该父级菜单下已经存在该跳转路由，请勿重复添加",201);
+                return this.renderError("该父级字典下已经存在该字典名称，请勿重复添加",201);
+//            if (s2.equals("parentTile_codePath"))
+//                return this.renderError("该父级菜单下已经存在该跳转路由，请勿重复添加",201);
             else
                 return this.renderError("添加失败,请检查填写信息重试",201);
         }

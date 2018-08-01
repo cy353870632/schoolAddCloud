@@ -1,6 +1,8 @@
 package com.github.wxiaoqi.security.xjsystem.service.impl;
 
 import com.ace.cache.annotation.Cache;
+import com.ace.cache.annotation.CacheClear;
+import com.alibaba.druid.support.logging.Log;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
@@ -14,6 +16,7 @@ import com.github.wxiaoqi.security.xjsystem.service.ISysDicService;
 import com.github.wxiaoqi.security.xjsystem.utils.MenuUtil;
 import com.github.wxiaoqi.security.xjsystem.vo.MenuVo;
 import com.github.wxiaoqi.security.xjsystem.vo.SysDicVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +30,7 @@ import java.util.*;
  **/
 @Service
 @Transactional(rollbackFor = Exception.class)
+@Slf4j
 public class SysDicServiceImpl extends ServiceImpl<SysDicMapper,System_dic> implements ISysDicService{
 
 
@@ -56,5 +60,31 @@ public class SysDicServiceImpl extends ServiceImpl<SysDicMapper,System_dic> impl
     @Cache(key = "dicParent:u{1}")
     public List<System_dic> getChildByParentid(String parent_id) {
         return sysDicMapper.getchildByParentId(parent_id);
+    }
+
+    @Override
+    @CacheClear(key = "dicParent:u{1}")
+    public void cacheClear(String parent_id) {
+        log.info("清除了字典缓存");
+    }
+
+    @Override
+    public Integer addSysDic(System_dic system_dic) {
+        system_dic.setStatus("1");
+        system_dic.setId(UUID.randomUUID().toString());
+        system_dic.setCreat_date(new Date());
+        system_dic.setUpdate_date(new Date());
+        system_dic.setRead_only("0");
+        system_dic.setEnd_mark("1");
+        return sysDicMapper.insert(system_dic);
+    }
+
+    @Override
+    public List getAllParent() {
+        EntityWrapper<System_dic> wrapper = new EntityWrapper<System_dic>();
+        wrapper.eq("end_mark","0");
+        wrapper.eq("status","1");
+        wrapper.orderBy("seq",true);
+        return sysDicMapper.selectList(wrapper);
     }
 }

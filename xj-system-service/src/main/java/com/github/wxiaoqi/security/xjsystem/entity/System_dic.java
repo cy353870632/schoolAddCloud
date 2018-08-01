@@ -27,7 +27,7 @@ public class System_dic extends Model<System_dic> implements Serializable{
     private String read_only;
     private String parent_title;//父级名称
     private String end_mark;//是否为终结点
-
+    private Integer seq=99;//是否为终结点
     @Override
     protected Serializable pkVal() {
         return null;

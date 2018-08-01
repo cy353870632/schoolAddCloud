@@ -21,4 +21,11 @@ public interface ISysDicService extends IService<System_dic> {
 
     public List getChildByParentid(String parent_id);
 
+    public void cacheClear(String parent_id);
+
+    public Integer addSysDic(System_dic system_dic);
+
+    public List getAllParent();
+
+
 }
