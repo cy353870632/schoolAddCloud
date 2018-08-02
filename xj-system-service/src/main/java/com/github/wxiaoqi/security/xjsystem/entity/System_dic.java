@@ -17,6 +17,7 @@ public class System_dic extends Model<System_dic> implements Serializable{
     @TableId
     private String id;
     private String dic_name;//字典名称
+    private String dic_name_c;//字典名称
     private String parent_id;//父id
     private String dic_code;//字典编码
     private String status;//状态，1为可用，0位不可用

@@ -108,6 +108,9 @@ public class SysDicController extends BaseController{
         if (!user_code.equals("999") || !menuService.checkMenu(user_role,"sysDicManage")){
             return this.renderError("访问权限不够",400);
         }
+        if (system_dic.getDic_name()==null || (system_dic.getEnd_mark().equals("0")&&system_dic.getDic_name().equals(""))){
+            return this.renderError("字典编码不允许为空",400);
+        }
         try {
             if (sysDicService.addSysDic(system_dic)==1) {
                 sysDicService.cacheClear(system_dic.getParent_id());
@@ -130,20 +133,7 @@ public class SysDicController extends BaseController{
     }
 
 
-    @RequestMapping(value = "getParentMenu", method = RequestMethod.POST)
-    public Object getParentMenu(HttpServletRequest request) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String id = claims.get("id", String.class);
-        String user_role = claims.get("user_role", String.class);
-        String user_code = claims.get("user_code", String.class);
-        if (!user_code.equals("999") || !menuService.checkMenu(user_role,"sysDicManage")){
-            return this.renderError("访问权限不够",400);
-        }
-        return this.renderSuccess(menuService.getParentMenu());
-    }
-
-    @RequestMapping(value = "getMenuByid", method = RequestMethod.POST)
+    @RequestMapping(value = "getSysDic", method = RequestMethod.POST)
     public Object getMenuByid(HttpServletRequest request,String id) throws Exception {
         String token = request.getHeader(tokenHeader);
         Claims claims = jwtUtil.parseJWT(token);
@@ -152,11 +142,24 @@ public class SysDicController extends BaseController{
         if (!user_code.equals("999") || !menuService.checkMenu(user_role,"sysDicManage")){
             return this.renderError("访问权限不够",400);
         }
-        return this.renderSuccess(menuService.selectById(id));
+        System_dic system_dic = sysDicService.selectById(id);
+        System_dic system_dic1 = new System_dic();
+        Map resultMap = new HashMap<>();
+
+        if (system_dic.getParent_id().equals("0") && system_dic.getEnd_mark().equals("0")){
+            resultMap.put("parent","0");
+        }
+        else {
+            system_dic1 = sysDicService.selectById(system_dic.getParent_id());
+            resultMap.put("parent",system_dic1);
+
+        }
+        resultMap.put("data",system_dic);
+        return this.renderSuccess(resultMap);
     }
 
-    @RequestMapping(value = "upMenu", method = RequestMethod.POST)
-    public Object upMenu(HttpServletRequest request,@RequestBody Menu menu) throws Exception {
+    @RequestMapping(value = "upSysDic", method = RequestMethod.POST)
+    public Object upMenu(HttpServletRequest request,@RequestBody System_dic system_dic) throws Exception {
         String token = request.getHeader(tokenHeader);
         Claims claims = jwtUtil.parseJWT(token);
         String user_role = claims.get("user_role", String.class);
@@ -165,8 +168,15 @@ public class SysDicController extends BaseController{
             return this.renderError("访问权限不够",400);
         }
         try {
-            if (menuService.upMenu(menu,1)==1)
+            String oldParentID = sysDicService.selectById(system_dic.getId()).getParent_id();
+
+            if (sysDicService.upSysDic(system_dic,1)==1) {
+                sysDicService.cacheClear(system_dic.getParent_id());
+                if (!oldParentID.equals(system_dic.getParent_id())){
+                    sysDicService.cacheClear(oldParentID);
+                }
                 return this.renderSuccess();
+            }
             else
                 return this.renderError("更新失败",201);
         }catch (Exception e){
@@ -174,14 +184,14 @@ public class SysDicController extends BaseController{
             String s = StringUtils.subString(e.getCause().getMessage(),"entry '","' for");
             String s2 = StringUtils.subString(e.getCause().getMessage(),"for key '","'");
             if (s2.equals("parentTitle_title"))
-                return this.renderError("该父级菜单下已经存在该子菜单",201);
-            if (s2.equals("parentTile_codePath"))
-                return this.renderError("该父级菜单下已经存在该跳转路由",201);
+                return this.renderError("该父级字典下已经存在该字典名称，请勿重复添加",201);
+//            if (s2.equals("parentTile_codePath"))
+//                return this.renderError("该父级菜单下已经存在该跳转路由，请勿重复添加",201);
             else
                 return this.renderError("更新失败,请检查填写信息重试",201);
         }
     }
-    @RequestMapping(value = "deleteMenu", method = RequestMethod.POST)
+    @RequestMapping(value = "deleteSysDic", method = RequestMethod.POST)
     public Object deleteMenu(HttpServletRequest request,String id) throws Exception {
         String token = request.getHeader(tokenHeader);
         Claims claims = jwtUtil.parseJWT(token);
@@ -190,14 +200,15 @@ public class SysDicController extends BaseController{
         if (!user_code.equals("999") || !menuService.checkMenu(user_role,"sysDicManage")){
             return this.renderError("访问权限不够",400);
         }
-        Menu menu = new Menu();
-        menu.setId(id);
-        if (menuService.upMenu(menu,0)==1)
+        System_dic system_dic = sysDicService.selectById(id);
+        if (sysDicService.upSysDic(system_dic,0)==1) {
+            sysDicService.cacheClear(system_dic.getParent_id());
             return this.renderSuccess();
+        }
         else
             return this.renderError("删除失败",201);
     }
-    @RequestMapping(value = "blockMenu", method = RequestMethod.POST)
+    @RequestMapping(value = "blockSysDic", method = RequestMethod.POST)
     public Object blockMenu(HttpServletRequest request,String id) throws Exception {
         String token = request.getHeader(tokenHeader);
         Claims claims = jwtUtil.parseJWT(token);
@@ -206,14 +217,16 @@ public class SysDicController extends BaseController{
         if (!user_code.equals("999") || !menuService.checkMenu(user_role,"sysDicManage")){
             return this.renderError("访问权限不够",400);
         }
-        Menu menu = new Menu();
-        menu.setId(id);
-        if (menuService.upMenu(menu,2)==1)
+        System_dic system_dic = sysDicService.selectById(id);
+        if (sysDicService.upSysDic(system_dic,2)==1)
+        {
+            sysDicService.cacheClear(system_dic.getParent_id());
             return this.renderSuccess();
+        }
         else
             return this.renderError("冻结失败",201);
     }
-    @RequestMapping(value = "unblockMenu", method = RequestMethod.POST)
+    @RequestMapping(value = "unblockSysDic", method = RequestMethod.POST)
     public Object unblockMenu(HttpServletRequest request,String id) throws Exception {
         String token = request.getHeader(tokenHeader);
         Claims claims = jwtUtil.parseJWT(token);
@@ -222,10 +235,12 @@ public class SysDicController extends BaseController{
         if (!user_code.equals("999") || !menuService.checkMenu(user_role,"sysDicManage")){
             return this.renderError("访问权限不够",400);
         }
-        Menu menu = new Menu();
-        menu.setId(id);
-        if (menuService.upMenu(menu,1)==1)
+        System_dic system_dic = sysDicService.selectById(id);
+        if (sysDicService.upSysDic(system_dic,1)==1)
+        {
+            sysDicService.cacheClear(system_dic.getParent_id());
             return this.renderSuccess();
+        }
         else
             return this.renderError("生效失败",201);
     }

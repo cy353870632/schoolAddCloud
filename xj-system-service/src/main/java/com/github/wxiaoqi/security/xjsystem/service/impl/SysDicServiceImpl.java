@@ -87,4 +87,33 @@ public class SysDicServiceImpl extends ServiceImpl<SysDicMapper,System_dic> impl
         wrapper.orderBy("seq",true);
         return sysDicMapper.selectList(wrapper);
     }
+
+    @Override
+    public Integer upSysDic(System_dic system_dic, Integer status) {
+        System_dic system_dic1 = sysDicMapper.selectById(system_dic.getId());
+        if (status==1) {
+            if (system_dic.getDic_name_c() != null && !system_dic.getDic_name_c().equals(""))
+                system_dic1.setDic_name_c(system_dic.getDic_name_c());
+            if (system_dic.getDic_name() != null && !system_dic.getDic_name().equals(""))
+                system_dic1.setDic_name(system_dic.getDic_name());
+            if (system_dic.getParent_id() != null && !system_dic.getParent_id().equals("")) {
+                system_dic1.setParent_id(system_dic.getParent_id());
+                system_dic1.setParent_title(system_dic.getParent_title());
+            }
+            if (system_dic.getDic_code() != null&& !system_dic.getDic_code().equals("")){
+                system_dic1.setDic_code(system_dic.getDic_code());
+            }
+            if (system_dic.getSeq() != null)
+                system_dic1.setSeq(system_dic.getSeq());
+            system_dic1.setStatus("1");
+        }else if (status==0){
+            system_dic1.setStatus("0");
+        }else
+        {
+            system_dic1.setStatus("2");//冻结
+        }
+        EntityWrapper<System_dic> wrapper = new EntityWrapper<System_dic>();
+        wrapper.eq("id",system_dic1.getId());
+        return sysDicMapper.update(system_dic1,wrapper);
+    }
 }

@@ -27,5 +27,6 @@ public interface ISysDicService extends IService<System_dic> {
 
     public List getAllParent();
 
+    public Integer upSysDic(System_dic system_dic,Integer status);
 
 }
