@@ -7,10 +7,12 @@ import com.github.wxiaoqi.security.xjsystem.base.BaseController;
 import com.github.wxiaoqi.security.xjsystem.entity.Menu;
 import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
 import com.github.wxiaoqi.security.xjsystem.service.IMenuService;
+import com.github.wxiaoqi.security.xjsystem.service.ISchoolService;
 import com.github.wxiaoqi.security.xjsystem.service.IUserService;
 import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
 import com.github.wxiaoqi.security.xjsystem.utils.StringUtils;
 import com.github.wxiaoqi.security.xjsystem.vo.Pageable;
+import com.github.wxiaoqi.security.xjsystem.vo.SchoolVo;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -58,6 +60,9 @@ public class SchoolController extends BaseController{
     @Autowired
     IMenuService menuService;
 
+    @Autowired
+    ISchoolService schoolService;
+
     @RequestMapping(value = "getAllSchool", method = RequestMethod.POST)
     public Object getAllMenu(HttpServletRequest request,String keyWord,Integer pageSize,Integer currentPage) throws Exception {
         String token = request.getHeader(tokenHeader);
@@ -65,7 +70,7 @@ public class SchoolController extends BaseController{
         String id = claims.get("id", String.class);
         String user_code = claims.get("user_code", String.class);
         String user_role = claims.get("user_role", String.class);
-        if (!user_code.equals("999") || !menuService.checkMenu(user_role,"menuManage")){
+        if (!user_code.equals("999") || !menuService.checkMenu(user_role,"schoolMange")){
             return this.renderError("访问权限不够",400);
         }
         if (currentPage==0){
@@ -74,11 +79,11 @@ public class SchoolController extends BaseController{
         if (pageSize==0){
             pageSize = 10;
         }
-        List<Menu> menuList = menuService.getAllMenu(keyWord,pageSize,currentPage);
+        List<SchoolVo> menuList = schoolService.getAllSchool(keyWord,pageSize,currentPage);
         Pageable pageable = new Pageable();
         pageable.setPageSize(pageSize);
         pageable.setCurrentPage(currentPage);
-        pageable.setTotal(menuService.getMenuTotal(keyWord));
+        pageable.setTotal(schoolService.getSchoolTotal(keyWord));
         return this.renderSuccess(menuList,pageable);
     }
 
@@ -89,7 +94,7 @@ public class SchoolController extends BaseController{
         String id = claims.get("id", String.class);
         String user_role = claims.get("user_role", String.class);
         String user_code = claims.get("user_code", String.class);
-        if (!user_code.equals("999") || !menuService.checkMenu(user_role,"menuManage")){
+        if (!user_code.equals("999") || !menuService.checkMenu(user_role,"schoolMange")){
             return this.renderError("访问权限不够",400);
         }
         try {
@@ -118,7 +123,7 @@ public class SchoolController extends BaseController{
         Claims claims = jwtUtil.parseJWT(token);
         String user_role = claims.get("user_role", String.class);
         String user_code = claims.get("user_code", String.class);
-        if (!user_code.equals("999") || !menuService.checkMenu(user_role,"menuManage")){
+        if (!user_code.equals("999") || !menuService.checkMenu(user_role,"schoolMange")){
             return this.renderError("访问权限不够",400);
         }
         return this.renderSuccess(menuService.selectById(id));
@@ -130,7 +135,7 @@ public class SchoolController extends BaseController{
         Claims claims = jwtUtil.parseJWT(token);
         String user_role = claims.get("user_role", String.class);
         String user_code = claims.get("user_code", String.class);
-        if (!user_code.equals("999") || !menuService.checkMenu(user_role,"menuManage")){
+        if (!user_code.equals("999") || !menuService.checkMenu(user_role,"schoolMange")){
             return this.renderError("访问权限不够",400);
         }
         try {

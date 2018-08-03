@@ -2,7 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.wxiaoqi.security.xjsystem.mapper.SchoolMapper">
 
-    <resultMap id="MenuResultMap" type="com.github.wxiaoqi.security.xjsystem.entity.School">
+    <resultMap id="SchoolResultMap" type="com.github.wxiaoqi.security.xjsystem.entity.School">
     </resultMap>
+    <resultMap id="SchoolVoResultMap" type="com.github.wxiaoqi.security.xjsystem.vo.SchoolVo">
+    </resultMap>
+
+    <select id="selectAllSchool" resultMap="SchoolVoResultMap">
+        select
+        s.*,
+        d.dic_name_c "style_name",
+        d1.dic_name_c "school_creat_name"
+        from system_school s
+        INNER JOIN system_dic d ON s.style = d.dic_code
+        INNER JOIN system_dic d1 ON s.school_creat = d1.dic_code
+        where
+        s.status != '0'
+        <if test=" keyword != null and keyword != '' ">
+            and  (s.s_name like '%${keyword}%' or s.address like '%${keyword}%')
+        </if>
+        and d.dic_name= CONCAT('SCHOOLSTYLE',s.style) and d1.dic_name = CONCAT('SCHOOLCREAT',s.school_creat)
+        limit #{currentPage},#{PageSize}
+    </select>
+
+    <select id="selectScoolTotal" resultType="java.lang.Integer">
+        select
+        count(*)
+        from system_school s
+        where
+        s.status != '0'
+        <if test=" keyword != null and keyword != '' ">
+            and  (s.s_name like '%${keyword}%' or s.address like '%${keyword}%')
+        </if>
+    </select>
 
 </mapper>

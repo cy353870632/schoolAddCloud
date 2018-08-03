@@ -33,7 +33,7 @@ public class School extends Model<School> implements Serializable{
     private String style;//类型，编码，对应dic中的schoolStyle
     private String description;//描述
     private String president;//校长名称
-    private String style_name;//学校类型名称，不允许直接修改，只能用编码赋值
+    private String school_creat;//办学类型，编码，对应dic中的schoolCreat
 
 
 

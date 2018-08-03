@@ -28,7 +28,7 @@
         limit #{currentPage},#{PageSize}
     </select>
 
-    <select id="selectMenuTotal" resultMap="MenuResultMap">
+    <select id="selectMenuTotal" resultType="java.lang.Integer">
         select
         count(*)
         from system_menu u
