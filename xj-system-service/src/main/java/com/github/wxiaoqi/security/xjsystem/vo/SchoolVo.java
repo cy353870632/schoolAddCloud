@@ -27,4 +27,8 @@ public class SchoolVo{
     private String president;//校长名称
     public String style_name;
     public String school_creat_name;
+    private int review_status;//审批状态，1为可用，0位未通过，2为待审批
+    public String creat_username;
+    public String review_username;
+
 }

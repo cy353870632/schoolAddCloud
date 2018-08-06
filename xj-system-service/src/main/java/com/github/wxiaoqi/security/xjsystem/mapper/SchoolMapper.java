@@ -10,8 +10,11 @@ import java.util.List;
 
 public interface SchoolMapper extends BaseMapper<School> {
 
-    List<SchoolVo> selectAllSchool(@Param("keyword") String keyword, @Param("PageSize") Integer PageSize, @Param("currentPage") Integer currentPage);
+    List<SchoolVo> selectAllSchool(@Param("keyword") String keyword, @Param("PageSize") Integer PageSize, @Param("currentPage") Integer currentPage
+            , @Param("review_status") Integer review_status);
 
     Integer selectScoolTotal(@Param("keyword") String keyword);
 
+    List<SchoolVo> selectAllSchoolByUserID(@Param("keyword") String keyword, @Param("PageSize") Integer PageSize, @Param("currentPage") Integer currentPage
+            , @Param("review_status") Integer review_status,@Param("userid") String userid);
 }

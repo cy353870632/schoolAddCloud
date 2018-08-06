@@ -11,14 +11,41 @@
         select
         s.*,
         d.dic_name_c "style_name",
+        d1.dic_name_c "school_creat_name",
+        u.u_name "creat_username",
+        u1.u_name "review_username"
+        from system_school s
+        INNER JOIN system_dic d ON s.style = d.dic_code
+        INNER JOIN system_dic d1 ON s.school_creat = d1.dic_code
+        INNER JOIN SYSTEM_USER u ON s.creat_user = u.id
+        INNER JOIN SYSTEM_USER u1 ON s.review_user = u1.id
+        where
+        s.status != '0'
+        <if test=" keyword != null and keyword != '' ">
+            and  (s.s_name like '%${keyword}%' or s.address like '%${keyword}%')
+        </if>
+        <if test="review_status != 3 ">
+            and  (s.review_status = #{review_status})
+        </if>
+        and d.dic_name= CONCAT('SCHOOLSTYLE',s.style) and d1.dic_name = CONCAT('SCHOOLCREAT',s.school_creat)
+        limit #{currentPage},#{PageSize}
+    </select>
+
+    <select id="selectAllSchoolByUserID" resultMap="SchoolVoResultMap">
+        select
+        s.*,
+        d.dic_name_c "style_name",
         d1.dic_name_c "school_creat_name"
         from system_school s
         INNER JOIN system_dic d ON s.style = d.dic_code
         INNER JOIN system_dic d1 ON s.school_creat = d1.dic_code
         where
-        s.status != '0'
+        s.status != '0' and s.creat_user=#{userid}
         <if test=" keyword != null and keyword != '' ">
             and  (s.s_name like '%${keyword}%' or s.address like '%${keyword}%')
+        </if>
+        <if test="review_status != 3 ">
+            and  (s.review_status = #{review_status})
         </if>
         and d.dic_name= CONCAT('SCHOOLSTYLE',s.style) and d1.dic_name = CONCAT('SCHOOLCREAT',s.school_creat)
         limit #{currentPage},#{PageSize}

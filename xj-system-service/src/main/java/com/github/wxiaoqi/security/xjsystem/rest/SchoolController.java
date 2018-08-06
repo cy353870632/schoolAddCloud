@@ -64,7 +64,7 @@ public class SchoolController extends BaseController{
     ISchoolService schoolService;
 
     @RequestMapping(value = "getAllSchool", method = RequestMethod.POST)
-    public Object getAllMenu(HttpServletRequest request,String keyWord,Integer pageSize,Integer currentPage) throws Exception {
+    public Object getAllMenu(HttpServletRequest request,String keyWord,Integer pageSize,Integer currentPage,int review_status) throws Exception {
         String token = request.getHeader(tokenHeader);
         Claims claims = jwtUtil.parseJWT(token);
         String id = claims.get("id", String.class);
@@ -79,7 +79,7 @@ public class SchoolController extends BaseController{
         if (pageSize==0){
             pageSize = 10;
         }
-        List<SchoolVo> menuList = schoolService.getAllSchool(keyWord,pageSize,currentPage);
+        List<SchoolVo> menuList = schoolService.getAllSchool(keyWord,pageSize,currentPage,review_status,user_code,id);
         Pageable pageable = new Pageable();
         pageable.setPageSize(pageSize);
         pageable.setCurrentPage(currentPage);

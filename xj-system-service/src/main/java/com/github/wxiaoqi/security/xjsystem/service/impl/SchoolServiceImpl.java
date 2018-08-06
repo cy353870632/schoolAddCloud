@@ -42,13 +42,17 @@ public class SchoolServiceImpl extends ServiceImpl<SchoolMapper,School> implemen
     ICacheService cacheService;
 
     @Override
-    public List getAllSchool(String keyword, Integer pageSize, Integer currentPage) {
+    public List getAllSchool(String keyword, Integer pageSize, Integer currentPage,int review_status,String user_code, String id) {
 
 //        Map cacheMap = cacheService.cacheGridMessage("getAllmenu",pageSize+currentPage);
 //        List<JSONObject> menuObejct = (List<JSONObject>)cacheMap.get("cacheListMap");
 //        if (menuObejct == null){
             currentPage = (currentPage-1)*pageSize;
-            List<SchoolVo> schoolVoList = schoolMapper.selectAllSchool(keyword,pageSize,currentPage);
+        List<SchoolVo> schoolVoList = new ArrayList<>();
+        if (user_code.equals("999") || user_code.equals("998"))
+           schoolVoList = schoolMapper.selectAllSchool(keyword,pageSize,currentPage,review_status);
+        else
+            schoolVoList = schoolMapper.selectAllSchoolByUserID(keyword,pageSize,currentPage,review_status,id);
 //            cacheService.cacheGridMessage("getAllmenuParent","Parent");
 //            cacheService.getCacheMessage(menuList);
 //            cacheService.cacheGridMessage("getAllmenuParent","Parent");
