@@ -35,7 +35,8 @@ public class School extends Model<School> implements Serializable{
     private String president;//校长名称
     private String school_creat;//办学类型，编码，对应dic中的schoolCreat
     private int review_status;//审批状态，1为可用，0位未通过，2为待审批
-
+    private String creat_user;//描述
+    private String review_user;//校长名称
 
 
     @Override

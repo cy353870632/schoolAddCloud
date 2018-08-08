@@ -2,13 +2,13 @@ package com.github.wxiaoqi.security.xjsystem.rest;
 
 //import com.ace.cache.annotation.Cache;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.github.wxiaoqi.security.auth.client.jwt.UserAuthUtil;
 import com.github.wxiaoqi.security.xjsystem.base.BaseController;
 import com.github.wxiaoqi.security.xjsystem.entity.Menu;
-import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
-import com.github.wxiaoqi.security.xjsystem.service.IMenuService;
-import com.github.wxiaoqi.security.xjsystem.service.ISchoolService;
-import com.github.wxiaoqi.security.xjsystem.service.IUserService;
+import com.github.wxiaoqi.security.xjsystem.entity.School;
+import com.github.wxiaoqi.security.xjsystem.entity.System_dic;
+import com.github.wxiaoqi.security.xjsystem.service.*;
 import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
 import com.github.wxiaoqi.security.xjsystem.utils.StringUtils;
 import com.github.wxiaoqi.security.xjsystem.vo.Pageable;
@@ -18,13 +18,16 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.objenesis.instantiator.sun.MagicInstantiator;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * ${DESCRIPTION}
@@ -49,9 +52,6 @@ public class SchoolController extends BaseController{
     private long ttlMillis;
 
     @Autowired
-    private UserAuthUtil userAuthUtil;
-
-    @Autowired
     ICacheService cacheService;
 
     @Autowired
@@ -62,6 +62,10 @@ public class SchoolController extends BaseController{
 
     @Autowired
     ISchoolService schoolService;
+
+    @Autowired
+    ISysDicService sysDicService;
+
 
     @RequestMapping(value = "getAllSchool", method = RequestMethod.POST)
     public Object getAllMenu(HttpServletRequest request,String keyWord,Integer pageSize,Integer currentPage,int review_status) throws Exception {
@@ -88,7 +92,7 @@ public class SchoolController extends BaseController{
     }
 
     @RequestMapping(value = "addSchool", method = RequestMethod.POST)
-    public Object addMenu(HttpServletRequest request,@RequestBody Menu menu) throws Exception {
+    public Object addMenu(HttpServletRequest request,@RequestBody School school) throws Exception {
         String token = request.getHeader(tokenHeader);
         Claims claims = jwtUtil.parseJWT(token);
         String id = claims.get("id", String.class);
@@ -98,7 +102,8 @@ public class SchoolController extends BaseController{
             return this.renderError("访问权限不够",400);
         }
         try {
-            if (menuService.addMenu(menu)==1)
+            school.setCreat_user(id);
+            if (schoolService.addSchool(school)==1)
                 return this.renderSuccess();
             else
                 return this.renderError("保存失败",201);
@@ -117,7 +122,7 @@ public class SchoolController extends BaseController{
     }
 
 
-    @RequestMapping(value = "getSchoolByid", method = RequestMethod.POST)
+    @RequestMapping(value = "getStyleAndCreatStyle", method = RequestMethod.POST)
     public Object getMenuByid(HttpServletRequest request,String id) throws Exception {
         String token = request.getHeader(tokenHeader);
         Claims claims = jwtUtil.parseJWT(token);
@@ -126,7 +131,18 @@ public class SchoolController extends BaseController{
         if (!user_code.equals("999") || !menuService.checkMenu(user_role,"schoolMange")){
             return this.renderError("访问权限不够",400);
         }
-        return this.renderSuccess(menuService.selectById(id));
+        EntityWrapper<System_dic> wrapper = new EntityWrapper<System_dic>();
+        wrapper.eq("dic_name","SCHOOLSTYLE");
+        String dic_id = sysDicService.selectMap(wrapper).get("id").toString();
+        List<System_dic> style_dic = sysDicService.getChildByParentid(dic_id);
+        EntityWrapper<System_dic> wrapper1 = new EntityWrapper<System_dic>();
+        wrapper1.eq("dic_name","SCHOOLCREAT");
+        dic_id = sysDicService.selectMap(wrapper1).get("id").toString();
+        List<System_dic> creatstyle_dic = sysDicService.getChildByParentid(dic_id);
+        Map map = new HashMap<>();
+        map.put("styleDic",style_dic);
+        map.put("creatstyle_dic",creatstyle_dic);
+        return this.renderSuccess(map);
     }
 
     @RequestMapping(value = "upSchool", method = RequestMethod.POST)

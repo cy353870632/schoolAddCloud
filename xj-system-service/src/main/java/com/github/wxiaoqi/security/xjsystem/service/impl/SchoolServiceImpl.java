@@ -66,6 +66,19 @@ public class SchoolServiceImpl extends ServiceImpl<SchoolMapper,School> implemen
         return schoolMapper.selectScoolTotal(keyword);
     }
 
+    @Override
+    public Integer addSchool(School school) {
+        school.setStatus("1");
+        school.setCreat_date(new Date());
+        school.setUpdate_date(new Date());
+        school.setRead_only("0");
+        school.setId(UUID.randomUUID().toString());
+        school.setReview_status(2);
+        if (school.getLocal() == null)
+            school.setLocal("");
+        return schoolMapper.insert(school);
+    }
+
 //    @Override
 //    public Integer getMenuTotal(String keyword) {
 //        Integer total = menuMapper.selectMenuTotal(keyword);

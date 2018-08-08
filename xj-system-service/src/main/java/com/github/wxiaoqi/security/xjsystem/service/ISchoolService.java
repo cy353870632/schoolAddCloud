@@ -20,7 +20,7 @@ public interface ISchoolService extends IService<School> {
 
     public Integer getSchoolTotal(String keyword);
 //
-//    public Integer addMenu(Menu menu);
+    public Integer addSchool(School school);
 //
 //    public Integer upMenu(Menu menu, Integer status);
 
