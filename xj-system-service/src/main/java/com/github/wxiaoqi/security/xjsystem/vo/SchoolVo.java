@@ -30,5 +30,6 @@ public class SchoolVo{
     private int review_status;//审批状态，1为可用，0位未通过，2为待审批
     public String creat_username;
     public String review_username;
-
+    private double longitude;//经度
+    private double latitude;//纬度
 }

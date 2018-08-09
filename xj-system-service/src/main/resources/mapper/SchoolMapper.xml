@@ -18,7 +18,7 @@
         INNER JOIN system_dic d ON s.style = d.dic_code
         INNER JOIN system_dic d1 ON s.school_creat = d1.dic_code
         INNER JOIN SYSTEM_USER u ON s.creat_user = u.id
-        INNER JOIN SYSTEM_USER u1 ON s.review_user = u1.id
+        LEFT JOIN SYSTEM_USER u1 ON s.review_user = u1.id
         where
         s.status != '0'
         <if test=" keyword != null and keyword != '' ">

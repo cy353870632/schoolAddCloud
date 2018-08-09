@@ -74,8 +74,11 @@ public class SchoolServiceImpl extends ServiceImpl<SchoolMapper,School> implemen
         school.setRead_only("0");
         school.setId(UUID.randomUUID().toString());
         school.setReview_status(2);
-        if (school.getLocal() == null)
-            school.setLocal("");
+        if (school.getLongitude()==0)
+            school.setLongitude(0);
+        if (school.getLatitude()==0)
+            school.setLatitude(0);
+        school.setReview_user("0");
         return schoolMapper.insert(school);
     }
 

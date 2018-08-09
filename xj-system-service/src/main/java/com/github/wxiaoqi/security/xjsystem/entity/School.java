@@ -28,15 +28,16 @@ public class School extends Model<School> implements Serializable{
     //为1的时候不允许修改，为系统数据，为0的时候可以编辑
     private String read_only;
     private String status;//状态，1为可用，0位不可用
-    private String local;//坐标位置
     private String city;//所在城市
     private String style;//类型，编码，对应dic中的schoolStyle
     private String description;//描述
     private String president;//校长名称
     private String school_creat;//办学类型，编码，对应dic中的schoolCreat
-    private int review_status;//审批状态，1为可用，0位未通过，2为待审批
+    private int review_status;//审批状态，1为通过，0位未通过，2为待审批
     private String creat_user;//描述
     private String review_user;//校长名称
+    private double longitude;//经度
+    private double latitude;//纬度
 
 
     @Override

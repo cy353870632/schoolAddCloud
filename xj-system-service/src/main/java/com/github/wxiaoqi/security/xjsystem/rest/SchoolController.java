@@ -74,7 +74,7 @@ public class SchoolController extends BaseController{
         String id = claims.get("id", String.class);
         String user_code = claims.get("user_code", String.class);
         String user_role = claims.get("user_role", String.class);
-        if (!user_code.equals("999") || !menuService.checkMenu(user_role,"schoolMange")){
+        if (!user_code.equals("999") &&!menuService.checkMenu(user_role,"schoolMange")){
             return this.renderError("访问权限不够",400);
         }
         if (currentPage==0){
@@ -98,7 +98,7 @@ public class SchoolController extends BaseController{
         String id = claims.get("id", String.class);
         String user_role = claims.get("user_role", String.class);
         String user_code = claims.get("user_code", String.class);
-        if (!user_code.equals("999") || !menuService.checkMenu(user_role,"schoolMange")){
+        if (!user_code.equals("999") && !menuService.checkMenu(user_role,"schoolMange")){
             return this.renderError("访问权限不够",400);
         }
         try {
@@ -128,7 +128,7 @@ public class SchoolController extends BaseController{
         Claims claims = jwtUtil.parseJWT(token);
         String user_role = claims.get("user_role", String.class);
         String user_code = claims.get("user_code", String.class);
-        if (!user_code.equals("999") || !menuService.checkMenu(user_role,"schoolMange")){
+        if (!user_code.equals("999") && !menuService.checkMenu(user_role,"schoolMange")){
             return this.renderError("访问权限不够",400);
         }
         EntityWrapper<System_dic> wrapper = new EntityWrapper<System_dic>();
@@ -151,7 +151,7 @@ public class SchoolController extends BaseController{
         Claims claims = jwtUtil.parseJWT(token);
         String user_role = claims.get("user_role", String.class);
         String user_code = claims.get("user_code", String.class);
-        if (!user_code.equals("999") || !menuService.checkMenu(user_role,"schoolMange")){
+        if (!user_code.equals("999") && !menuService.checkMenu(user_role,"schoolMange")){
             return this.renderError("访问权限不够",400);
         }
         try {
