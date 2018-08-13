@@ -11,6 +11,7 @@ import com.github.wxiaoqi.security.xjsystem.service.*;
 import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
 import com.github.wxiaoqi.security.xjsystem.utils.StringUtils;
 import com.github.wxiaoqi.security.xjsystem.vo.Pageable;
+import com.github.wxiaoqi.security.xjsystem.vo.ProvinceVo;
 import com.github.wxiaoqi.security.xjsystem.vo.SchoolVo;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
@@ -50,33 +51,23 @@ public class CityController extends BaseController{
     private long ttlMillis;
 
     @Autowired
-    ICacheService cacheService;
-
-    @Autowired
     JWTUtil jwtUtil;
 
     @Autowired
-    IMenuService menuService;
-
-    @Autowired
-    ISchoolService schoolService;
-
-    @Autowired
-    ISysDicService sysDicService;
-
+    IProviceService proviceService;
 
     @RequestMapping(value = "getAllCity", method = RequestMethod.POST)
-    public Object getAllMenu(HttpServletRequest request,String keyWord) throws Exception {
+    public Object getAllMenu(HttpServletRequest request) throws Exception {
         String token = request.getHeader(tokenHeader);
         Claims claims = jwtUtil.parseJWT(token);
-        String id = claims.get("id", String.class);
-        String user_code = claims.get("user_code", String.class);
-        String user_role = claims.get("user_role", String.class);
-        if (!user_code.equals("999") && !user_code.equals("998") && !menuService.checkMenu(user_role,"schoolMange")){
-            return this.renderError("访问权限不够",400);
-        }
-
-        return this.renderSuccess();
+//        String id = claims.get("id", String.class);
+//        String user_code = claims.get("user_code", String.class);
+//        String user_role = claims.get("user_role", String.class);
+//        if (!user_code.equals("999") && !user_code.equals("998") && !menuService.checkMenu(user_role,"schoolMange")){
+//            return this.renderError("访问权限不够",400);
+//        }
+        List<ProvinceVo> provinceVos = proviceService.getAllCityByStatus(1);
+        return this.renderSuccess(provinceVos);
     }
 
 

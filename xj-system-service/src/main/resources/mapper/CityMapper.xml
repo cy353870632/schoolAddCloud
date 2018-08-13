@@ -4,6 +4,20 @@
 
     <resultMap id="CityResultMap" type="com.github.wxiaoqi.security.xjsystem.entity.City">
     </resultMap>
+    <resultMap id="CityVoResultMap" type="com.github.wxiaoqi.security.xjsystem.vo.CityVo">
+    </resultMap>
 
-
+    <select id="getcityByProCodeList" resultMap="CityVoResultMap">
+        SELECT * from city
+        where provincecode in
+        <foreach collection="proCodeList" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and status=1
+    </select>
+    <select id="getcityByProCode" resultMap="CityVoResultMap">
+        SELECT * from city
+        where provincecode = #{proCode}
+        and status=1
+    </select>
 </mapper>

@@ -4,6 +4,10 @@
 
     <resultMap id="ProvinceResultMap" type="com.github.wxiaoqi.security.xjsystem.entity.Province">
     </resultMap>
+    <resultMap id="ProvinceVoResultMap" type="com.github.wxiaoqi.security.xjsystem.vo.ProvinceVo">
+    </resultMap>
 
-
+    <select id="selectAllByStatus" resultMap="ProvinceVoResultMap">
+        select * from province WHERE status=#{status}
+    </select>
 </mapper>

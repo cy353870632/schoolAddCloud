@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * @author chengyuan
  * @create 2018-05-23 8:48
- * @desc 用户服务实现类
+ * @desc 区
  **/
 @Service
 @Transactional(rollbackFor = Exception.class)
