@@ -14,6 +14,7 @@ import com.github.wxiaoqi.security.xjsystem.service.IUserService;
 import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
 import com.github.wxiaoqi.security.xjsystem.utils.MenuUtil;
 import com.github.wxiaoqi.security.xjsystem.utils.StringUtils;
+import com.github.wxiaoqi.security.xjsystem.utils.UserMessage;
 import com.github.wxiaoqi.security.xjsystem.vo.MenuVo;
 import com.github.wxiaoqi.security.xjsystem.vo.Pageable;
 import com.github.wxiaoqi.security.xjsystem.vo.UserInfoVo;
@@ -87,10 +88,8 @@ public class UserController extends BaseController{
 
     @RequestMapping(value = "getUserInfo", method = RequestMethod.POST)
     public Object getUserInfo(HttpServletRequest request) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_id = claims.get("id", String.class);
-        User user = userService.selectById(user_id);
+        String id = UserMessage.getUserId();
+        User user = userService.selectById(id);
         UserVo userVo = new UserVo();
         BeanUtils.copyProperties(user, userVo);
         if (user==null){
@@ -103,10 +102,8 @@ public class UserController extends BaseController{
     @RequestMapping(value = "getPromoterList", method = RequestMethod.POST)
     public Object getPromoterList(HttpServletRequest request,String keyWord,Integer pageSize,Integer currentPage) throws Exception {
         Boolean status = false;
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_role = claims.get("user_role", String.class);
-        String user_id = claims.get("id", String.class);
+        String id = UserMessage.getUserId();
+        String user_role = UserMessage.getUserRole();
         if (menuService.checkMenu(user_role,"promoterMange")){
             if (pageSize == null){
                 pageSize = 10;
@@ -114,8 +111,8 @@ public class UserController extends BaseController{
             if (currentPage == null){
                 currentPage = 1;
             }
-            List<User> promoterList = userService.getPromoter(user_id,keyWord,pageSize,currentPage);
-            Integer total = userService.getPromoterTotal(user_id,keyWord);
+            List<User> promoterList = userService.getPromoter(id,keyWord,pageSize,currentPage);
+            Integer total = userService.getPromoterTotal(id,keyWord);
             Pageable pageable = new Pageable();
             pageable.setCurrentPage(currentPage);
             pageable.setPageSize(pageSize);
@@ -127,10 +124,7 @@ public class UserController extends BaseController{
 
     @RequestMapping(value = "addPromoter", method = RequestMethod.POST)
     public Object addPromoter(HttpServletRequest request,@RequestBody User user) throws Exception{
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_code = claims.get("user_code", String.class);
-        String user_id = claims.get("id", String.class);
+        String user_code = UserMessage.getUserCode();
         if (!user_code.equals("999") && !user_code.equals("998")){
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
@@ -157,10 +151,7 @@ public class UserController extends BaseController{
 
     @RequestMapping(value = "deletePromoter", method = RequestMethod.POST)
     public Object deletePromoter(HttpServletRequest request,String uid) throws Exception{
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_code = claims.get("user_code", String.class);
-        String user_id = claims.get("id", String.class);
+        String user_code = UserMessage.getUserCode();
         if (!user_code.equals("999") && !user_code.equals("998")){
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
@@ -176,10 +167,7 @@ public class UserController extends BaseController{
 
     @RequestMapping(value = "getPromoter", method = RequestMethod.POST)
     public Object getPromoter(HttpServletRequest request,String uid) throws Exception{
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_code = claims.get("user_code", String.class);
-        String user_id = claims.get("id", String.class);
+        String user_code = UserMessage.getUserCode();
         if (!user_code.equals("999") && !user_code.equals("998")){
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
@@ -194,10 +182,7 @@ public class UserController extends BaseController{
     }
     @RequestMapping(value = "upPromoter", method = RequestMethod.POST)
     public Object upPromoter(HttpServletRequest request,@RequestBody User user) throws Exception{
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_code = claims.get("user_code", String.class);
-        String user_id = claims.get("id", String.class);
+        String user_code = UserMessage.getUserCode();
         if (!user_code.equals("999") && !user_code.equals("998")){
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
@@ -227,10 +212,7 @@ public class UserController extends BaseController{
 
     @RequestMapping(value = "restPWD", method = RequestMethod.POST)
     public Object restPWD(HttpServletRequest request,String uid) throws Exception{
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_code = claims.get("user_code", String.class);
-        String user_id = claims.get("id", String.class);
+        String user_code = UserMessage.getUserCode();
         if (!user_code.equals("999") && !user_code.equals("998")){
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
@@ -248,10 +230,9 @@ public class UserController extends BaseController{
     @RequestMapping(value = "getManageUserList", method = RequestMethod.POST)
     public Object getManageUserList(HttpServletRequest request,String keyWord,Integer pageSize,Integer currentPage) throws Exception {
         Boolean status = false;
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_role = claims.get("user_role", String.class);
-        String user_id = claims.get("id", String.class);
+        String id = UserMessage.getUserId();
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
         if (menuService.checkMenu(user_role,"userMange")){
             if (pageSize == null){
                 pageSize = 10;
@@ -259,8 +240,8 @@ public class UserController extends BaseController{
             if (currentPage == null){
                 currentPage = 1;
             }
-            List<User> promoterList = userService.getManageUser(user_id,keyWord,pageSize,currentPage);
-            Integer total = userService.getManageUserTotal(user_id,keyWord);
+            List<User> promoterList = userService.getManageUser(id,keyWord,pageSize,currentPage);
+            Integer total = userService.getManageUserTotal(id,keyWord);
             Pageable pageable = new Pageable();
             pageable.setCurrentPage(currentPage);
             pageable.setPageSize(pageSize);
@@ -272,10 +253,7 @@ public class UserController extends BaseController{
 
     @RequestMapping(value = "addManageUser", method = RequestMethod.POST)
     public Object addManageUser(HttpServletRequest request,@RequestBody User user) throws Exception{
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_code = claims.get("user_code", String.class);
-        String user_id = claims.get("id", String.class);
+        String user_code = UserMessage.getUserCode();
         if (!user_code.equals("999") && !user_code.equals("998")){
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
@@ -302,10 +280,7 @@ public class UserController extends BaseController{
 
     @RequestMapping(value = "deleteManageUser", method = RequestMethod.POST)
     public Object deleteManageUser(HttpServletRequest request,String uid) throws Exception{
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_code = claims.get("user_code", String.class);
-        String user_id = claims.get("id", String.class);
+        String user_code = UserMessage.getUserCode();
         if (!user_code.equals("999") && !user_code.equals("998")){
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
@@ -321,10 +296,7 @@ public class UserController extends BaseController{
 
     @RequestMapping(value = "getManageUser", method = RequestMethod.POST)
     public Object getManageUser(HttpServletRequest request,String uid) throws Exception{
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_code = claims.get("user_code", String.class);
-        String user_id = claims.get("id", String.class);
+        String user_code = UserMessage.getUserCode();
         if (!user_code.equals("999") && !user_code.equals("998")){
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
@@ -339,10 +311,7 @@ public class UserController extends BaseController{
     }
     @RequestMapping(value = "upManageUser", method = RequestMethod.POST)
     public Object upManageUser(HttpServletRequest request,@RequestBody User user) throws Exception{
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_code = claims.get("user_code", String.class);
-        String user_id = claims.get("id", String.class);
+        String user_code = UserMessage.getUserCode();
         if (!user_code.equals("999") && !user_code.equals("998")){
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
@@ -373,10 +342,7 @@ public class UserController extends BaseController{
 
     @RequestMapping(value = "restManageUserPWD", method = RequestMethod.POST)
     public Object restManageUserPWD(HttpServletRequest request,String uid) throws Exception{
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_code = claims.get("user_code", String.class);
-        String user_id = claims.get("id", String.class);
+        String user_code = UserMessage.getUserCode();
         if (!user_code.equals("999") && !user_code.equals("998")){
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
@@ -395,17 +361,15 @@ public class UserController extends BaseController{
         if (pass.length()<6){
             return this.renderError("密码长度不符，至少为6位",400);//权限不够
         }
-        String token = "";
-        if (loginToken == null || loginToken.equals(""))
-            token = request.getHeader(tokenHeader);
-        else
-            token = loginToken;
-        if (token==null||token.equals("")){
-            return this.renderError("您没有权限进行该操作",400);//权限不够
-        }
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_code = claims.get("user_code", String.class);
-        String user_id = claims.get("id", String.class);
+//        String token = "";
+//        if (loginToken == null || loginToken.equals(""))
+//            token = request.getHeader(tokenHeader);
+//        else
+//            token = loginToken;
+//        if (token==null||token.equals("")){
+//            return this.renderError("您没有权限进行该操作",400);//权限不够
+//        }
+        String user_id = UserMessage.getUserId();
         if (!user_id.equals(id)){
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }

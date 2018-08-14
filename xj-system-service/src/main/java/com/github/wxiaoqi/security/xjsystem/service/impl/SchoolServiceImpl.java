@@ -4,12 +4,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.github.wxiaoqi.security.xjsystem.entity.Menu;
+import com.github.wxiaoqi.security.xjsystem.entity.Province;
 import com.github.wxiaoqi.security.xjsystem.entity.School;
 import com.github.wxiaoqi.security.xjsystem.mapper.MenuMapper;
 import com.github.wxiaoqi.security.xjsystem.mapper.SchoolMapper;
-import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
-import com.github.wxiaoqi.security.xjsystem.service.IMenuService;
-import com.github.wxiaoqi.security.xjsystem.service.ISchoolService;
+import com.github.wxiaoqi.security.xjsystem.service.*;
 import com.github.wxiaoqi.security.xjsystem.utils.MenuUtil;
 import com.github.wxiaoqi.security.xjsystem.vo.MenuVo;
 import com.github.wxiaoqi.security.xjsystem.vo.SchoolVo;
@@ -37,9 +36,17 @@ public class SchoolServiceImpl extends ServiceImpl<SchoolMapper,School> implemen
 
     private String passwordKey = "d+#8p&nn=o30ke6%-";
 
-
     @Autowired
     ICacheService cacheService;
+
+    @Autowired
+    IProviceService proviceService;
+
+    @Autowired
+    ICityService cityService;
+
+    @Autowired
+    IAreaService areaService;
 
     @Override
     public List getAllSchool(String keyword, Integer pageSize, Integer currentPage,int review_status,String user_code, String id) {

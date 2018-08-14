@@ -22,7 +22,7 @@ public class SchoolVo{
     //工号，账号
     private Date creat_date;
     private String status;//状态，1为可用，0位不可用
-    private String city;//所在城市
+    private String provicne_city;//所在城市
     private String description;//描述
     private String president;//校长名称
     public String style_name;

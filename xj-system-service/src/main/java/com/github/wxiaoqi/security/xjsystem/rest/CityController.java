@@ -58,14 +58,6 @@ public class CityController extends BaseController{
 
     @RequestMapping(value = "getAllCity", method = RequestMethod.POST)
     public Object getAllMenu(HttpServletRequest request) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-//        String id = claims.get("id", String.class);
-//        String user_code = claims.get("user_code", String.class);
-//        String user_role = claims.get("user_role", String.class);
-//        if (!user_code.equals("999") && !user_code.equals("998") && !menuService.checkMenu(user_role,"schoolMange")){
-//            return this.renderError("访问权限不够",400);
-//        }
         List<ProvinceVo> provinceVos = proviceService.getAllCityByStatus(1);
         return this.renderSuccess(provinceVos);
     }

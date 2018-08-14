@@ -12,6 +12,7 @@ import com.github.wxiaoqi.security.xjsystem.service.ISysDicService;
 import com.github.wxiaoqi.security.xjsystem.service.IUserService;
 import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
 import com.github.wxiaoqi.security.xjsystem.utils.StringUtils;
+import com.github.wxiaoqi.security.xjsystem.utils.UserMessage;
 import com.github.wxiaoqi.security.xjsystem.vo.Pageable;
 import com.github.wxiaoqi.security.xjsystem.vo.SysDicVo;
 import io.jsonwebtoken.Claims;
@@ -68,11 +69,9 @@ public class SysDicController extends BaseController{
 
     @RequestMapping(value = "getAllSysDic", method = RequestMethod.POST)
     public Object getAllMenu(HttpServletRequest request,String keyWord,Integer pageSize,Integer currentPage) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String id = claims.get("id", String.class);
-        String user_code = claims.get("user_code", String.class);
-        String user_role = claims.get("user_role", String.class);
+        String id = UserMessage.getUserId();
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
         if (!user_code.equals("999") && !menuService.checkMenu(user_role,"sysDicManage")){
             return this.renderError("访问权限不够",400);
         }
@@ -100,11 +99,8 @@ public class SysDicController extends BaseController{
 
     @RequestMapping(value = "addSysDic", method = RequestMethod.POST)
     public Object addSysDic(HttpServletRequest request,@RequestBody System_dic system_dic) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String id = claims.get("id", String.class);
-        String user_role = claims.get("user_role", String.class);
-        String user_code = claims.get("user_code", String.class);
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
         if (!user_code.equals("999") && !menuService.checkMenu(user_role,"sysDicManage")){
             return this.renderError("访问权限不够",400);
         }
@@ -135,10 +131,8 @@ public class SysDicController extends BaseController{
 
     @RequestMapping(value = "getSysDic", method = RequestMethod.POST)
     public Object getMenuByid(HttpServletRequest request,String id) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_role = claims.get("user_role", String.class);
-        String user_code = claims.get("user_code", String.class);
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
         if (!user_code.equals("999") && !menuService.checkMenu(user_role,"sysDicManage")){
             return this.renderError("访问权限不够",400);
         }
@@ -160,10 +154,8 @@ public class SysDicController extends BaseController{
 
     @RequestMapping(value = "upSysDic", method = RequestMethod.POST)
     public Object upMenu(HttpServletRequest request,@RequestBody System_dic system_dic) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_role = claims.get("user_role", String.class);
-        String user_code = claims.get("user_code", String.class);
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
         if (!user_code.equals("999") && !menuService.checkMenu(user_role,"sysDicManage")){
             return this.renderError("访问权限不够",400);
         }
@@ -180,8 +172,6 @@ public class SysDicController extends BaseController{
             else
                 return this.renderError("更新失败",201);
         }catch (Exception e){
-            String s1 = e.getCause().getMessage();
-            String s = StringUtils.subString(e.getCause().getMessage(),"entry '","' for");
             String s2 = StringUtils.subString(e.getCause().getMessage(),"for key '","'");
             if (s2.equals("parentTitle_title"))
                 return this.renderError("该父级字典下已经存在该字典名称，请勿重复添加",201);
@@ -193,10 +183,8 @@ public class SysDicController extends BaseController{
     }
     @RequestMapping(value = "deleteSysDic", method = RequestMethod.POST)
     public Object deleteMenu(HttpServletRequest request,String id) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_role = claims.get("user_role", String.class);
-        String user_code = claims.get("user_code", String.class);
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
         if (!user_code.equals("999") && !menuService.checkMenu(user_role,"sysDicManage")){
             return this.renderError("访问权限不够",400);
         }
@@ -210,10 +198,8 @@ public class SysDicController extends BaseController{
     }
     @RequestMapping(value = "blockSysDic", method = RequestMethod.POST)
     public Object blockMenu(HttpServletRequest request,String id) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_role = claims.get("user_role", String.class);
-        String user_code = claims.get("user_code", String.class);
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
         if (!user_code.equals("999") && !menuService.checkMenu(user_role,"sysDicManage")){
             return this.renderError("访问权限不够",400);
         }
@@ -228,10 +214,8 @@ public class SysDicController extends BaseController{
     }
     @RequestMapping(value = "unblockSysDic", method = RequestMethod.POST)
     public Object unblockMenu(HttpServletRequest request,String id) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_role = claims.get("user_role", String.class);
-        String user_code = claims.get("user_code", String.class);
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
         if (!user_code.equals("999") && !menuService.checkMenu(user_role,"sysDicManage")){
             return this.renderError("访问权限不够",400);
         }

@@ -28,6 +28,8 @@ public class School extends Model<School> implements Serializable{
     //为1的时候不允许修改，为系统数据，为0的时候可以编辑
     private String read_only;
     private String status;//状态，1为可用，0位不可用
+    private String province;//所在省份
+    private String area;//所在区县
     private String city;//所在城市
     private String style;//类型，编码，对应dic中的schoolStyle
     private String description;//描述

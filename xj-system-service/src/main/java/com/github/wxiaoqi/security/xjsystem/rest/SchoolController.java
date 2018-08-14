@@ -11,6 +11,7 @@ import com.github.wxiaoqi.security.xjsystem.entity.System_dic;
 import com.github.wxiaoqi.security.xjsystem.service.*;
 import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
 import com.github.wxiaoqi.security.xjsystem.utils.StringUtils;
+import com.github.wxiaoqi.security.xjsystem.utils.UserMessage;
 import com.github.wxiaoqi.security.xjsystem.vo.Pageable;
 import com.github.wxiaoqi.security.xjsystem.vo.SchoolVo;
 import io.jsonwebtoken.Claims;
@@ -69,11 +70,9 @@ public class SchoolController extends BaseController{
 
     @RequestMapping(value = "getAllSchool", method = RequestMethod.POST)
     public Object getAllMenu(HttpServletRequest request,String keyWord,Integer pageSize,Integer currentPage,int review_status) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String id = claims.get("id", String.class);
-        String user_code = claims.get("user_code", String.class);
-        String user_role = claims.get("user_role", String.class);
+        String id = UserMessage.getUserId();
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
         if (!user_code.equals("999") &&!menuService.checkMenu(user_role,"schoolMange")){
             return this.renderError("访问权限不够",400);
         }
@@ -92,12 +91,10 @@ public class SchoolController extends BaseController{
     }
 
     @RequestMapping(value = "addSchool", method = RequestMethod.POST)
-    public Object addMenu(HttpServletRequest request,@RequestBody School school) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String id = claims.get("id", String.class);
-        String user_role = claims.get("user_role", String.class);
-        String user_code = claims.get("user_code", String.class);
+    public Object addMenu(@RequestBody School school) throws Exception {
+        String id = UserMessage.getUserId();
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
         if (!user_code.equals("999") && !menuService.checkMenu(user_role,"schoolMange")){
             return this.renderError("访问权限不够",400);
         }
@@ -108,8 +105,6 @@ public class SchoolController extends BaseController{
             else
                 return this.renderError("保存失败",201);
         }catch (Exception e){
-            String s1 = e.getCause().getMessage();
-            String s = StringUtils.subString(e.getCause().getMessage(),"entry '","' for");
             String s2 = StringUtils.subString(e.getCause().getMessage(),"for key '","'");
             if (s2.equals("parentTitle_title"))
                 return this.renderError("该父级菜单下已经存在该子菜单，请勿重复添加",201);
@@ -124,10 +119,8 @@ public class SchoolController extends BaseController{
 
     @RequestMapping(value = "getStyleAndCreatStyle", method = RequestMethod.POST)
     public Object getMenuByid(HttpServletRequest request,String id) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_role = claims.get("user_role", String.class);
-        String user_code = claims.get("user_code", String.class);
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
         if (!user_code.equals("999") && !menuService.checkMenu(user_role,"schoolMange")){
             return this.renderError("访问权限不够",400);
         }
@@ -147,10 +140,8 @@ public class SchoolController extends BaseController{
 
     @RequestMapping(value = "upSchool", method = RequestMethod.POST)
     public Object upMenu(HttpServletRequest request,@RequestBody Menu menu) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_role = claims.get("user_role", String.class);
-        String user_code = claims.get("user_code", String.class);
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
         if (!user_code.equals("999") && !menuService.checkMenu(user_role,"schoolMange")){
             return this.renderError("访问权限不够",400);
         }
@@ -160,8 +151,6 @@ public class SchoolController extends BaseController{
             else
                 return this.renderError("更新失败",201);
         }catch (Exception e){
-            String s1 = e.getCause().getMessage();
-            String s = StringUtils.subString(e.getCause().getMessage(),"entry '","' for");
             String s2 = StringUtils.subString(e.getCause().getMessage(),"for key '","'");
             if (s2.equals("parentTitle_title"))
                 return this.renderError("该父级菜单下已经存在该子菜单",201);

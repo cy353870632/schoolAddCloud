@@ -11,6 +11,7 @@ import com.github.wxiaoqi.security.xjsystem.service.IMenuService;
 import com.github.wxiaoqi.security.xjsystem.service.IUserService;
 import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
 import com.github.wxiaoqi.security.xjsystem.utils.StringUtils;
+import com.github.wxiaoqi.security.xjsystem.utils.UserMessage;
 import com.github.wxiaoqi.security.xjsystem.vo.JwtAuthenticationRequest;
 import com.github.wxiaoqi.security.xjsystem.vo.Pageable;
 import com.github.wxiaoqi.security.xjsystem.vo.ResultVo;
@@ -66,20 +67,14 @@ public class MenuController extends BaseController{
 
     @RequestMapping(value = "getMenu", method = RequestMethod.POST)
     public Object getMenu(HttpServletRequest request) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String id = claims.get("id", String.class);
-        String user_role = claims.get("user_role", String.class);
+        String user_role = UserMessage.getUserRole();
         return this.renderSuccess(menuService.getMenu(user_role));
     }
 
     @RequestMapping(value = "getAllMenu", method = RequestMethod.POST)
     public Object getAllMenu(HttpServletRequest request,String keyWord,Integer pageSize,Integer currentPage) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String id = claims.get("id", String.class);
-        String user_code = claims.get("user_code", String.class);
-        String user_role = claims.get("user_role", String.class);
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
         if (!user_code.equals("999") && !menuService.checkMenu(user_role,"menuManage")){
             return this.renderError("访问权限不够",400);
         }
@@ -99,11 +94,8 @@ public class MenuController extends BaseController{
 
     @RequestMapping(value = "addMenu", method = RequestMethod.POST)
     public Object addMenu(HttpServletRequest request,@RequestBody Menu menu) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String id = claims.get("id", String.class);
-        String user_role = claims.get("user_role", String.class);
-        String user_code = claims.get("user_code", String.class);
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
         if (!user_code.equals("999") && !menuService.checkMenu(user_role,"menuManage")){
             return this.renderError("访问权限不够",400);
         }
@@ -128,12 +120,9 @@ public class MenuController extends BaseController{
 
 
     @RequestMapping(value = "getParentMenu", method = RequestMethod.POST)
-    public Object getParentMenu(HttpServletRequest request) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String id = claims.get("id", String.class);
-        String user_role = claims.get("user_role", String.class);
-        String user_code = claims.get("user_code", String.class);
+    public Object getParentMenu() throws Exception {
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
         if (!user_code.equals("999") && !menuService.checkMenu(user_role,"menuManage")){
             return this.renderError("访问权限不够",400);
         }
@@ -142,10 +131,8 @@ public class MenuController extends BaseController{
 
     @RequestMapping(value = "getMenuByid", method = RequestMethod.POST)
     public Object getMenuByid(HttpServletRequest request,String id) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_role = claims.get("user_role", String.class);
-        String user_code = claims.get("user_code", String.class);
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
         if (!user_code.equals("999") && !menuService.checkMenu(user_role,"menuManage")){
             return this.renderError("访问权限不够",400);
         }
@@ -154,10 +141,8 @@ public class MenuController extends BaseController{
 
     @RequestMapping(value = "upMenu", method = RequestMethod.POST)
     public Object upMenu(HttpServletRequest request,@RequestBody Menu menu) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_role = claims.get("user_role", String.class);
-        String user_code = claims.get("user_code", String.class);
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
         if (!user_code.equals("999") && !menuService.checkMenu(user_role,"menuManage")){
             return this.renderError("访问权限不够",400);
         }
@@ -167,8 +152,6 @@ public class MenuController extends BaseController{
             else
                 return this.renderError("更新失败",201);
         }catch (Exception e){
-            String s1 = e.getCause().getMessage();
-            String s = StringUtils.subString(e.getCause().getMessage(),"entry '","' for");
             String s2 = StringUtils.subString(e.getCause().getMessage(),"for key '","'");
             if (s2.equals("parentTitle_title"))
                 return this.renderError("该父级菜单下已经存在该子菜单",201);
@@ -180,10 +163,8 @@ public class MenuController extends BaseController{
     }
     @RequestMapping(value = "deleteMenu", method = RequestMethod.POST)
     public Object deleteMenu(HttpServletRequest request,String id) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_role = claims.get("user_role", String.class);
-        String user_code = claims.get("user_code", String.class);
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
         if (!user_code.equals("999") && !menuService.checkMenu(user_role,"menuManage")){
             return this.renderError("访问权限不够",400);
         }
@@ -196,10 +177,8 @@ public class MenuController extends BaseController{
     }
     @RequestMapping(value = "blockMenu", method = RequestMethod.POST)
     public Object blockMenu(HttpServletRequest request,String id) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_role = claims.get("user_role", String.class);
-        String user_code = claims.get("user_code", String.class);
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
         if (!user_code.equals("999") && !menuService.checkMenu(user_role,"menuManage")){
             return this.renderError("访问权限不够",400);
         }
@@ -212,10 +191,8 @@ public class MenuController extends BaseController{
     }
     @RequestMapping(value = "unblockMenu", method = RequestMethod.POST)
     public Object unblockMenu(HttpServletRequest request,String id) throws Exception {
-        String token = request.getHeader(tokenHeader);
-        Claims claims = jwtUtil.parseJWT(token);
-        String user_role = claims.get("user_role", String.class);
-        String user_code = claims.get("user_code", String.class);
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
         if (!user_code.equals("999") && !menuService.checkMenu(user_role,"menuManage")){
             return this.renderError("访问权限不够",400);
         }
