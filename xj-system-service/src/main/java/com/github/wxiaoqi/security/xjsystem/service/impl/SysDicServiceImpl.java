@@ -63,6 +63,13 @@ public class SysDicServiceImpl extends ServiceImpl<SysDicMapper,System_dic> impl
     }
 
     @Override
+    @Cache(key = "dicParent:u{1}")
+    public List<System_dic> getChildByDicName(String dic_name) {
+        return sysDicMapper.getchildByDicNmae(dic_name);
+    }
+
+
+    @Override
     @CacheClear(key = "dicParent:u{1}")
     public void cacheClear(String parent_id) {
         log.info("清除了字典缓存");

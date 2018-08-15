@@ -16,4 +16,6 @@ public interface SysDicMapper extends BaseMapper<System_dic> {
 
     public List<System_dic> getchildByParentId(@Param("id")String id);
 
+    public List<System_dic> getchildByDicNmae(@Param("dic_name")String dic_name);
+
 }

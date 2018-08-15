@@ -16,9 +16,9 @@ import java.util.List;
 
 public interface ISchoolService extends IService<School> {
 
-    public List<SchoolVo> getAllSchool(String keyword, Integer pageSize, Integer currentPage,int review_status,String user_code, String id);
+    public List<SchoolVo> getAllSchool(String keyword, Integer pageSize, Integer currentPage,int review_status,String user_code, String id,String schoolstyle_status);
 
-    public Integer getSchoolTotal(String keyword);
+    public Integer getSchoolTotal(String keyword,int review_status,String schoolstyle_status);
 //
     public Integer addSchool(School school);
 //

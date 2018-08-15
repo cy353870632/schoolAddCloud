@@ -19,7 +19,9 @@ public interface ISysDicService extends IService<System_dic> {
 
     public Integer getSysDicTotal(String keyword);
 
-    public List getChildByParentid(String parent_id);
+    public List<System_dic> getChildByParentid(String parent_id);
+
+    public List<System_dic> getChildByDicName(String dic_name);
 
     public void cacheClear(String parent_id);
 

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.github.wxiaoqi.security.xjsystem.entity.Menu;
 import com.github.wxiaoqi.security.xjsystem.entity.Province;
 import com.github.wxiaoqi.security.xjsystem.entity.School;
+import com.github.wxiaoqi.security.xjsystem.entity.System_dic;
 import com.github.wxiaoqi.security.xjsystem.mapper.MenuMapper;
 import com.github.wxiaoqi.security.xjsystem.mapper.SchoolMapper;
 import com.github.wxiaoqi.security.xjsystem.service.*;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author chengyuan
@@ -48,18 +50,40 @@ public class SchoolServiceImpl extends ServiceImpl<SchoolMapper,School> implemen
     @Autowired
     IAreaService areaService;
 
+    @Autowired
+    ISysDicService sysDicService;
+
     @Override
-    public List getAllSchool(String keyword, Integer pageSize, Integer currentPage,int review_status,String user_code, String id) {
+    public List getAllSchool(String keyword, Integer pageSize, Integer currentPage,int review_status,String user_code, String id,String schoolstyle_status) {
 
 //        Map cacheMap = cacheService.cacheGridMessage("getAllmenu",pageSize+currentPage);
 //        List<JSONObject> menuObejct = (List<JSONObject>)cacheMap.get("cacheListMap");
 //        if (menuObejct == null){
             currentPage = (currentPage-1)*pageSize;
         List<SchoolVo> schoolVoList = new ArrayList<>();
-        if (user_code.equals("999") || user_code.equals("998"))
-           schoolVoList = schoolMapper.selectAllSchool(keyword,pageSize,currentPage,review_status);
-        else
-            schoolVoList = schoolMapper.selectAllSchoolByUserID(keyword,pageSize,currentPage,review_status,id);
+        List<System_dic> system_dics = sysDicService.getChildByDicName("SCHOOLSTYLE");
+        if (user_code.equals("999") || user_code.equals("998")){
+            schoolVoList = schoolMapper.selectAllSchool(keyword,pageSize,currentPage,review_status,schoolstyle_status);
+            for (SchoolVo schoolVo:schoolVoList){
+                String style = "";
+                String[] s = schoolVo.getStyle_name().split(",");
+                for (String s1:s){
+                    style = style + system_dics.stream().filter(f->f.getDic_code().equals(s1)).collect(Collectors.toList()).get(0).getDic_name_c()+",";
+                }
+                schoolVo.setStyle_name(style.substring(0,style.length()-1));
+            }
+        }
+        else {
+            schoolVoList = schoolMapper.selectAllSchoolByUserID(keyword, pageSize, currentPage, review_status, id,schoolstyle_status);
+            for (SchoolVo schoolVo:schoolVoList){
+                String style = "";
+                String[] s = schoolVo.getStyle_name().split(",");
+                for (String s1:s){
+                    style = style + system_dics.stream().filter(f->f.getDic_code().equals(s1)).collect(Collectors.toList()).get(0).getDic_name_c()+",";
+                }
+                schoolVo.setStyle_name(style.substring(0,style.length()-1));
+            }
+        }
 //            cacheService.cacheGridMessage("getAllmenuParent","Parent");
 //            cacheService.getCacheMessage(menuList);
 //            cacheService.cacheGridMessage("getAllmenuParent","Parent");
@@ -69,8 +93,8 @@ public class SchoolServiceImpl extends ServiceImpl<SchoolMapper,School> implemen
     }
 
     @Override
-    public Integer getSchoolTotal(String keyword) {
-        return schoolMapper.selectScoolTotal(keyword);
+    public Integer getSchoolTotal(String keyword,int review_status,String schoolstyle_status) {
+        return schoolMapper.selectScoolTotal(keyword,review_status,schoolstyle_status);
     }
 
     @Override

@@ -29,4 +29,9 @@
 
     </select>
 
+    <select id="getchildByDicNmae" resultMap="SysDicResultMap">
+        select * from system_dic d
+        WHERE d.dic_name like '%${dic_name}%'  and d.end_mark='1'
+    </select>
+
 </mapper>

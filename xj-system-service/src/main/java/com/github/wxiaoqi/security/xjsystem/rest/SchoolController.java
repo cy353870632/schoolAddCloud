@@ -69,7 +69,7 @@ public class SchoolController extends BaseController{
 
 
     @RequestMapping(value = "getAllSchool", method = RequestMethod.POST)
-    public Object getAllMenu(HttpServletRequest request,String keyWord,Integer pageSize,Integer currentPage,int review_status) throws Exception {
+    public Object getAllMenu(HttpServletRequest request,String keyWord,Integer pageSize,Integer currentPage,int review_status,String schoolstyle_status) throws Exception {
         String id = UserMessage.getUserId();
         String user_code = UserMessage.getUserCode();
         String user_role = UserMessage.getUserRole();
@@ -82,11 +82,11 @@ public class SchoolController extends BaseController{
         if (pageSize==0){
             pageSize = 10;
         }
-        List<SchoolVo> menuList = schoolService.getAllSchool(keyWord,pageSize,currentPage,review_status,user_code,id);
+        List<SchoolVo> menuList = schoolService.getAllSchool(keyWord,pageSize,currentPage,review_status,user_code,id,schoolstyle_status);
         Pageable pageable = new Pageable();
         pageable.setPageSize(pageSize);
         pageable.setCurrentPage(currentPage);
-        pageable.setTotal(schoolService.getSchoolTotal(keyWord));
+        pageable.setTotal(schoolService.getSchoolTotal(keyWord,review_status,schoolstyle_status));
         return this.renderSuccess(menuList,pageable);
     }
 
@@ -160,6 +160,23 @@ public class SchoolController extends BaseController{
                 return this.renderError("更新失败,请检查填写信息重试",201);
         }
     }
+    @RequestMapping(value = "passSchool", method = RequestMethod.POST)
+    public Object passSchool(String id,String status) throws Exception {
+//        String token = request.getHeader(tokenHeader);
+//        Claims claims = jwtUtil.parseJWT(token);
+//        String user_role = claims.get("user_role", String.class);
+//        String user_code = claims.get("user_code", String.class);
+//        if (!user_code.equals("999") || !menuService.checkMenu(user_role,"menuManage")){
+//            return this.renderError("访问权限不够",400);
+//        }
+//        Menu menu = new Menu();
+//        menu.setId(id);
+//        if (menuService.upMenu(menu,0)==1)
+//            return this.renderSuccess();
+//        else
+        return this.renderError("删除失败",201);
+    }
+
     @RequestMapping(value = "deleteSchool", method = RequestMethod.POST)
     public Object deleteMenu(HttpServletRequest request,String id) throws Exception {
 //        String token = request.getHeader(tokenHeader);
