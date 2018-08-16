@@ -32,4 +32,9 @@ public class SchoolVo{
     public String review_username;
     private double longitude;//经度
     private double latitude;//纬度
+    private String province;//所在省份
+    private String area;//所在区县
+    private String city;//所在城市
+    private String style;//类型，编码，对应dic中的schoolStyle
+    private String school_creat;//办学类型，编码，对应dic中的schoolCreat
 }

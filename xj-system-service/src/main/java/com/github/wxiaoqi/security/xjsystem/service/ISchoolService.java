@@ -22,7 +22,7 @@ public interface ISchoolService extends IService<School> {
 //
     public Integer addSchool(School school);
 //
-//    public Integer upMenu(Menu menu, Integer status);
+    public Integer upSchool(School newschool,School oldschool);
 
 
 }

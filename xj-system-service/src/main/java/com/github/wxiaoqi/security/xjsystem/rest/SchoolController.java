@@ -17,6 +17,7 @@ import com.github.wxiaoqi.security.xjsystem.vo.SchoolVo;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.objenesis.instantiator.sun.MagicInstantiator;
@@ -90,6 +91,19 @@ public class SchoolController extends BaseController{
         return this.renderSuccess(menuList,pageable);
     }
 
+    @RequestMapping(value = "getSchool", method = RequestMethod.POST)
+    public Object getSchool(String id) throws Exception {
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
+        if (!user_code.equals("999") && !menuService.checkMenu(user_role,"schoolMange")){
+            return this.renderError("访问权限不够",400);
+        }
+        School school = schoolService.selectById(id);
+        SchoolVo schoolVo = new SchoolVo();
+        BeanUtils.copyProperties(school,schoolVo);
+        return this.renderSuccess(schoolVo);
+    }
+
     @RequestMapping(value = "addSchool", method = RequestMethod.POST)
     public Object addMenu(@RequestBody School school) throws Exception {
         String id = UserMessage.getUserId();
@@ -139,46 +153,44 @@ public class SchoolController extends BaseController{
     }
 
     @RequestMapping(value = "upSchool", method = RequestMethod.POST)
-    public Object upMenu(HttpServletRequest request,@RequestBody Menu menu) throws Exception {
+    public Object upMenu(@RequestBody School school) throws Exception {
         String user_code = UserMessage.getUserCode();
         String user_role = UserMessage.getUserRole();
-        if (!user_code.equals("999") && !menuService.checkMenu(user_role,"schoolMange")){
+        String user_id = UserMessage.getUserId();
+        if (!menuService.checkMenu(user_role,"schoolMange")){
+            return this.renderError("访问权限不够",400);
+        }
+        School school1 = schoolService.selectById(school.getId());
+        if (!school1.getCreat_user().equals(user_id) && !user_code.equals("999")){
             return this.renderError("访问权限不够",400);
         }
         try {
-            if (menuService.upMenu(menu,1)==1)
+            if (schoolService.upSchool(school,school1)==1)
                 return this.renderSuccess();
             else
                 return this.renderError("更新失败",201);
         }catch (Exception e){
-            String s2 = StringUtils.subString(e.getCause().getMessage(),"for key '","'");
-            if (s2.equals("parentTitle_title"))
-                return this.renderError("该父级菜单下已经存在该子菜单",201);
-            if (s2.equals("parentTile_codePath"))
-                return this.renderError("该父级菜单下已经存在该跳转路由",201);
-            else
+//            String s2 = StringUtils.subString(e.getCause().getMessage(),"for key '","'");
                 return this.renderError("更新失败,请检查填写信息重试",201);
         }
     }
-    @RequestMapping(value = "passSchool", method = RequestMethod.POST)
-    public Object passSchool(String id,String status) throws Exception {
-//        String token = request.getHeader(tokenHeader);
-//        Claims claims = jwtUtil.parseJWT(token);
-//        String user_role = claims.get("user_role", String.class);
-//        String user_code = claims.get("user_code", String.class);
-//        if (!user_code.equals("999") || !menuService.checkMenu(user_role,"menuManage")){
-//            return this.renderError("访问权限不够",400);
-//        }
-//        Menu menu = new Menu();
-//        menu.setId(id);
-//        if (menuService.upMenu(menu,0)==1)
-//            return this.renderSuccess();
-//        else
+    @RequestMapping(value = "deleteSchool", method = RequestMethod.POST)
+    public Object deleteSchool(String id) throws Exception {
+        String user_code = UserMessage.getUserCode();
+        if ( !user_code.equals("998") && !user_code.equals("999")){
+            return this.renderError("你无权进行该操作",400);
+        }
+        School school = schoolService.selectById(id);
+        if (school!=null) {
+            school.setStatus("0");
+            schoolService.updateById(school);
+            return this.renderSuccess();
+        }
         return this.renderError("删除失败",201);
     }
 
-    @RequestMapping(value = "deleteSchool", method = RequestMethod.POST)
-    public Object deleteMenu(HttpServletRequest request,String id) throws Exception {
+    @RequestMapping(value = "passSchool", method = RequestMethod.POST)
+    public Object passSchool(HttpServletRequest request,String id) throws Exception {
 //        String token = request.getHeader(tokenHeader);
 //        Claims claims = jwtUtil.parseJWT(token);
 //        String user_role = claims.get("user_role", String.class);

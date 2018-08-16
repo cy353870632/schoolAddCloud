@@ -113,6 +113,38 @@ public class SchoolServiceImpl extends ServiceImpl<SchoolMapper,School> implemen
         return schoolMapper.insert(school);
     }
 
+    @Override
+    public Integer upSchool(School newschool,School oldschool) {
+        oldschool.setUpdate_date(new Date());
+        if (newschool.getS_name()!=null)
+            oldschool.setS_name(newschool.getS_name());
+        if (newschool.getS_user_name()!=null)
+            oldschool.setS_user_name(newschool.getS_user_name());
+        if (newschool.getPhone()!=null)
+            oldschool.setPhone(newschool.getPhone());
+        if (newschool.getProvince()!=null)
+            oldschool.setProvince(newschool.getProvince());
+        if (newschool.getCity()!=null)
+            oldschool.setCity(newschool.getCity());
+        if (newschool.getArea()!=null)
+            oldschool.setArea(newschool.getArea());
+        if (newschool.getLatitude()==0)
+            oldschool.setLatitude(newschool.getLatitude());
+        if (newschool.getLongitude()==0)
+            oldschool.setLongitude(newschool.getLongitude());
+        if (newschool.getAddress()!=null)
+            oldschool.setAddress(newschool.getAddress());
+        if (newschool.getPresident()!=null)
+            oldschool.setPresident(newschool.getPresident());
+        if (newschool.getStyle()!=null)
+            oldschool.setStyle(newschool.getStyle());
+        if (newschool.getSchool_creat()!=null)
+            oldschool.setSchool_creat(newschool.getSchool_creat());
+        if (newschool.getDescription()!=null)
+            oldschool.setDescription(newschool.getDescription());
+        return schoolMapper.updateById(oldschool);
+    }
+
 //    @Override
 //    public Integer getMenuTotal(String keyword) {
 //        Integer total = menuMapper.selectMenuTotal(keyword);
