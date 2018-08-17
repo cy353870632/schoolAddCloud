@@ -71,6 +71,7 @@ public class LoginController extends BaseController{
             String jwtoken = jwtUtil.createJWT(user,ttlMillis);
             resulet.put("accessToken",jwtoken);
             resulet.put("userId",user.getId());
+            resulet.put("userCode",user.getUser_code());
             if (!user.getPwd().equals(MD5Util.encrypt("666666"+passwordKey)))
                 resulet.put("pwdStatus",0);
             else

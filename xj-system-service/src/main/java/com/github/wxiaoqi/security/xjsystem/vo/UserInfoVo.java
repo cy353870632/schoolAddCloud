@@ -15,5 +15,7 @@ public class UserInfoVo{
 
     public String role;
 
+    public String code;
+
     public String images;
 }

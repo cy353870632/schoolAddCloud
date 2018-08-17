@@ -41,11 +41,15 @@
         s.*,
         CONCAT(p.name,c1.name) "provicne_city",
         s.style "style_name",
-        d1.dic_name_c "school_creat_name"
+        d1.dic_name_c "school_creat_name",
+        u.u_name "creat_username",
+        u1.u_name "review_username"
         from system_school s
         INNER JOIN system_dic d1 ON s.school_creat = d1.dic_code
         LEFT JOIN province p ON s.province = p.code
         LEFT JOIN city c1 ON s.city = c1.code
+        LEFT JOIN SYSTEM_USER u ON s.creat_user = u.id
+        LEFT JOIN SYSTEM_USER u1 ON s.review_user = u1.id
         where
         s.status != '0' and s.creat_user=#{userid}
         <if test=" keyword != null and keyword != '' ">

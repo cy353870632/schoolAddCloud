@@ -203,7 +203,28 @@ public class SchoolController extends BaseController{
 //        if (menuService.upMenu(menu,0)==1)
 //            return this.renderSuccess();
 //        else
-            return this.renderError("删除失败",201);
+        return this.renderError("删除失败",201);
+    }
+    @RequestMapping(value = "nopassSchool", method = RequestMethod.POST)
+    public Object nopassSchool(String id,String reviewFalese) throws Exception {
+        String user_role = UserMessage.getUserRole();
+        String user_code = UserMessage.getUserCode();
+        String user_id = UserMessage.getUserId();
+        if (!user_code.equals("999") && !user_code.equals("998") && !menuService.checkMenu(user_role,"menuManage")){
+            return this.renderError("访问权限不够",400);
+        }
+        if (!user_code.equals("999") && !user_code.equals("998")){
+            return this.renderError("操作权限不够",400);
+        }
+        School school = schoolService.selectById(id);
+        if (school!=null) {
+            school.setReview_status(0);
+            school.setNopass_text(reviewFalese);
+            school.setReview_user(user_id);
+            schoolService.updateById(school);
+            return this.renderSuccess();
+        }
+        return this.renderError("操作失败",201);
     }
 //    @RequestMapping(value = "blockMenu", method = RequestMethod.POST)
 //    public Object blockMenu(HttpServletRequest request,String id) throws Exception {

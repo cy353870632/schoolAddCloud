@@ -40,6 +40,7 @@ public class School extends Model<School> implements Serializable{
     private String review_user;//校长名称
     private double longitude;//经度
     private double latitude;//纬度
+    public String nopass_text;//不通过原因
 
 
     @Override
