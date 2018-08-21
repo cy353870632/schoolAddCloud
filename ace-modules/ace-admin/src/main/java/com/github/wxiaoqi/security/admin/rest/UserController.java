@@ -54,4 +54,8 @@ public class UserController extends BaseController<UserBiz,User> {
     List<Menu> getAllMenus() throws Exception {
         return menuBiz.selectListAll();
     }
+
+
+
+
 }

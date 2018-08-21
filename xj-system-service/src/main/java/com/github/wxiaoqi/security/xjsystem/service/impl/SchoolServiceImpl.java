@@ -110,6 +110,8 @@ public class SchoolServiceImpl extends ServiceImpl<SchoolMapper,School> implemen
         if (school.getLatitude()==0)
             school.setLatitude(0);
         school.setReview_user("0");
+
+
         return schoolMapper.insert(school);
     }
 

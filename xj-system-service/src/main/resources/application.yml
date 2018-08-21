@@ -35,6 +35,10 @@ spring:
         port:  ${RABBIT_MQ_PORT:5672}
         username: guest
         password: guest
+        publisher-returns: true
+        listener:
+              simple:
+                acknowledge-mode: manual
     sleuth:
       enabled: true
       http:
