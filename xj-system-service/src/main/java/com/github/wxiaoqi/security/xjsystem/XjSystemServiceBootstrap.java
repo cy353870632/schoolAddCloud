@@ -3,8 +3,16 @@ package com.github.wxiaoqi.security.xjsystem;
 //import com.ace.cache.EnableAceCache;
 import com.ace.cache.EnableAceCache;
 import com.github.wxiaoqi.security.auth.client.EnableAceAuthClient;
+import com.github.wxiaoqi.security.xjsystem.config.Receiver;
+import com.rabbitmq.client.Channel;
 import com.spring4all.swagger.EnableSwagger2Doc;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.ChannelAwareMessageListener;
+import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
@@ -57,4 +65,10 @@ public class XjSystemServiceBootstrap {
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
+
+
+
+
+
+
 }

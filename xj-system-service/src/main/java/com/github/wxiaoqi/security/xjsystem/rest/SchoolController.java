@@ -299,12 +299,12 @@ public class SchoolController extends BaseController{
     public void nopassSchool(HttpServletRequest request,String id) throws Exception {
         Connection connection =  RabbitMqUtil.getConnection();
         Channel channel = connection.createChannel();
-        String exchangeName = "myExchange";
-        channel.exchangeDeclare(exchangeName,"fanout");
+//        String exchangeName = "fanout-exchange";
+//        channel.exchangeDeclare(exchangeName,"fanout");
         int msgCnt =4;
         while(msgCnt-->0){
             String msg = "测试第    "+msgCnt+"    次";
-            channel.basicPublish(exchangeName,"",null,msg.getBytes());  //发送消息
+            channel.basicPublish("fanout-exchange","",null,msg.getBytes());  //发送消息
             System.out.println("produce msg :"+msg);
             Thread.sleep(1200);
 //            TimeUnit.MILLISECONDS.sleep((long) (Math.random()*500));
