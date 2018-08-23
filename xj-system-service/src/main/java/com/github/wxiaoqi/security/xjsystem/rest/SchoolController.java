@@ -194,49 +194,49 @@ public class SchoolController extends BaseController{
         return this.renderError("删除失败",201);
     }
 
-//    @RequestMapping(value = "passSchool", method = RequestMethod.POST)
-//    public Object passSchool(HttpServletRequest request,String id) throws Exception {
-//        String user_role = UserMessage.getUserRole();
-//        String user_code = UserMessage.getUserCode();
-//        String user_id = UserMessage.getUserId();
-//        if (!user_code.equals("999") && !user_code.equals("998") && !menuService.checkMenu(user_role,"menuManage")){
-//            return this.renderError("访问权限不够",400);
-//        }
-//        if (!user_code.equals("999") && !user_code.equals("998")){
-//            return this.renderError("操作权限不够",400);
-//        }
-//        School school = schoolService.selectById(id);
-//        if (school!=null) {
-//            school.setReview_status(1);
-//            school.setReview_user(user_id);
-//            school.setUpdate_date(new Date());
-//            schoolService.updateById(school);
-//            return this.renderSuccess();
-//        }
-//        return this.renderError("删除失败",201);
-//    }
-//    @RequestMapping(value = "nopassSchool", method = RequestMethod.POST)
-//    public Object nopassSchool(String id,String reviewFalese) throws Exception {
-//        String user_role = UserMessage.getUserRole();
-//        String user_code = UserMessage.getUserCode();
-//        String user_id = UserMessage.getUserId();
-//        if (!user_code.equals("999") && !user_code.equals("998") && !menuService.checkMenu(user_role,"menuManage")){
-//            return this.renderError("访问权限不够",400);
-//        }
-//        if (!user_code.equals("999") && !user_code.equals("998")){
-//            return this.renderError("操作权限不够",400);
-//        }
-//        School school = schoolService.selectById(id);
-//        if (school!=null) {
-//            school.setReview_status(0);
-//            school.setNopass_text(reviewFalese);
-//            school.setReview_user(user_id);
-//            school.setUpdate_date(new Date());
-//            schoolService.updateById(school);
-//            return this.renderSuccess();
-//        }
-//        return this.renderError("操作失败",201);
-//    }
+    @RequestMapping(value = "passSchool", method = RequestMethod.POST)
+    public Object passSchool(HttpServletRequest request,String id) throws Exception {
+        String user_role = UserMessage.getUserRole();
+        String user_code = UserMessage.getUserCode();
+        String user_id = UserMessage.getUserId();
+        if (!user_code.equals("999") && !user_code.equals("998") && !menuService.checkMenu(user_role,"menuManage")){
+            return this.renderError("访问权限不够",400);
+        }
+        if (!user_code.equals("999") && !user_code.equals("998")){
+            return this.renderError("操作权限不够",400);
+        }
+        School school = schoolService.selectById(id);
+        if (school!=null) {
+            school.setReview_status(1);
+            school.setReview_user(user_id);
+            school.setUpdate_date(new Date());
+            schoolService.updateById(school);
+            return this.renderSuccess();
+        }
+        return this.renderError("删除失败",201);
+    }
+    @RequestMapping(value = "nopassSchool", method = RequestMethod.POST)
+    public Object nopassSchool(String id,String reviewFalese) throws Exception {
+        String user_role = UserMessage.getUserRole();
+        String user_code = UserMessage.getUserCode();
+        String user_id = UserMessage.getUserId();
+        if (!user_code.equals("999") && !user_code.equals("998") && !menuService.checkMenu(user_role,"menuManage")){
+            return this.renderError("访问权限不够",400);
+        }
+        if (!user_code.equals("999") && !user_code.equals("998")){
+            return this.renderError("操作权限不够",400);
+        }
+        School school = schoolService.selectById(id);
+        if (school!=null) {
+            school.setReview_status(0);
+            school.setNopass_text(reviewFalese);
+            school.setReview_user(user_id);
+            school.setUpdate_date(new Date());
+            schoolService.updateById(school);
+            return this.renderSuccess();
+        }
+        return this.renderError("操作失败",201);
+    }
 //    @RequestMapping(value = "blockMenu", method = RequestMethod.POST)
 //    public Object blockMenu(HttpServletRequest request,String id) throws Exception {
 //        String token = request.getHeader(tokenHeader);
@@ -272,49 +272,4 @@ public class SchoolController extends BaseController{
 
 
 
-    @RequestMapping(value = "passSchool", method = RequestMethod.POST)
-    public void passSchool(HttpServletRequest request,String id) throws Exception {
-        Connection connection =  RabbitMqUtil.getConnection();
-        Channel channel = connection.createChannel();
-        String queueName = "queueOne";
-        String exchangeName = "exchangerOne";
-        String routingKey = "queueOne";
-        channel.exchangeDeclare(exchangeName,"direct");
-        channel.queueDeclare(queueName,false,false,false,null);
-        channel.queueBind(queueName,exchangeName,routingKey);
-
-        int msgCnt =4;
-        while(msgCnt-->0){
-            String msg = "测试第    "+msgCnt+"    次";
-            channel.basicPublish(exchangeName,routingKey,null,msg.getBytes());  //发送消息
-            System.out.println("produce msg :"+msg);
-            Thread.sleep(1200);
-//            TimeUnit.MILLISECONDS.sleep((long) (Math.random()*500));
-        }
-        channel.close();
-        connection.close();
-    }
-
-    @RequestMapping(value = "nopassSchool", method = RequestMethod.POST)
-    public void nopassSchool(HttpServletRequest request,String id) throws Exception {
-        Connection connection =  RabbitMqUtil.getConnection();
-        Channel channel = connection.createChannel();
-//        String exchangeName = "fanout-exchange";
-//        channel.exchangeDeclare(exchangeName,"fanout");
-        int msgCnt =4;
-        while(msgCnt-->0){
-            String msg = "测试第    "+msgCnt+"    次";
-            channel.basicPublish("fanout-exchange","",null,msg.getBytes());  //发送消息
-            System.out.println("produce msg :"+msg);
-            Thread.sleep(1200);
-//            TimeUnit.MILLISECONDS.sleep((long) (Math.random()*500));
-        }
-        channel.close();
-        connection.close();
-    }
-
-    @RequestMapping(value = "rabit", method = RequestMethod.POST)
-    public void rabit(HttpServletRequest request) throws Exception {
-
-    }
 }

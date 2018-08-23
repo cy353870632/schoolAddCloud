@@ -39,4 +39,17 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper,Role> implements IRo
         Role role = roleMapper.getRoleByRname(r_name);
         return role;
     }
+
+    @Override
+//    @Cache(key = "getAllRole")
+    public List<Role> getAllRole(String keyword, Integer pageSize, Integer currentPage) {
+        currentPage = (currentPage-1)*pageSize;
+        List<Role> result = roleMapper.selectAllRole(keyword,currentPage,pageSize);
+        return result;
+    }
+
+    @Override
+    public Integer getAllRoleTotal(String keyword) {
+        return roleMapper.selectAllRoletotal(keyword);
+    }
 }

@@ -19,4 +19,8 @@ public interface IRoleService extends IService<Role> {
 
     public Role getRoleByRname(String r_name);
 
+    public List<Role> getAllRole(String keyword, Integer pageSize, Integer currentPage);
+
+    public Integer getAllRoleTotal(String keyword);
+
 }

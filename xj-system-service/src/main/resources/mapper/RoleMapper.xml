@@ -19,4 +19,27 @@
         where r_name = #{r_name}
     </select>
 
+    <select id="selectAllRole" resultMap="RoleResultMap">
+        select
+        *
+        from system_role u
+        where
+        u.status != 0
+        <if test=" keyword != null and keyword != '' ">
+            and  (u.r_name like '%${keyword}%' or u.r_name_china like '%${keyword}%')
+        </if>
+        order by u.sort limit #{currentPage},#{PageSize}
+    </select>
+    <select id="selectAllRoletotal" resultType="java.lang.Integer">
+        select
+        count(*)
+        from system_role u
+        where
+        u.status != 0
+        <if test=" keyword != null and keyword != '' ">
+            and  (u.r_name like '%${keyword}%' or u.r_name_china like '%${keyword}%')
+        </if>
+    </select>
+
+
 </mapper>
