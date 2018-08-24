@@ -23,4 +23,9 @@ public interface IRoleService extends IService<Role> {
 
     public Integer getAllRoleTotal(String keyword);
 
+    public Integer addRole(Role role);
+
+    public Integer upRole(Role role,Role oldrole);
+
+
 }

@@ -1,6 +1,7 @@
 package com.github.wxiaoqi.security.xjsystem.service.impl;
 
 import com.ace.cache.annotation.Cache;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.github.wxiaoqi.security.common.util.MD5Util;
 import com.github.wxiaoqi.security.xjsystem.entity.Role;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author chengyuan
@@ -51,5 +53,29 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper,Role> implements IRo
     @Override
     public Integer getAllRoleTotal(String keyword) {
         return roleMapper.selectAllRoletotal(keyword);
+    }
+
+    @Override
+    public Integer addRole(Role role) {
+        role.setRead_only("0");
+        role.setCreat_date(new Date());
+        role.setUpdate_date(new Date());
+        role.setStatus(1);
+        role.setId(UUID.randomUUID().toString());
+        if (role.getSort()==null)
+            role.setSort("0");
+        return roleMapper.insert(role);
+    }
+
+    @Override
+    public Integer upRole(Role role,Role oldrole) {
+        if (role.getR_name()!=null && !role.getR_name().equals(""))
+            oldrole.setR_name(role.getR_name());
+        if (role.getR_name_china()!=null && !role.getR_name_china().equals(""))
+            oldrole.setR_name_china(role.getR_name_china());
+        if (role.getSort()!=null && !role.getSort().equals(""))
+            oldrole.setSort(role.getSort());
+        oldrole.setUpdate_date(new Date());
+        return roleMapper.updateById(oldrole);
     }
 }

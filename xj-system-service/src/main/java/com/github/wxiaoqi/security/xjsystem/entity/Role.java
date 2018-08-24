@@ -28,6 +28,8 @@ public class Role extends Model<Role> implements Serializable{
 
     private String r_name_china;//角色名称中文
 
+    private Integer status;//角色名称中文
+
 
     @Override
     protected Serializable pkVal() {

@@ -87,89 +87,93 @@ public class RoleController extends BaseController{
         pageable.setTotal(roleService.getAllRoleTotal(keyWord));
         return this.renderSuccess(roleResult,pageable);
     }
-//
-//    @RequestMapping(value = "addRole", method = RequestMethod.POST)
-//    public Object addMenu(HttpServletRequest request,@RequestBody Menu menu) throws Exception {
-//        String user_code = UserMessage.getUserCode();
-//        String user_role = UserMessage.getUserRole();
-//        if (!user_code.equals("999") && !menuService.checkMenu(user_role,"roleManage")){
-//            return this.renderError("访问权限不够",400);
-//        }
-//        try {
-//            if (menuService.addMenu(menu)==1)
-//                return this.renderSuccess();
-//            else
-//                return this.renderError("保存失败",201);
-//        }catch (Exception e){
-//            String s1 = e.getCause().getMessage();
-//            String s = StringUtils.subString(e.getCause().getMessage(),"entry '","' for");
-//            String s2 = StringUtils.subString(e.getCause().getMessage(),"for key '","'");
-//            if (s2.equals("parentTitle_title"))
-//                return this.renderError("该父级菜单下已经存在该子菜单，请勿重复添加",201);
-//            if (s2.equals("parentTile_codePath"))
-//                return this.renderError("该父级菜单下已经存在该跳转路由，请勿重复添加",201);
-//            else
-//                return this.renderError("添加失败,请检查填写信息重试",201);
-//        }
-//
-//    }
-//
-//
-//    @RequestMapping(value = "getParentMenu", method = RequestMethod.POST)
-//    public Object getParentMenu() throws Exception {
-//        String user_code = UserMessage.getUserCode();
-//        String user_role = UserMessage.getUserRole();
-//        if (!user_code.equals("999") && !menuService.checkMenu(user_role,"menuManage")){
-//            return this.renderError("访问权限不够",400);
-//        }
-//        return this.renderSuccess(menuService.getParentMenu());
-//    }
-//
-//    @RequestMapping(value = "getMenuByid", method = RequestMethod.POST)
-//    public Object getMenuByid(HttpServletRequest request,String id) throws Exception {
-//        String user_code = UserMessage.getUserCode();
-//        String user_role = UserMessage.getUserRole();
-//        if (!user_code.equals("999") && !menuService.checkMenu(user_role,"menuManage")){
-//            return this.renderError("访问权限不够",400);
-//        }
-//        return this.renderSuccess(menuService.selectById(id));
-//    }
-//
-//    @RequestMapping(value = "upMenu", method = RequestMethod.POST)
-//    public Object upMenu(HttpServletRequest request,@RequestBody Menu menu) throws Exception {
-//        String user_code = UserMessage.getUserCode();
-//        String user_role = UserMessage.getUserRole();
-//        if (!user_code.equals("999") && !menuService.checkMenu(user_role,"menuManage")){
-//            return this.renderError("访问权限不够",400);
-//        }
-//        try {
-//            if (menuService.upMenu(menu,1)==1)
-//                return this.renderSuccess();
-//            else
-//                return this.renderError("更新失败",201);
-//        }catch (Exception e){
-//            String s2 = StringUtils.subString(e.getCause().getMessage(),"for key '","'");
-//            if (s2.equals("parentTitle_title"))
-//                return this.renderError("该父级菜单下已经存在该子菜单",201);
-//            if (s2.equals("parentTile_codePath"))
-//                return this.renderError("该父级菜单下已经存在该跳转路由",201);
-//            else
-//                return this.renderError("更新失败,请检查填写信息重试",201);
-//        }
-//    }
-//    @RequestMapping(value = "deleteMenu", method = RequestMethod.POST)
-//    public Object deleteMenu(HttpServletRequest request,String id) throws Exception {
-//        String user_code = UserMessage.getUserCode();
-//        String user_role = UserMessage.getUserRole();
-//        if (!user_code.equals("999") && !menuService.checkMenu(user_role,"menuManage")){
-//            return this.renderError("访问权限不够",400);
-//        }
-//        Menu menu = new Menu();
-//        menu.setId(id);
-//        if (menuService.upMenu(menu,0)==1)
-//            return this.renderSuccess();
-//        else
-//            return this.renderError("删除失败",201);
-//    }
+
+    @RequestMapping(value = "addRole", method = RequestMethod.POST)
+    public Object addMenu(HttpServletRequest request,@RequestBody Role role) throws Exception {
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
+        if (!user_code.equals("999") && !menuService.checkMenu(user_role,"roleManage")){
+            return this.renderError("访问权限不够",400);
+        }
+        if (role.getR_name()==null||role.getR_name().equals("")||role.getR_name_china()==null||role.getR_name_china().equals("")){
+            return this.renderError("字段缺失",500);
+        }
+        try {
+            if (roleService.addRole(role)==1)
+                return this.renderSuccess();
+            else
+                return this.renderError("保存失败",201);
+        }catch (Exception e){
+            String s1 = e.getCause().getMessage();
+            String s = StringUtils.subString(e.getCause().getMessage(),"entry '","' for");
+            String s2 = StringUtils.subString(e.getCause().getMessage(),"for key '","'");
+            if (s2.equals("r_name"))
+                return this.renderError("该权限code已经存在，请勿重复添加",201);
+            if (s2.equals("r_name_china"))
+                return this.renderError("该权限名称已经存在，请勿重复添加",201);
+            else
+                return this.renderError("添加失败,请检查填写信息重试",201);
+        }
+
+    }
+        @RequestMapping(value = "getRoleById", method = RequestMethod.POST)
+    public Object getRoleById(String id) throws Exception {
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
+        if (!user_code.equals("999") && !menuService.checkMenu(user_role,"roleManage")){
+            return this.renderError("访问权限不够",400);
+        }
+            Role role = roleService.selectById(id);
+        if (role==null)
+            return this.renderError("删除失败",201);
+        else
+            return this.renderSuccess(role);
+        }
+    @RequestMapping(value = "upRole", method = RequestMethod.POST)
+    public Object upRole(@RequestBody Role role) throws Exception {
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
+        if (!user_code.equals("999") && !menuService.checkMenu(user_role, "roleManage")) {
+            return this.renderError("访问权限不够", 400);
+        }
+        Role role1 = roleService.selectById(role.getId());
+        if (role1 == null) {
+            return this.renderError("找不到该条权限数据信息", 400);
+        } else {
+            try {
+                if (roleService.upRole(role,role1) == 1)
+                    return this.renderSuccess();
+                else
+                    return this.renderError("更新失败", 201);
+            } catch (Exception e) {
+                String s2 = StringUtils.subString(e.getCause().getMessage(), "for key '", "'");
+                if (s2.equals("r_name"))
+                    return this.renderError("该权限code已经存在，请勿重复添加",201);
+                if (s2.equals("r_name_china"))
+                    return this.renderError("该权限名称已经存在，请勿重复添加",201);
+                else
+                    return this.renderError("添加失败,请检查填写信息重试",201);
+            }
+        }
+    }
+
+    @RequestMapping(value = "deleteRole", method = RequestMethod.POST)
+    public Object deleteMenu(String id) throws Exception {
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
+        if (!user_code.equals("999") && !menuService.checkMenu(user_role,"menuManage")){
+            return this.renderError("访问权限不够",400);
+        }
+        Role role = roleService.selectById(id);
+        if (role==null)
+            return this.renderError("删除失败",201);
+        else {
+            role.setStatus(0);
+            if (roleService.updateById(role))
+                return this.renderSuccess();
+            else
+                return this.renderError("删除失败",201);
+        }
+    }
 
 }
