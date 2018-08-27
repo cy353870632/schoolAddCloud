@@ -2,14 +2,13 @@ package com.github.wxiaoqi.security.xjsystem.rest;
 
 //import com.ace.cache.annotation.Cache;
 
+import com.alibaba.fastjson.JSON;
 import com.github.wxiaoqi.security.auth.client.jwt.UserAuthUtil;
 import com.github.wxiaoqi.security.xjsystem.base.BaseController;
 import com.github.wxiaoqi.security.xjsystem.entity.Menu;
+import com.github.wxiaoqi.security.xjsystem.entity.MenuRole;
 import com.github.wxiaoqi.security.xjsystem.entity.Role;
-import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
-import com.github.wxiaoqi.security.xjsystem.service.IMenuService;
-import com.github.wxiaoqi.security.xjsystem.service.IRoleService;
-import com.github.wxiaoqi.security.xjsystem.service.IUserService;
+import com.github.wxiaoqi.security.xjsystem.service.*;
 import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
 import com.github.wxiaoqi.security.xjsystem.utils.StringUtils;
 import com.github.wxiaoqi.security.xjsystem.utils.UserMessage;
@@ -18,10 +17,7 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -60,6 +56,9 @@ public class RoleController extends BaseController{
 
     @Autowired
     IRoleService roleService;
+
+    @Autowired
+    IMenuRoleService menuRoleService;
 
 //    @RequestMapping(value = "getRole", method = RequestMethod.POST)
 //    public Object getMenu(HttpServletRequest request) throws Exception {
@@ -175,5 +174,60 @@ public class RoleController extends BaseController{
                 return this.renderError("删除失败",201);
         }
     }
+
+    @RequestMapping(value = "getRoleMenuMessage", method = RequestMethod.POST)
+    public Object getRoleMenuMessage(String id) throws Exception {
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
+        if (!user_code.equals("999") && !menuService.checkMenu(user_role,"roleManage")){
+            return this.renderError("访问权限不够",400);
+        }
+        //超级管理员可以给998授权系统设置，给别的角色不可以设置系统设置
+        Role role = roleService.selectById(id);
+        List<Menu> menuList = menuService.getAllMenu();
+        //获取用户现有的权限id列表
+        List<String> menuCheckList = menuRoleService.getMenuIdByRoleId(id);
+        if (menuList.size()==0){
+            return this.renderError("没有可用权限进行授权",400);
+        }
+        if (user_code.equals("999")){
+            if (role.getR_name().equals("ADMIN") || role.getR_name().equals("SYSADMIN")){
+                return this.renderSuccess( menuService.roleToMenuCheck(menuList,menuCheckList,0));
+            }else {
+                return this.renderSuccess( menuService.roleToMenuCheck(menuList,menuCheckList,1));
+
+            }
+        }else {
+            //如果是998的，吧可以授权系统设置，给除了998以外的，不可以设置推广员，管理员的人员设置
+            if (role.getR_name().equals("ADMIN") || role.getR_name().equals("SYSADMIN")){
+                //不可以下级给上级，同级授权
+                return this.renderError("访问权限不够",400);
+            }else {
+                //除了系统管理，推广员，管理员设置
+                return this.renderSuccess( menuService.roleToMenuCheck(menuList,menuCheckList,2));
+            }
+        }
+    }
+    @RequestMapping(value = "checkMenuToRole", method = RequestMethod.POST)
+    public Object checkMenuToRole(String id, String menuList) throws Exception {
+        String user_code = UserMessage.getUserCode();
+        String user_role = UserMessage.getUserRole();
+        if (!user_code.equals("999") && !menuService.checkMenu(user_role,"roleManage")){
+            return this.renderError("访问权限不够",400);
+        }
+        List menuList1 = (List) JSON.parse(menuList);
+
+//        Role role = roleService.selectById(id);
+//        if (role==null)
+//            return this.renderError("删除失败",201);
+//        else {
+//            role.setStatus(0);
+//            if (roleService.updateById(role))
+//                return this.renderSuccess();
+//            else
+                return this.renderError("删除失败",201);
+//        }
+    }
+
 
 }

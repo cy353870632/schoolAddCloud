@@ -30,6 +30,7 @@ public class Role extends Model<Role> implements Serializable{
 
     private Integer status;//角色名称中文
 
+    private Integer role_code;//角色编码，用于权限验证
 
     @Override
     protected Serializable pkVal() {

@@ -31,5 +31,8 @@ public interface IMenuService extends IService<Menu> {
 
     public Integer upMenu(Menu menu,Integer status);
 
+    public List<Menu> getAllMenu();
+
+    public Object roleToMenuCheck(List<Menu> menuList,List<String> menuCheckList,Integer status);
 
 }

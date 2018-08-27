@@ -34,7 +34,6 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper,Role> implements IRo
     @Autowired
     RoleMapper roleMapper;
 
-
     @Override
     @Cache(key = "getroleByrname:u{1}")
     public Role getRoleByRname(String r_name) {

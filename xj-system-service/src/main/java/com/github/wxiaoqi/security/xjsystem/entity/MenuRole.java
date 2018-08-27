@@ -21,7 +21,7 @@ public class MenuRole extends Model<MenuRole> implements Serializable{
     private Date update_date;
     //为1的时候不允许修改，为系统数据，为0的时候可以编辑
     private String read_only;
-    private String menu_id;//角色名称
+    private String menu_id;//菜单名称
     private String role_id;//角色名称
 
     @Override

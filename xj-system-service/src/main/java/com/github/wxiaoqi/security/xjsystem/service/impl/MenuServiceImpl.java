@@ -1,5 +1,6 @@
 package com.github.wxiaoqi.security.xjsystem.service.impl;
 
+import com.ace.cache.annotation.Cache;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
@@ -9,6 +10,7 @@ import com.github.wxiaoqi.security.xjsystem.entity.User;
 import com.github.wxiaoqi.security.xjsystem.mapper.MenuMapper;
 import com.github.wxiaoqi.security.xjsystem.mapper.UserMapper;
 import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
+import com.github.wxiaoqi.security.xjsystem.service.IMenuRoleService;
 import com.github.wxiaoqi.security.xjsystem.service.IMenuService;
 import com.github.wxiaoqi.security.xjsystem.service.IUserService;
 import com.github.wxiaoqi.security.xjsystem.utils.MenuUtil;
@@ -38,9 +40,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper,Menu> implements IMe
 
     private String passwordKey = "d+#8p&nn=o30ke6%-";
 
-
     @Autowired
     ICacheService cacheService;
+
+
 
     @Override
     public List<MenuVo> getMenu(String role) {
@@ -178,5 +181,48 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper,Menu> implements IMe
         EntityWrapper<Menu> wrapper = new EntityWrapper<Menu>();
         wrapper.eq("id",menu1.getId());
         return menuMapper.update(menu1,wrapper);
+    }
+
+    @Override
+    @Cache(key = "allMenu")
+    public List<Menu> getAllMenu() {
+        EntityWrapper<Menu> wrapper = new EntityWrapper<Menu>();
+        wrapper.eq("status",1);
+        wrapper.eq("end_mark","1");
+        return menuMapper.selectList(wrapper);
+    }
+
+    //按照角色权限的规则，来处理结果
+    @Override
+    public Object roleToMenuCheck(List<Menu> menuList,List<String> menuCheckList,Integer status) {
+        //status为0是：999给999和998授权，1是999给其他授权，2是998给别人授权
+        List<Map> menuAllList = new ArrayList<>();
+        switch (status){
+            case 0:
+                for (Menu menu:menuList){
+                    Map map = new HashMap<>();
+                    map.put("key",menu.getId());
+                    map.put("label",menu.getTitle());
+                    map.put("disabled",false);
+                    menuAllList.add(map);
+                }
+                break;
+            case 1:case 2:
+                for (Menu menu:menuList){
+                    if (!menu.getParent_title().equals("系统设置") && !menu.getCode_path().equals("promoterMange")
+                            && !menu.getCode_path().equals("userMange")) {
+                        Map map = new HashMap<>();
+                        map.put("key", menu.getId());
+                        map.put("label", menu.getTitle());
+                        map.put("disabled", false);
+                        menuAllList.add(map);
+                    }
+                }
+                break;
+        }
+        Map resultMap = new HashMap<>();
+        resultMap.put("allMenu",menuAllList);
+        resultMap.put("checkMenu",menuCheckList);
+        return resultMap;
     }
 }
