@@ -2,6 +2,7 @@ package com.github.wxiaoqi.security.xjsystem.service;
 
 import com.baomidou.mybatisplus.service.IService;
 import com.github.wxiaoqi.security.xjsystem.entity.Menu;
+import com.github.wxiaoqi.security.xjsystem.entity.Role;
 import com.github.wxiaoqi.security.xjsystem.entity.User;
 import com.github.wxiaoqi.security.xjsystem.vo.MenuVo;
 import com.github.wxiaoqi.security.xjsystem.vo.UserInfoVo;
@@ -34,5 +35,12 @@ public interface IMenuService extends IService<Menu> {
     public List<Menu> getAllMenu();
 
     public Object roleToMenuCheck(List<Menu> menuList,List<String> menuCheckList,Integer status);
+
+    public List<Menu> getAllMenuByRole(String roleid);
+
+    public void clearAllMneuCache();
+
+    public void clearMenuByRoleCache(Role role);
+
 
 }

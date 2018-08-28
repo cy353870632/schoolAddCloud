@@ -27,5 +27,6 @@ public interface IRoleService extends IService<Role> {
 
     public Integer upRole(Role role,Role oldrole);
 
+    public Boolean upRoleMenu(Role role,List<String> menuId);
 
 }

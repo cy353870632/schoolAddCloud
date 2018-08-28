@@ -4,13 +4,13 @@ import com.ace.cache.annotation.Cache;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.github.wxiaoqi.security.common.util.MD5Util;
+import com.github.wxiaoqi.security.xjsystem.entity.Menu;
+import com.github.wxiaoqi.security.xjsystem.entity.MenuRole;
 import com.github.wxiaoqi.security.xjsystem.entity.Role;
 import com.github.wxiaoqi.security.xjsystem.entity.User;
 import com.github.wxiaoqi.security.xjsystem.mapper.RoleMapper;
 import com.github.wxiaoqi.security.xjsystem.mapper.UserMapper;
-import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
-import com.github.wxiaoqi.security.xjsystem.service.IRoleService;
-import com.github.wxiaoqi.security.xjsystem.service.IUserService;
+import com.github.wxiaoqi.security.xjsystem.service.*;
 import com.github.wxiaoqi.security.xjsystem.vo.UserInfoVo;
 import io.jsonwebtoken.Claims;
 import org.apache.commons.lang3.StringUtils;
@@ -33,6 +33,12 @@ import java.util.UUID;
 public class RoleServiceImpl extends ServiceImpl<RoleMapper,Role> implements IRoleService{
     @Autowired
     RoleMapper roleMapper;
+
+    @Autowired
+    IMenuService menuService;
+
+    @Autowired
+    IMenuRoleService menuRoleService;
 
     @Override
     @Cache(key = "getroleByrname:u{1}")
@@ -65,7 +71,6 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper,Role> implements IRo
             role.setSort("0");
         return roleMapper.insert(role);
     }
-
     @Override
     public Integer upRole(Role role,Role oldrole) {
         if (role.getR_name()!=null && !role.getR_name().equals(""))
@@ -74,7 +79,46 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper,Role> implements IRo
             oldrole.setR_name_china(role.getR_name_china());
         if (role.getSort()!=null && !role.getSort().equals(""))
             oldrole.setSort(role.getSort());
+        if (role.getRole_code()!=0)
+            oldrole.setRole_code(role.getRole_code());
         oldrole.setUpdate_date(new Date());
         return roleMapper.updateById(oldrole);
+    }
+
+    @Override
+    public Boolean upRoleMenu(Role role,List<String> menuId) {
+        //可以被授权的所有的菜单
+        List<Menu> allMenuList = menuService.getAllMenuByRole(role.getId());
+        List<String> allMenuIdList = new ArrayList<>();
+        for (Menu menu:allMenuList){
+            allMenuIdList.add(menu.getId());
+        }
+        //已经被授权的所有的菜单
+        List<String> exitsMenuIdList = menuRoleService.getMenuIdByRoleId(role.getId());
+        for (String s:menuId){
+            if (allMenuIdList.contains(s) && !exitsMenuIdList.contains(s)){
+                //新增
+                MenuRole menuRole = new MenuRole();
+                menuRole.setId(UUID.randomUUID().toString());
+                menuRole.setMenu_id(s);
+                menuRole.setRole_id(role.getId());
+                menuRole.setRead_only("0");
+                menuRole.setCreat_date(new Date());
+                menuRole.setUpdate_date(new Date());
+                menuRoleService.insert(menuRole);
+                exitsMenuIdList.add(s);
+            }
+        }
+        for (String s:exitsMenuIdList){
+            if (!menuId.contains(s)){
+                //删除
+                EntityWrapper<MenuRole> wrapper = new EntityWrapper<MenuRole>();
+                wrapper.eq("menu_id",s);
+                wrapper.eq("role_id",role.getId());
+                menuRoleService.delete(wrapper);
+            }
+        }
+        menuService.clearMenuByRoleCache(role);
+        return true;
     }
 }

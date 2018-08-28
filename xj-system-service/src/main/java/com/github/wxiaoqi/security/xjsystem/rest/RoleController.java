@@ -215,18 +215,22 @@ public class RoleController extends BaseController{
         if (!user_code.equals("999") && !menuService.checkMenu(user_role,"roleManage")){
             return this.renderError("访问权限不够",400);
         }
-        List menuList1 = (List) JSON.parse(menuList);
-
-//        Role role = roleService.selectById(id);
-//        if (role==null)
-//            return this.renderError("删除失败",201);
-//        else {
-//            role.setStatus(0);
-//            if (roleService.updateById(role))
-//                return this.renderSuccess();
-//            else
-                return this.renderError("删除失败",201);
-//        }
+        List<String> menuList1 = (List) JSON.parse(menuList);
+        Role role = roleService.selectById(id);
+        if (role==null){
+            return this.renderError("没有该权限信息",400);
+        }
+        if (Integer.valueOf(user_code).intValue() < Integer.valueOf(role.getRole_code()).intValue()){
+            return this.renderError("操作权限不够",400);
+        }
+        try {
+            if (roleService.upRoleMenu(role,menuList1)){
+                return this.renderSuccess();
+            }
+        }catch (Exception e){
+            return this.renderError("授权失败:"+e.getMessage(),201);
+        }
+        return this.renderError("授权失败",201);
     }
 
 

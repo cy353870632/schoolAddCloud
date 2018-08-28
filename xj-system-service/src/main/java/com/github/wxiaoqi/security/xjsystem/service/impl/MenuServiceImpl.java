@@ -1,21 +1,21 @@
 package com.github.wxiaoqi.security.xjsystem.service.impl;
 
 import com.ace.cache.annotation.Cache;
+import com.ace.cache.annotation.CacheClear;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.github.wxiaoqi.security.common.util.MD5Util;
 import com.github.wxiaoqi.security.xjsystem.entity.Menu;
+import com.github.wxiaoqi.security.xjsystem.entity.Role;
 import com.github.wxiaoqi.security.xjsystem.entity.User;
 import com.github.wxiaoqi.security.xjsystem.mapper.MenuMapper;
 import com.github.wxiaoqi.security.xjsystem.mapper.UserMapper;
-import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
-import com.github.wxiaoqi.security.xjsystem.service.IMenuRoleService;
-import com.github.wxiaoqi.security.xjsystem.service.IMenuService;
-import com.github.wxiaoqi.security.xjsystem.service.IUserService;
+import com.github.wxiaoqi.security.xjsystem.service.*;
 import com.github.wxiaoqi.security.xjsystem.utils.MenuUtil;
 import com.github.wxiaoqi.security.xjsystem.vo.MenuVo;
 import com.github.wxiaoqi.security.xjsystem.vo.UserInfoVo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
  **/
 @Service
 @Transactional(rollbackFor = Exception.class)
+@Slf4j
 public class MenuServiceImpl extends ServiceImpl<MenuMapper,Menu> implements IMenuService{
 
 
@@ -43,7 +44,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper,Menu> implements IMe
     @Autowired
     ICacheService cacheService;
 
-
+    @Autowired
+    IRoleService roleService;
 
     @Override
     public List<MenuVo> getMenu(String role) {
@@ -224,5 +226,36 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper,Menu> implements IMe
         resultMap.put("allMenu",menuAllList);
         resultMap.put("checkMenu",menuCheckList);
         return resultMap;
+    }
+
+    //获取该role可以被授权的所有的菜单
+    @Override
+    @Cache(key = "allMenuByRole:u{1}")
+    public List<Menu> getAllMenuByRole(String roleid) {
+        Role role = roleService.selectById(roleid);
+        EntityWrapper<Menu> wrapper = new EntityWrapper<Menu>();
+        wrapper.eq("status",1);
+        wrapper.eq("end_mark","1");
+        List<Menu> menuList = menuMapper.selectList(wrapper);
+        if (role.getRole_code()==999||role.getRole_code()==998){
+            return menuList;
+        }
+        else {
+            menuList = menuList.stream().filter(f->!f.getParent_title().equals("系统设置")&&!f.getCode_path().equals("promoterMange")
+                    &&!f.getCode_path().equals("userMange")).collect(Collectors.toList());
+        }
+        return menuList;
+    }
+
+    @Override
+    @CacheClear(key = "allMenu")
+    public void clearAllMneuCache() {
+        log.info("清除了缓存 allMenu");
+    }
+
+    @Override
+    @CacheClear(key = "allMenuByRole:u{1}")
+    public void clearMenuByRoleCache(Role role) {
+        log.info("清除了缓存 "+role.getR_name()+"  的可用菜单");
     }
 }
