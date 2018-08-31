@@ -28,6 +28,11 @@ public class UserMessage {
         Claims claims = new JWTUtil().parseJWT(token);
         return claims.get("user_code", String.class);
     }
+    public static String getUserName() throws Exception{
+        String token =getHttpServletRequest().getHeader("Authorization");
+        Claims claims = new JWTUtil().parseJWT(token);
+        return claims.get("user_name", String.class);
+    }
     public static String getUserRole() throws Exception{
         String token =getHttpServletRequest().getHeader("Authorization");
         Claims claims = new JWTUtil().parseJWT(token);

@@ -11,10 +11,7 @@ import com.github.wxiaoqi.security.xjsystem.mapper.RoleMapper;
 import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
 import com.github.wxiaoqi.security.xjsystem.service.IMenuService;
 import com.github.wxiaoqi.security.xjsystem.service.IUserService;
-import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
-import com.github.wxiaoqi.security.xjsystem.utils.MenuUtil;
-import com.github.wxiaoqi.security.xjsystem.utils.StringUtils;
-import com.github.wxiaoqi.security.xjsystem.utils.UserMessage;
+import com.github.wxiaoqi.security.xjsystem.utils.*;
 import com.github.wxiaoqi.security.xjsystem.vo.MenuVo;
 import com.github.wxiaoqi.security.xjsystem.vo.Pageable;
 import com.github.wxiaoqi.security.xjsystem.vo.UserInfoVo;
@@ -25,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.util.LambdaSafe;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -82,8 +80,15 @@ public class UserController extends BaseController{
         UserInfoVo userInfoVo = userService.getInfo(claims);
         Map restltMap = new HashMap<>();
         restltMap.put("userInfo",userInfoVo);
-        restltMap.put("menus",menuService.getMenu(user_role));
-        return this.renderSuccess(restltMap);
+        List<Menu> menuList = menuService.getMenu(user_role);
+        if (menuList!=null && menuList.size()>0){
+            restltMap.put("menus",menuService.getMenu(user_role));
+            DocUtil.saveDoc("获取用户信息成功", "普通");
+            return this.renderSuccess(restltMap);
+        }else
+        {
+            return this.renderError("您的权限没有可用菜单，请联系管理员",201);
+        }
     }
 
     @RequestMapping(value = "getUserInfo", method = RequestMethod.POST)
@@ -117,6 +122,7 @@ public class UserController extends BaseController{
             pageable.setCurrentPage(currentPage);
             pageable.setPageSize(pageSize);
             pageable.setTotal(total);
+            DocUtil.saveDoc("获取推广员信息成功", "普通");
             return this.renderSuccess(promoterList,pageable);
         }
         return this.renderError("您没有访问该页面的权限",400);//权限不够
@@ -129,8 +135,10 @@ public class UserController extends BaseController{
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
         try {
-            if (userService.addPromoter(user)==1)
+            if (userService.addPromoter(user)==1) {
+                DocUtil.saveDoc("新增推广员信息成功", "普通");
                 return this.renderSuccess();
+            }
             else
                 return this.renderError("保存失败",201);
         }catch (Exception e){
@@ -188,8 +196,10 @@ public class UserController extends BaseController{
         }
         try {
             int status = userService.updatePromoter(user,user_code);
-            if (status==1)
+            if (status==1) {
+                DocUtil.saveDoc("更新推广员信息成功", "敏感");
                 return this.renderSuccess();
+            }
             else if(status==3)
                 return this.renderError("数据不存在",404);
             else {
@@ -217,8 +227,10 @@ public class UserController extends BaseController{
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
         int status = userService.restPwd(uid,user_code);
-        if (status==1)
+        if (status==1) {
+            DocUtil.saveDoc("修改密码", "敏感");
             return this.renderSuccess();
+        }
         else if(status==3)
             return this.renderError("数据不存在",404);
         else {
@@ -246,6 +258,7 @@ public class UserController extends BaseController{
             pageable.setCurrentPage(currentPage);
             pageable.setPageSize(pageSize);
             pageable.setTotal(total);
+            DocUtil.saveDoc("获取管理员信息成功", "普通");
             return this.renderSuccess(promoterList,pageable);
         }
         return this.renderError("您没有访问该页面的权限",400);//权限不够
@@ -258,8 +271,10 @@ public class UserController extends BaseController{
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
         try {
-            if (userService.addManageUser(user)==1)
+            if (userService.addManageUser(user)==1) {
+                DocUtil.saveDoc("新增管理员信息成功", "普通");
                 return this.renderSuccess();
+            }
             else
                 return this.renderError("保存失败",201);
         }catch (Exception e){
@@ -285,8 +300,9 @@ public class UserController extends BaseController{
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
         int status = userService.deletePromoter(uid,user_code);
-        if (status==1)
-            return this.renderSuccess();
+        if (status==1){
+            DocUtil.saveDoc("删除管理员信息成功", "敏感");
+            return this.renderSuccess();}
         else if(status==3)
             return this.renderError("数据不存在",404);
         else {
@@ -300,6 +316,7 @@ public class UserController extends BaseController{
         if (!user_code.equals("999") && !user_code.equals("998")){
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
+        DocUtil.saveDoc("获取管理员信息", "普通");
         User user = userService.selectById(uid);
         if (user!=null)
             return this.renderSuccess(user);
@@ -317,8 +334,10 @@ public class UserController extends BaseController{
         }
         try {
             int status = userService.updatePromoter(user,user_code);
-            if (status==1)
+            if (status==1) {
+                DocUtil.saveDoc("更新管理员信息", "敏感");
                 return this.renderSuccess();
+            }
             else if(status==3)
                 return this.renderError("数据不存在",404);
             else {
@@ -347,8 +366,10 @@ public class UserController extends BaseController{
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
         int status = userService.restPwd(uid,user_code);
-        if (status==1)
+        if (status==1) {
+            DocUtil.saveDoc("修改管理员密码成功", "敏感");
             return this.renderSuccess();
+        }
         else if(status==3)
             return this.renderError("数据不存在",404);
         else {
@@ -373,6 +394,7 @@ public class UserController extends BaseController{
         if (!user_id.equals(id)){
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
+        DocUtil.saveDoc("修改密码成功", "敏感");
         Integer status = userService.changPwd(id,oldpass,pass);
         if (status==1){
             return this.renderSuccess("更新成功");

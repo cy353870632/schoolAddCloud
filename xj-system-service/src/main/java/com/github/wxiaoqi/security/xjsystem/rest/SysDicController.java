@@ -10,6 +10,7 @@ import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
 import com.github.wxiaoqi.security.xjsystem.service.IMenuService;
 import com.github.wxiaoqi.security.xjsystem.service.ISysDicService;
 import com.github.wxiaoqi.security.xjsystem.service.IUserService;
+import com.github.wxiaoqi.security.xjsystem.utils.DocUtil;
 import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
 import com.github.wxiaoqi.security.xjsystem.utils.StringUtils;
 import com.github.wxiaoqi.security.xjsystem.utils.UserMessage;
@@ -86,7 +87,6 @@ public class SysDicController extends BaseController{
         Map result = new HashMap<>();
         result.put("parentList",sysDicVosarent);
         result.put("dataList",sysDicVos);
-
         for (SysDicVo sysDicVo:sysDicVos){
             sysDicVo.setChildren(sysDicService.getChildByParentid(sysDicVo.getId()));
         }
@@ -94,6 +94,8 @@ public class SysDicController extends BaseController{
         pageable.setPageSize(pageSize);
         pageable.setCurrentPage(currentPage);
         pageable.setTotal(sysDicService.getSysDicTotal(keyWord));
+        DocUtil.saveDoc("获取字典成功","普通");
+
         return this.renderSuccess(result,pageable);
     }
 
@@ -110,6 +112,7 @@ public class SysDicController extends BaseController{
         try {
             if (sysDicService.addSysDic(system_dic)==1) {
                 sysDicService.cacheClear(system_dic.getParent_id());
+                DocUtil.saveDoc("新增字典成功","普通");
                 return this.renderSuccess();
             }
             else
@@ -165,6 +168,7 @@ public class SysDicController extends BaseController{
             if (sysDicService.upSysDic(system_dic,1)==1) {
                 sysDicService.cacheClear(system_dic.getParent_id());
                 if (!oldParentID.equals(system_dic.getParent_id())){
+                    DocUtil.saveDoc("更新字典成功","普通");
                     sysDicService.cacheClear(oldParentID);
                 }
                 return this.renderSuccess();
@@ -191,6 +195,7 @@ public class SysDicController extends BaseController{
         System_dic system_dic = sysDicService.selectById(id);
         if (sysDicService.upSysDic(system_dic,0)==1) {
             sysDicService.cacheClear(system_dic.getParent_id());
+            DocUtil.saveDoc("删除字典成功","敏感");
             return this.renderSuccess();
         }
         else
@@ -207,6 +212,7 @@ public class SysDicController extends BaseController{
         if (sysDicService.upSysDic(system_dic,2)==1)
         {
             sysDicService.cacheClear(system_dic.getParent_id());
+            DocUtil.saveDoc("冻结字典成功","敏感");
             return this.renderSuccess();
         }
         else
@@ -223,6 +229,7 @@ public class SysDicController extends BaseController{
         if (sysDicService.upSysDic(system_dic,1)==1)
         {
             sysDicService.cacheClear(system_dic.getParent_id());
+            DocUtil.saveDoc("解冻字典成功","敏感");
             return this.renderSuccess();
         }
         else

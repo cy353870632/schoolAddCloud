@@ -121,4 +121,14 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper,Role> implements IRo
         menuService.clearMenuByRoleCache(role);
         return true;
     }
+
+    @Override
+    public Boolean checkRoleStatus(String roleId) {
+        EntityWrapper<Role> wrapper = new EntityWrapper<Role>();
+        wrapper.eq("id",roleId);
+        wrapper.eq("status","1");
+        if (roleMapper.selectCount(wrapper)==0)
+            return false;
+        return true;
+    }
 }

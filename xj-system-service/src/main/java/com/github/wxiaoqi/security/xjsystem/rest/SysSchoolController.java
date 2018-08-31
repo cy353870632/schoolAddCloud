@@ -9,10 +9,7 @@ import com.github.wxiaoqi.security.xjsystem.entity.Menu;
 import com.github.wxiaoqi.security.xjsystem.entity.School;
 import com.github.wxiaoqi.security.xjsystem.entity.System_dic;
 import com.github.wxiaoqi.security.xjsystem.service.*;
-import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
-import com.github.wxiaoqi.security.xjsystem.utils.RabbitMqUtil;
-import com.github.wxiaoqi.security.xjsystem.utils.StringUtils;
-import com.github.wxiaoqi.security.xjsystem.utils.UserMessage;
+import com.github.wxiaoqi.security.xjsystem.utils.*;
 import com.github.wxiaoqi.security.xjsystem.vo.Pageable;
 import com.github.wxiaoqi.security.xjsystem.vo.SchoolVo;
 import com.rabbitmq.client.*;
@@ -43,10 +40,10 @@ import java.util.concurrent.TimeUnit;
  * @create 2018-05-22 11:51
  */
 @RestController
-@RequestMapping("/api/School")
+@RequestMapping("/api/SysSchool")
 @Api(tags = {""},description = "")
 @Slf4j
-public class SchoolController extends BaseController{
+public class SysSchoolController extends BaseController{
 
     @Autowired
     IUserService userService;
@@ -93,6 +90,7 @@ public class SchoolController extends BaseController{
         pageable.setPageSize(pageSize);
         pageable.setCurrentPage(currentPage);
         pageable.setTotal(schoolService.getSchoolTotal(keyWord,review_status,schoolstyle_status));
+        DocUtil.saveDoc("获取学校信息成功","普通");
         return this.renderSuccess(menuList,pageable);
     }
 
@@ -119,8 +117,10 @@ public class SchoolController extends BaseController{
         }
         try {
             school.setCreat_user(id);
-            if (schoolService.addSchool(school)==1)
+            if (schoolService.addSchool(school)==1){
+                DocUtil.saveDoc("新增学校信息成功","普通");
                 return this.renderSuccess();
+            }
             else
                 return this.renderError("保存失败",201);
         }catch (Exception e){
@@ -170,8 +170,10 @@ public class SchoolController extends BaseController{
             return this.renderError("访问权限不够",400);
         }
         try {
-            if (schoolService.upSchool(school,school1)==1)
+            if (schoolService.upSchool(school,school1)==1) {
+                DocUtil.saveDoc("更新学校信息成功", "普通");
                 return this.renderSuccess();
+            }
             else
                 return this.renderError("更新失败",201);
         }catch (Exception e){
@@ -189,6 +191,7 @@ public class SchoolController extends BaseController{
         if (school!=null) {
             school.setStatus("0");
             schoolService.updateById(school);
+            DocUtil.saveDoc("删除学校信息成功", "敏感");
             return this.renderSuccess();
         }
         return this.renderError("删除失败",201);
@@ -211,6 +214,7 @@ public class SchoolController extends BaseController{
             school.setReview_user(user_id);
             school.setUpdate_date(new Date());
             schoolService.updateById(school);
+            DocUtil.saveDoc("审核学校通过", "敏感");
             return this.renderSuccess();
         }
         return this.renderError("删除失败",201);
@@ -233,43 +237,11 @@ public class SchoolController extends BaseController{
             school.setReview_user(user_id);
             school.setUpdate_date(new Date());
             schoolService.updateById(school);
+            DocUtil.saveDoc("审核学校不通过", "敏感");
             return this.renderSuccess();
         }
         return this.renderError("操作失败",201);
     }
-//    @RequestMapping(value = "blockMenu", method = RequestMethod.POST)
-//    public Object blockMenu(HttpServletRequest request,String id) throws Exception {
-//        String token = request.getHeader(tokenHeader);
-//        Claims claims = jwtUtil.parseJWT(token);
-//        String user_role = claims.get("user_role", String.class);
-//        String user_code = claims.get("user_code", String.class);
-//        if (!user_code.equals("999") || !menuService.checkMenu(user_role,"menuManage")){
-//            return this.renderError("访问权限不够",400);
-//        }
-//        Menu menu = new Menu();
-//        menu.setId(id);
-//        if (menuService.upMenu(menu,2)==1)
-//            return this.renderSuccess();
-//        else
-//            return this.renderError("冻结失败",201);
-//    }
-//    @RequestMapping(value = "unblockMenu", method = RequestMethod.POST)
-//    public Object unblockMenu(HttpServletRequest request,String id) throws Exception {
-//        String token = request.getHeader(tokenHeader);
-//        Claims claims = jwtUtil.parseJWT(token);
-//        String user_role = claims.get("user_role", String.class);
-//        String user_code = claims.get("user_code", String.class);
-//        if (!user_code.equals("999") || !menuService.checkMenu(user_role,"menuManage")){
-//            return this.renderError("访问权限不够",400);
-//        }
-//        Menu menu = new Menu();
-//        menu.setId(id);
-//        if (menuService.upMenu(menu,1)==1)
-//            return this.renderSuccess();
-//        else
-//            return this.renderError("生效失败",201);
-//    }
-
 
 
 }

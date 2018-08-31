@@ -29,4 +29,6 @@ public interface IRoleService extends IService<Role> {
 
     public Boolean upRoleMenu(Role role,List<String> menuId);
 
+    public Boolean checkRoleStatus(String roleId);
+
 }

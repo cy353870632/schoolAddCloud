@@ -54,18 +54,25 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper,Menu> implements IMe
         if (role.contains(",")){
             String[] roleone = role.split(",");
             for (String r : roleone){
-                roles.add(r);
+                if (roleService.checkRoleStatus(r))
+                    roles.add(r);
             }
         }else
         {
-            roles.add(role);
+            if (roleService.checkRoleStatus(role))
+                roles.add(role);
         }
-        List<Menu> menuList = menuMapper.selectByRole(roles);
-        List<MenuVo> menuVoList = MenuUtil.getMenuTree(menuList);
-        cacheService.clearCache("getmenu",role);
-        cacheService.getCacheMessage(menuVoList);
-        cacheService.cacheGridMessage("getmenu",role);
-        return menuVoList;
+        if (roles.size()>0) {
+            List<Menu> menuList = menuMapper.selectByRole(roles);
+            List<MenuVo> menuVoList = MenuUtil.getMenuTree(menuList);
+            cacheService.clearCache("getmenu", role);
+            cacheService.getCacheMessage(menuVoList);
+            cacheService.cacheGridMessage("getmenu", role);
+            return menuVoList;
+        }else
+        {
+            return null;
+        }
     }
 
     @Override

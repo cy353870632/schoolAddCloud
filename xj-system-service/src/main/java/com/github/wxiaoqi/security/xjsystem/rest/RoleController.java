@@ -9,6 +9,7 @@ import com.github.wxiaoqi.security.xjsystem.entity.Menu;
 import com.github.wxiaoqi.security.xjsystem.entity.MenuRole;
 import com.github.wxiaoqi.security.xjsystem.entity.Role;
 import com.github.wxiaoqi.security.xjsystem.service.*;
+import com.github.wxiaoqi.security.xjsystem.utils.DocUtil;
 import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
 import com.github.wxiaoqi.security.xjsystem.utils.StringUtils;
 import com.github.wxiaoqi.security.xjsystem.utils.UserMessage;
@@ -84,6 +85,7 @@ public class RoleController extends BaseController{
         pageable.setPageSize(pageSize);
         pageable.setCurrentPage(currentPage);
         pageable.setTotal(roleService.getAllRoleTotal(keyWord));
+        DocUtil.saveDoc("获取所有权限信息成功","普通");
         return this.renderSuccess(roleResult,pageable);
     }
 
@@ -99,7 +101,10 @@ public class RoleController extends BaseController{
         }
         try {
             if (roleService.addRole(role)==1)
+            {
+                DocUtil.saveDoc("保存权限信息成功","敏感");
                 return this.renderSuccess();
+            }
             else
                 return this.renderError("保存失败",201);
         }catch (Exception e){
@@ -140,8 +145,10 @@ public class RoleController extends BaseController{
             return this.renderError("找不到该条权限数据信息", 400);
         } else {
             try {
-                if (roleService.upRole(role,role1) == 1)
+                if (roleService.upRole(role,role1) == 1){
+                    DocUtil.saveDoc("更新权限信息成功","敏感");
                     return this.renderSuccess();
+                }
                 else
                     return this.renderError("更新失败", 201);
             } catch (Exception e) {
@@ -157,10 +164,10 @@ public class RoleController extends BaseController{
     }
 
     @RequestMapping(value = "deleteRole", method = RequestMethod.POST)
-    public Object deleteMenu(String id) throws Exception {
+    public Object deleteRole(String id) throws Exception {
         String user_code = UserMessage.getUserCode();
         String user_role = UserMessage.getUserRole();
-        if (!user_code.equals("999") && !menuService.checkMenu(user_role,"menuManage")){
+        if (!user_code.equals("999") && !menuService.checkMenu(user_role,"roleManage")){
             return this.renderError("访问权限不够",400);
         }
         Role role = roleService.selectById(id);
@@ -168,8 +175,10 @@ public class RoleController extends BaseController{
             return this.renderError("删除失败",201);
         else {
             role.setStatus(0);
-            if (roleService.updateById(role))
+            if (roleService.updateById(role)){
+                DocUtil.saveDoc("删除权限信息成功","敏感");
                 return this.renderSuccess();
+            }
             else
                 return this.renderError("删除失败",201);
         }
@@ -190,6 +199,7 @@ public class RoleController extends BaseController{
         if (menuList.size()==0){
             return this.renderError("没有可用权限进行授权",400);
         }
+        DocUtil.saveDoc("获取菜单权限授权操作开始","普通");
         if (user_code.equals("999")){
             if (role.getR_name().equals("ADMIN") || role.getR_name().equals("SYSADMIN")){
                 return this.renderSuccess( menuService.roleToMenuCheck(menuList,menuCheckList,0));
@@ -225,6 +235,7 @@ public class RoleController extends BaseController{
         }
         try {
             if (roleService.upRoleMenu(role,menuList1)){
+                DocUtil.saveDoc("获取菜单权限授权操作成功","敏感");
                 return this.renderSuccess();
             }
         }catch (Exception e){

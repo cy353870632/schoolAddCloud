@@ -9,6 +9,7 @@ import com.github.wxiaoqi.security.xjsystem.entity.User;
 import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
 import com.github.wxiaoqi.security.xjsystem.service.IMenuService;
 import com.github.wxiaoqi.security.xjsystem.service.IUserService;
+import com.github.wxiaoqi.security.xjsystem.utils.DocUtil;
 import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
 import com.github.wxiaoqi.security.xjsystem.utils.StringUtils;
 import com.github.wxiaoqi.security.xjsystem.utils.UserMessage;
@@ -89,6 +90,8 @@ public class MenuController extends BaseController{
         pageable.setPageSize(pageSize);
         pageable.setCurrentPage(currentPage);
         pageable.setTotal(menuService.getMenuTotal(keyWord));
+        DocUtil.saveDoc("获取可用菜单","普通");
+
         return this.renderSuccess(menuList,pageable);
     }
 
@@ -100,8 +103,10 @@ public class MenuController extends BaseController{
             return this.renderError("访问权限不够",400);
         }
         try {
-            if (menuService.addMenu(menu)==1)
+            if (menuService.addMenu(menu)==1) {
+                DocUtil.saveDoc("新增菜单成功", "敏感");
                 return this.renderSuccess();
+            }
             else
                 return this.renderError("保存失败",201);
         }catch (Exception e){
@@ -147,8 +152,10 @@ public class MenuController extends BaseController{
             return this.renderError("访问权限不够",400);
         }
         try {
-            if (menuService.upMenu(menu,1)==1)
+            if (menuService.upMenu(menu,1)==1){
+                DocUtil.saveDoc("更新菜单成功","敏感");
                 return this.renderSuccess();
+            }
             else
                 return this.renderError("更新失败",201);
         }catch (Exception e){
@@ -171,7 +178,10 @@ public class MenuController extends BaseController{
         Menu menu = new Menu();
         menu.setId(id);
         if (menuService.upMenu(menu,0)==1)
+        {
+            DocUtil.saveDoc("删除菜单成功","敏感");
             return this.renderSuccess();
+        }
         else
             return this.renderError("删除失败",201);
     }
@@ -184,8 +194,10 @@ public class MenuController extends BaseController{
         }
         Menu menu = new Menu();
         menu.setId(id);
-        if (menuService.upMenu(menu,2)==1)
+        if (menuService.upMenu(menu,2)==1){
+            DocUtil.saveDoc("冻结菜单成功","敏感");
             return this.renderSuccess();
+        }
         else
             return this.renderError("冻结失败",201);
     }
@@ -198,8 +210,10 @@ public class MenuController extends BaseController{
         }
         Menu menu = new Menu();
         menu.setId(id);
-        if (menuService.upMenu(menu,1)==1)
+        if (menuService.upMenu(menu,1)==1){
+            DocUtil.saveDoc("解冻菜单成功","敏感");
             return this.renderSuccess();
+        }
         else
             return this.renderError("生效失败",201);
     }

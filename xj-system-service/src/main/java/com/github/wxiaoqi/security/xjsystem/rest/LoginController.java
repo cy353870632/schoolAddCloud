@@ -8,6 +8,7 @@ import com.github.wxiaoqi.security.xjsystem.base.BaseController;
 import com.github.wxiaoqi.security.xjsystem.entity.User;
 import com.github.wxiaoqi.security.xjsystem.service.ICacheService;
 import com.github.wxiaoqi.security.xjsystem.service.IUserService;
+import com.github.wxiaoqi.security.xjsystem.utils.DocUtil;
 import com.github.wxiaoqi.security.xjsystem.utils.JWTUtil;
 import com.github.wxiaoqi.security.xjsystem.vo.JwtAuthenticationRequest;
 import com.github.wxiaoqi.security.xjsystem.vo.ResultVo;
@@ -76,6 +77,7 @@ public class LoginController extends BaseController{
                 resulet.put("pwdStatus",0);
             else
                 resulet.put("pwdStatus",1);//1为需要强制修改密码的用户
+            DocUtil.saveDoc("登录系统成功","普通");
             return this.renderSuccess(resulet);
         }
     }
