@@ -5,9 +5,7 @@ package com.github.wxiaoqi.security.xjsystem.rest;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.github.wxiaoqi.security.auth.client.jwt.UserAuthUtil;
 import com.github.wxiaoqi.security.xjsystem.base.BaseController;
-import com.github.wxiaoqi.security.xjsystem.entity.Menu;
-import com.github.wxiaoqi.security.xjsystem.entity.School;
-import com.github.wxiaoqi.security.xjsystem.entity.System_dic;
+import com.github.wxiaoqi.security.xjsystem.entity.*;
 import com.github.wxiaoqi.security.xjsystem.service.*;
 import com.github.wxiaoqi.security.xjsystem.utils.*;
 import com.github.wxiaoqi.security.xjsystem.vo.Pageable;
@@ -70,6 +68,8 @@ public class SysSchoolController extends BaseController{
     @Autowired
     ISysDicService sysDicService;
 
+    @Autowired
+    IRoleService roleService;
 
     @RequestMapping(value = "getAllSchool", method = RequestMethod.POST)
     public Object getAllMenu(HttpServletRequest request,String keyWord,Integer pageSize,Integer currentPage,int review_status,String schoolstyle_status) throws Exception {
@@ -102,8 +102,13 @@ public class SysSchoolController extends BaseController{
             return this.renderError("访问权限不够",400);
         }
         School school = schoolService.selectById(id);
+        User user = userService.selectById(school.getCreat_user());
+        EntityWrapper<Role> wrapper = new EntityWrapper<Role>();
+        wrapper.eq("role_code",user.getUser_code());
+        Role role = roleService.selectOne(wrapper);
         SchoolVo schoolVo = new SchoolVo();
         BeanUtils.copyProperties(school,schoolVo);
+        schoolVo.setCreat_username(user.getU_name()+"("+role.getR_name_china()+")");
         return this.renderSuccess(schoolVo);
     }
 
