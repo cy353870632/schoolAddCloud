@@ -42,7 +42,7 @@ public class User extends Model<User> implements Serializable{
 
     private String id_card;
 
-
+    private String user_area;//用户所在区域，用逗号分隔，用于判断
     @Override
     protected Serializable pkVal() {
         return null;

@@ -103,7 +103,7 @@ public class UserController extends BaseController{
         return this.renderSuccess(userVo);
     }
 
-
+    //推广员列表
     @RequestMapping(value = "getPromoterList", method = RequestMethod.POST)
     public Object getPromoterList(HttpServletRequest request,String keyWord,Integer pageSize,Integer currentPage) throws Exception {
         Boolean status = false;
@@ -219,7 +219,7 @@ public class UserController extends BaseController{
                 return this.renderError("更新失败,请检查填写信息重试",201);
         }
     }
-
+//重置密码
     @RequestMapping(value = "restPWD", method = RequestMethod.POST)
     public Object restPWD(HttpServletRequest request,String uid) throws Exception{
         String user_code = UserMessage.getUserCode();
@@ -299,7 +299,7 @@ public class UserController extends BaseController{
         if (!user_code.equals("999") && !user_code.equals("998")){
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
-        int status = userService.deletePromoter(uid,user_code);
+        int status = userService.deleteManageUser(uid,user_code);
         if (status==1){
             DocUtil.saveDoc("删除管理员信息成功", "敏感");
             return this.renderSuccess();}
@@ -333,7 +333,7 @@ public class UserController extends BaseController{
             return this.renderError("您没有权限进行该操作",400);//权限不够
         }
         try {
-            int status = userService.updatePromoter(user,user_code);
+            int status = userService.updateManageUser(user,user_code);
             if (status==1) {
                 DocUtil.saveDoc("更新管理员信息", "敏感");
                 return this.renderSuccess();
